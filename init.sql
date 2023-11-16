@@ -1,5 +1,7 @@
 DROP TABLE IF EXISTS plants;
 DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS status;
+DROP TABLE IF EXISTS offers;
 
 
 CREATE TABLE users (
@@ -8,13 +10,13 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL UNIQUE,
     username VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    zipcode VARCHAR(10) NOT NULL,
+    zipcode VARCHAR(10) NOT NULL
     );
 
 
 CREATE TABLE status ( 
     id INTEGER NOT NULL UNIQUE,
-    status VARCHAR(50) NOT NULL,
+    status VARCHAR(50) NOT NULL
     );
 
     
@@ -39,10 +41,10 @@ CREATE TABLE plants (
     );
 
 
-CREATE TABLE offer (
+CREATE TABLE offers (
     id INTEGER NOT NULL UNIQUE,
     price INTEGER NOT NULL,
-    buyer_id INTEGER NOT NULL REFERENCES users(id)
+    buyer_id INTEGER NOT NULL REFERENCES users(id),
     plant_id INTEGER NOT NULL REFERENCES plants(id)
     );
 
