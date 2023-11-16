@@ -3,10 +3,12 @@ volumes:
     ghi:
     postgres-data:
     pg-admin:
+    
 
 services:
     fastapi:
         environment:
+            DATABASE_URL: postgresql://user:password@postgres:15432/postgres-data
             CORS_HOST: http://localhost:3000
         build:
             context: api
@@ -40,7 +42,7 @@ services:
         environment: # Environment variables for the PostgreSQL service
             POSTGRES_USER: user # Default user for PostgreSQL
             POSTGRES_PASSWORD: password # Password for the default user
-            POSTGRES_DB: wyp-db # Default database name
+            POSTGRES_DB: postgres-data # Default database name
         ports:
             - "15432:5432" # Map port 15432 of the host to port 5432 of the container
 
