@@ -35,7 +35,8 @@ services:
     postgres:
         image: postgres:14.2-bullseye # Use the specified PostgreSQL image
         volumes:
-            - postgres-data:/var/lib/postgresql/data # Initialize the database with the provided SQL script
+            - postgres-data:/var/lib/postgresql/data
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Initialize the database with the provided SQL script
         environment: # Environment variables for the PostgreSQL service
             POSTGRES_USER: user # Default user for PostgreSQL
             POSTGRES_PASSWORD: password # Password for the default user
@@ -54,3 +55,4 @@ services:
             PGADMIN_DEFAULT_EMAIL: me@me.com # Default email for pgAdmin login
             PGADMIN_DEFAULT_PASSWORD: password # Password for the default email
             PGADMIN_DISABLE_POSTFIX: 1 # Disable postfix service within the container
+
