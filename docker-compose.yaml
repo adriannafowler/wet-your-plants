@@ -1,7 +1,7 @@
 volumes:
   fastapi:
   ghi:
-  postgres:
+  postgres-data:
   pg-admin:
 
 services:
@@ -35,7 +35,7 @@ services:
   postgres:
     image: postgres:14.2-bullseye # Use the specified PostgreSQL image
     volumes:
-      - init.sql:/docker-entrypoint-initdb.d/init.sql # Initialize the database with the provided SQL script
+      - postgres-data:/var/lib/postgresql/data # Initialize the database with the provided SQL script
     environment: # Environment variables for the PostgreSQL service
       POSTGRES_USER: user # Default user for PostgreSQL
       POSTGRES_PASSWORD: password # Password for the default user
