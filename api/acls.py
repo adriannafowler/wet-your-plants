@@ -1,6 +1,6 @@
 import json
 import requests
-from keys import PERENUAL_API_KEY
+from keys import PERENUAL_API_KEY, OPEN_WEATHER_API_KEY
 
 
 def get_plant_species(name):
@@ -16,6 +16,7 @@ def get_plant_species(name):
         return result
     except (KeyError, IndexError):
         return {"plant_id": None}
+
 
 def get_plant_details(plant_id):
     url = f"https://perenual.com/api/species/details/{plant_id}?key={PERENUAL_API_KEY}"
@@ -37,7 +38,61 @@ def get_plant_details(plant_id):
             "indoor": content["indoor"],
             "care_level": content["care_level"],
             "description": content["description"],
-            "default_image": content["default_image"]["original_url"]
+            "default_image": content["default_image"]["original_url"],
         }
     except (KeyError, IndexError):
         return {"plant_details": None}
+
+
+def get_weather_data(zipcode):
+    geo_url = "http://api.openweathermap.org/geo/1.0/zip"
+    headers = {"Authorization": OPEN_WEATHER_API_KEY}
+    geo_params = {
+        "zip": f"{zipcode},US",
+        "appid": OPEN_WEATHER_API_KEY,
+    }
+    response = requests.get(
+        geo_url,
+        headers=headers,
+        params=geo_params,
+    )
+    geo_content = json.loads(response.content)
+
+    try:
+        coordinates = {
+            "latitude": geo_content["lat"],
+            "longitude": geo_content["lon"],
+        }
+    except (KeyError, IndexError):
+        coordinates = {
+            "latitude": None,
+            "longitude": None,
+        }
+
+    weather_url = "https://api.openweathermap.org/data/2.5/weather"
+    weather_params = {
+        "lat": coordinates["latitude"],
+        "lon": coordinates["longitude"],
+        "appid": OPEN_WEATHER_API_KEY,
+        "units": "imperial",
+    }
+    response = requests.get(
+        weather_url,
+        headers=headers,
+        params=weather_params,
+    )
+    weather_content = json.loads(response.content)
+    try:
+        weather_data = {
+            "temp": weather_content["main"]["temp"],
+            "description": weather_content["weather"][0]["description"],
+            "wind_speed": weather_content["wind"]["speed"],
+        }
+    except (KeyError, IndexError):
+        weather_data = {
+            "temp": None,
+            "description": None,
+            "wind_speed": None,
+        }
+
+    return weather_data
