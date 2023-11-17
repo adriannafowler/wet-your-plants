@@ -177,6 +177,7 @@ scratch-paper.txt
 .env.development.local
 .env.test.local
 .env.production.local
+.api.keys.py
 
 **/*npm-debug.log*
 **/*yarn-debug.log*
