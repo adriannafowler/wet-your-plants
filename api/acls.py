@@ -22,7 +22,6 @@ def get_plant_details(plant_id):
 
     response = requests.get(url)
     content = json.loads(response.content)
-    print(response)
 
     try:
         return {
