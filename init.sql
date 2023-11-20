@@ -5,8 +5,8 @@ DROP TABLE IF EXISTS offers;
 
 
 CREATE TABLE users (
-    id INTEGER NOT NULL UNIQUE,
-    name INTEGER NOT NULL,
+    id SERIAL NOT NULL UNIQUE,
+    name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
     username VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL,
@@ -15,13 +15,13 @@ CREATE TABLE users (
 
 
 CREATE TABLE status ( 
-    id INTEGER NOT NULL UNIQUE,
+    id SERIAL NOT NULL UNIQUE,
     status VARCHAR(50) NOT NULL
     );
 
     
 CREATE TABLE plants (
-    id INTEGER NOT NULL UNIQUE,
+    id SERIAL NOT NULL UNIQUE,
     name VARCHAR(50) NOT NULL,
     source VARCHAR(100) NOT NULL,
     common_name VARCHAR(50) NOT NULL,
@@ -40,10 +40,17 @@ CREATE TABLE plants (
     status VARCHAR(50) NOT NULL REFERENCES  status(id)
     );
 
+CREATE TABLE post (
+    id SERIAL NOT NULL UNIQUE,
+    price DECIMAL(10, 2) NOT NULL,
+    plant_id INTEGER NOT NULL REFERENCES plants(id),
+    owner_id INTEGER NOT NULL REFERENCES users(id),
+    created_on DATETIME NOT NULL
+)
 
 CREATE TABLE offers (
-    id INTEGER NOT NULL UNIQUE,
-    price INTEGER NOT NULL,
+    id SERIAL NOT NULL UNIQUE,
+    price DECIMAL(10, 2) NOT NULL,
     buyer_id INTEGER NOT NULL REFERENCES users(id),
     plant_id INTEGER NOT NULL REFERENCES plants(id)
     );
