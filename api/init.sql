@@ -14,7 +14,7 @@ CREATE TABLE users (
     );
 
 
-CREATE TABLE status ( 
+CREATE TABLE status (
     id INTEGER NOT NULL UNIQUE,
     status VARCHAR(50) NOT NULL
     );
@@ -47,4 +47,3 @@ CREATE TABLE offers (
     buyer_id INTEGER NOT NULL REFERENCES users(id),
     plant_id INTEGER NOT NULL REFERENCES plants(id)
     );
-
