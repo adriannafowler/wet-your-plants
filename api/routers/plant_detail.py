@@ -1,5 +1,5 @@
-from fastapi import APIRouter
-from queries.plant_detail import PlantIn
+from fastapi import APIRouter, Depends, Query
+from queries.plant_detail import PlantIn, PlantRepository
 
 
 router = APIRouter()
@@ -7,6 +7,9 @@ router = APIRouter()
 
 
 @router.post("/greenhouse/{user_id}/")
-def add_plant(plant:PlantIn, user_id, plant_id):
+def create_plant(plant:PlantIn,
+                user_id: int,
+                repo: PlantRepository = Depends()
+                ):
     print('plant', plant)
-    return plant
+    return repo.create(plant, user_id)

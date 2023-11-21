@@ -10,16 +10,16 @@ def get_plant_species(name):
     content = json.loads(response.content)
 
     try:
-        result = {"id": []}
+        result = {"species_id": []}
         for item in content["data"]:
-            result["id"].append(item["id"])
+            result["species_id"].append(item["id"])
         return result
     except (KeyError, IndexError):
-        return {"plant_id": None}
+        return {"species_id": None}
 
 
-def get_plant_details(plant_id):
-    url = f"https://perenual.com/api/species/details/{plant_id}?key={PERENUAL_API_KEY}"
+def get_plant_details(species_id):
+    url = f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
 
     response = requests.get(url)
     content = json.loads(response.content)
@@ -28,16 +28,17 @@ def get_plant_details(plant_id):
         return {
             "id": content["id"],
             "common_name": content["common_name"],
+            "type": content["type"],
             "dimensions": f"{content['dimensions']['min_value']} - {content['dimensions']['max_value']} feet",
             "cycle": content["cycle"],
             "watering": content["watering"],
-            "sunlight": content["sunlight"],
-            "hardiness": content["hardiness"],
+            "sunlight": str(content["sunlight"]),
+            "hardiness": f"min: {content['hardiness']['min']} max: {content['hardiness']['max']}",
             "maintenance": content["maintenance"],
             "indoor": content["indoor"],
             "care_level": content["care_level"],
             "description": content["description"],
-            "default_image": content["default_image"]["original_url"],
+            "original_url": content["default_image"]["original_url"],
         }
     except (KeyError, IndexError):
         return {"plant_details": None}
