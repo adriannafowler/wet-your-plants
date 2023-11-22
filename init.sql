@@ -32,21 +32,21 @@ CREATE TABLE plants (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     source TEXT NOT NULL,
-    common_name TEXT NOT NULL,
-    type TEXT NOT NULL,
-    cycle  TEXT NOT NULL,
+    common_name TEXT ,
+    type TEXT ,
+    cycle  TEXT ,
     watering TEXT,
     sunlight TEXT,
-    indoor BOOLEAN NOT NULL,
-    care_level TEXT NOT NULL,
-    maintenance TEXT NOT NULL,
-    description TEXT NOT NULL,
-    hardiness TEXT NOT NULL,
-    original_url TEXT NOT NULL,
-    dimensions TEXT NOT NULL,
+    indoor BOOLEAN ,
+    care_level TEXT ,
+    maintenance TEXT,
+    description TEXT,
+    hardiness TEXT,
+    original_url TEXT,
+    dimensions TEXT,
     owner_id INTEGER NOT NULL REFERENCES users(id),
     status INTEGER REFERENCES  status(id),
-    watering_schedule REFERENCES watering_schedules(id)
+    watering_schedule INTEGER REFERENCES watering_schedules(id)
     );
 
 
@@ -81,6 +81,14 @@ INSERT INTO watering_schedules (schedule) VALUES
 ('every 6 weeks');
 
 
+INSERT INTO watering_schedules (schedule) VALUES
+('2x per week'),
+('1x per week'),
+('every 2 weeks'),
+('1x per month'),
+('every 6 weeks');
+
+
 INSERT INTO status (status) VALUES
 ('OK'),
 ('LISTED'),
@@ -89,7 +97,7 @@ INSERT INTO status (status) VALUES
 
 
 INSERT INTO plants
-(name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, status) VALUES
+(name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, status, watering_schedule) VALUES
 ('Fern', 'Nature Store', 'Fern', 'Type1', 'Annual', 'Regular', 'Partial Shade', TRUE, 'Easy', 'Low', 'A green fern', 'Hardy', 'http://example.com/fern', '10x10', 1, 1, 1),
 ('Cactus', 'Desert Flora', 'Cactus', 'Type2', 'Perennial', 'Sparse', 'Full Sun', FALSE, 'Medium', 'Medium', 'A spiky cactus', 'Very Hardy', 'http://example.com/cactus', '5x5', 1, 1, 5),
 ('Rose', 'Garden Shop', 'Rose', 'Type1', 'Perennial', 'Regular', 'Full Sun', FALSE, 'Hard', 'High', 'A beautiful rose', 'Moderate', 'http://example.com/rose', '12x12', 2, 1, 3),

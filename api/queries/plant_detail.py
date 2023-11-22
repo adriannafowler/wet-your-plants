@@ -13,6 +13,7 @@ class PlantIn(BaseModel):
     name: str
     source: str
     species_id: int
+    watering_schedule: int
 
 
 class PlantOut(BaseModel):
@@ -26,13 +27,14 @@ class PlantOut(BaseModel):
     sunlight: str
     indoor: bool
     care_level: str
-    maintenance: str
+    maintenance: Optional[str]
     description: str
     hardiness: str
     original_url: str
     dimensions: str
     owner_id: int
     status: int
+    watering_schedule: int
 
 
 class PlantRepository:
@@ -109,10 +111,11 @@ class PlantRepository:
                                 , dimensions = %s
                                 , owner_id = %s
                                 , status = %s
+                                , watering_schedule = %s
                             WHERE id = %s
                             RETURNING id, name, source, common_name, type, cycle, watering, sunlight,
                                 indoor, care_level, maintenance, description, hardiness, original_url,
-                                dimensions, owner_id, status;
+                                dimensions, owner_id, status, watering_schedule;
                             """,
                             [
                                 plant.name,
@@ -131,7 +134,8 @@ class PlantRepository:
                                 details["dimensions"],
                                 current_owner_id,
                                 current_status,
-                                plant_id
+                                plant_id,
+                                plant.watering_schedule
                             ]
                         )
                         if db.rowcount == 0:
@@ -159,7 +163,8 @@ class PlantRepository:
                         "original_url": details["original_url"],
                         "dimensions": details["dimensions"],
                         "owner_id": current_owner_id,
-                        "status": current_status
+                        "status": current_status,
+                        "watering_schedule": plant.watering_schedule
                     }
                         # if updated_record:
                         print("Plant data:", plant_data)
@@ -188,5 +193,6 @@ class PlantRepository:
                 original_url=record[13],
                 dimensions=record[14],
                 owner_id=record[15],
-                status=record[16]
+                status=record[16],
+                watering_schedule=record[17]
         )
