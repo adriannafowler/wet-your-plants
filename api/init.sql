@@ -67,7 +67,8 @@ INSERT INTO users (name, email, username, password, zipcode) VALUES
 -- Assuming the status table needs some data
 INSERT INTO status (status) VALUES
 ('OK'),
-('PENDING');
+('PENDING'),
+('SOLD');
 
 -- Inserting plants
 INSERT INTO plants
