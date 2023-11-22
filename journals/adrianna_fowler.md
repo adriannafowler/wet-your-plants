@@ -15,3 +15,8 @@ NOV 21, 2023
     - solved the error from yesterday, the issue was that I wasn't deleting my volumes when I went to rebuild my docker containers
     - create_plant now working!
     - corrected some issues in init.sql
+    - added seed data
+    - started a term dictionary for group use
+
+NOV 22, 2023
+    - working plant detail GET(one), PUT, and DELETE queries and routes --> pushed to plant-detail
