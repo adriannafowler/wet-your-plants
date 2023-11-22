@@ -12,6 +12,7 @@ class PlantIn(BaseModel):
     name: str
     source: str
     species_id: int
+    watering_schedule: int
 
 
 class PlantOut(BaseModel):
@@ -32,6 +33,7 @@ class PlantOut(BaseModel):
     dimensions: str
     owner_id: int
     status: int
+    watering_schedule: int
 
 
 class PlantRepository:
@@ -49,9 +51,9 @@ class PlantRepository:
                         INSERT INTO plants
                             (name, source, common_name, type, cycle, watering, sunlight,
                             indoor, care_level, maintenance, description, hardiness, original_url,
-                            dimensions, owner_id, status)
+                            dimensions, owner_id, status, watering_schedule)
                         VALUES
-                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
                         [
@@ -70,7 +72,8 @@ class PlantRepository:
                             details["original_url"],
                             details["dimensions"],
                             user_id,
-                            1
+                            1,
+                            plant.watering_schedule
                         ]
                     )
                     id = result.fetchone()[0]
@@ -94,7 +97,8 @@ class PlantRepository:
                         "original_url": details["original_url"],
                         "dimensions": details["dimensions"],
                         "owner_id": user_id,
-                        "status": 1
+                        "status": 1,
+                        "watering_schedule": plant.watering_schedule
                     }
                     print("Plant data:", plant_data)
                     return PlantOut(**plant_data)
