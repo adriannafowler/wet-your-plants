@@ -32,18 +32,18 @@ CREATE TABLE plants (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     source TEXT NOT NULL,
-    common_name TEXT NOT NULL,
-    type TEXT NOT NULL,
-    cycle  TEXT NOT NULL,
+    common_name TEXT ,
+    type TEXT ,
+    cycle  TEXT ,
     watering TEXT,
     sunlight TEXT,
-    indoor BOOLEAN NOT NULL,
-    care_level TEXT NOT NULL,
-    maintenance TEXT NOT NULL,
-    description TEXT NOT NULL,
-    hardiness TEXT NOT NULL,
-    original_url TEXT NOT NULL,
-    dimensions TEXT NOT NULL,
+    indoor BOOLEAN ,
+    care_level TEXT ,
+    maintenance TEXT,
+    description TEXT,
+    hardiness TEXT,
+    original_url TEXT,
+    dimensions TEXT,
     owner_id INTEGER NOT NULL REFERENCES users(id),
     status INTEGER REFERENCES  status(id),
     watering_schedule INTEGER REFERENCES watering_schedules(id)
@@ -71,6 +71,14 @@ INSERT INTO users (name, email, username, password, zipcode) VALUES
 ('John Doe', 'johndoe@example.com', 'johndoe', 'pass123', '12345'),
 ('Jane Smith', 'janesmith@example.com', 'janesmith', 'pass456', '23456'),
 ('Alice Johnson', 'alicejohnson@example.com', 'alicejohnson', 'pass789', '34567');
+
+
+INSERT INTO watering_schedules (schedule) VALUES
+('2x per week'),
+('1x per week'),
+('every 2 weeks'),
+('1x per month'),
+('every 6 weeks');
 
 
 INSERT INTO watering_schedules (schedule) VALUES
