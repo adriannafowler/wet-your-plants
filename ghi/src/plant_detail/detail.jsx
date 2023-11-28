@@ -58,9 +58,9 @@ function PlantDetail(){
 
         return (
             <div className='card-container'>
-                <Card className="card">
+                <Card className="card" sx={{borderRadius: '20px'}}>
                     <div className='media-content'>
-                        <div className='image-container'>
+                        <div className='image-container' sx={{}}>
                             <img
                                 src="https://www.thespruce.com/thmb/tBDy1ohOETN1l27cRTlTJWsN2iQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-921493782-9a70dc6a313e4497ba07412c2870573a.jpg"
                                 className='image'
