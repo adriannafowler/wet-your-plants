@@ -20,3 +20,10 @@ NOV 21, 2023
 
 NOV 22, 2023
     - working plant detail GET(one), PUT, and DELETE queries and routes --> pushed to plant-detail
+
+NOV 27, 2023
+    - working on plant detail front end component, pushed updates to plant-detail branch
+
+NOV 28, 2023
+    - have functional jsx for plant detail component
+    - working on pulling data from backend api
