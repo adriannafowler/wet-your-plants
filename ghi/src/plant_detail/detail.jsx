@@ -76,7 +76,7 @@ function PlantDetail(){
                     <div className='details'>
                         <Box sx={{ borderTop: 1, borderColor: 'divider' }}>
                         <CardActions>
-                                <Tabs value={value} onChange={handleChange} className='tab-labels'>
+                                <Tabs value={value} onChange={handleChange} className='tab-labels' >
                                     <Tab label="Description" {...a11yProps(0)} />
                                     <Tab label="Plant Care" {...a11yProps(1)} />
                                     <Tab label="Care History" {...a11yProps(2)} />
@@ -97,12 +97,12 @@ function PlantDetail(){
                                 </CustomTabPanel>
                             </CardContent>
                         </Box>
-                        <Grid container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+                        <Grid className='marketplace-buttons' container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginTop: 'auto'}}>
                             <Grid item xs={6}>
-                                <Button type="button"> Add to Marketplace</Button>
+                                <Button className='button' type="button"> Add to Marketplace</Button>
                             </Grid>
                             <Grid item xs={6}>
-                                <Button>Make an Offer</Button>
+                                <Button className='button' type='button'>Make an Offer</Button>
                             </Grid>
                         </Grid>
                     </div>
