@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import os
+from routers import weather_router, dashboard_router
 
 app = FastAPI()
 
@@ -14,6 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(weather_router, prefix="/weather-data", tags=["weather"])
+app.include_router(dashboard_router, tags=["dashboard"])
 
 @app.get("/api/launch-details")
 def launch_details():
