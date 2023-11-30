@@ -10,9 +10,9 @@ CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     email VARCHAR(100) NOT NULL UNIQUE,
-    username VARCHAR(20) NOT NULL,
     password VARCHAR(255) NOT NULL,
-    zipcode VARCHAR(10) NOT NULL
+    zipcode VARCHAR(10) NOT NULL,
+    hashed_password VARCHAR(255) NOT NULL,
     );
 
 
@@ -67,10 +67,10 @@ CREATE TABLE post (
 );
 
 
-INSERT INTO users (name, email, username, password, zipcode) VALUES
-('John Doe', 'johndoe@example.com', 'johndoe', 'pass123', '12345'),
-('Jane Smith', 'janesmith@example.com', 'janesmith', 'pass456', '23456'),
-('Alice Johnson', 'alicejohnson@example.com', 'alicejohnson', 'pass789', '34567');
+-- INSERT INTO users (name, email, username, password, zipcode) VALUES
+-- ('John Doe', 'johndoe@example.com', 'johndoe', 'pass123', '12345'),
+-- ('Jane Smith', 'janesmith@example.com', 'janesmith', 'pass456', '23456'),
+-- ('Alice Johnson', 'alicejohnson@example.com', 'alicejohnson', 'pass789', '34567');
 
 
 INSERT INTO watering_schedules (schedule) VALUES
@@ -104,8 +104,3 @@ INSERT INTO plants
 ('Tulip', 'Flower Store', 'Tulip', 'Type3', 'Annual', 'Regular', 'Full Sun', TRUE, 'Easy', 'Low', 'Colorful tulips', 'Hardy', 'http://example.com/tulip', '8x8', 2, 1, 2),
 ('Bonsai', 'Bonsai Tree Shop', 'Bonsai', 'Type4', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Hard', 'High', 'A miniature tree', 'Hardy', 'http://example.com/bonsai', '15x15', 3, 1, 2),
 ('Orchid', 'Orchid Gallery', 'Orchid', 'Type2', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Medium', 'Medium', 'An exotic orchid', 'Moderate', 'http://example.com/orchid', '9x9', 3, 1, 1);
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 2f7c417d171230b74c29ee393dc97725f7e427dd

@@ -1,9 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import plant_detail
+from routers import plant_detail,users
+from authenticator import authenticator
+from queries.users import UserQueries
 
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -28,4 +31,7 @@ def launch_details():
         }
     }
 
+
+app.include_router(authenticator.router)
 app.include_router(plant_detail.router)
+app.include_router(users.router)
