@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
+import React, { useEffect, useState } from "react";
+import { PlantProvider } from "./contexts/plantcontext";
+import Dashboard from "./dashboard";
 import ErrorNotification from "./ErrorNotification";
 import "./App.css";
 
@@ -8,29 +9,32 @@ function App() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
+    async function fetchData() {
+      try {
+        let url = `${process.env.REACT_APP_API_HOST}/api/launch-details`;
+        let response = await fetch(url);
+        let data = await response.json();
 
-      if (response.ok) {
-        console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
+        if (response.ok) {
+          setLaunchInfo(data.launch_details);
+        } else {
+          setError(data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        setError("An error occurred while fetching data.");
       }
     }
-    getData();
+    fetchData();
   }, []);
 
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
-    </div>
+    <PlantProvider>
+      <div>
+        <ErrorNotification error={error} />
+        <Dashboard launchInfo={launchInfo} />
+      </div>
+    </PlantProvider>
   );
 }
 

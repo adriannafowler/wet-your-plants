@@ -43,4 +43,3 @@ const WeatherWarningBar = ({ zipcode }) => {
 };
 
 export default WeatherWarningBar;
-

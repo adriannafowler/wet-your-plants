@@ -1,5 +1,7 @@
 import React, { useState } from "react";
-import DashboardMaterialUI from "./DashboardMaterialUI";
+import { PlantProvider } from "./contexts/plantcontext";
+import DashboardMaterialUI from "./dashboardMaterialUI";
+import DailyTodoList from "./DailyTodoList";
 
 const Dashboard = () => {
   const [showDashboard, setShowDashboard] = useState(false);
@@ -9,12 +11,15 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <DashboardMaterialUI
-        showDashboard={showDashboard}
-        toggleDashboard={toggleDashboard}
-      />
-    </div>
+    <PlantProvider>
+      <div>
+        <DashboardMaterialUI
+          showDashboard={showDashboard}
+          toggleDashboard={toggleDashboard}
+        />
+        <DailyTodoList /> {/* Include the DailyTodoList component */}
+      </div>
+    </PlantProvider>
   );
 };
 

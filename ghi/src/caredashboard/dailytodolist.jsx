@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { TextField, Button, List, ListItem, ListItemText } from "@mui/material";
+import { usePlantContext } from "./PlantContext";
 
 const DailyTodoList = () => {
   const [task, setTask] = useState("");
   const [todos, setTodos] = useState([]);
+  const { updatePlantCareHistory } = usePlantContext();
 
   const addTodo = () => {
     if (task.trim() !== "") {
@@ -13,9 +15,15 @@ const DailyTodoList = () => {
   };
 
   const removeTodo = (index) => {
+    const completedTodo = todos[index];
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+
+    updatePlantCareHistory({
+      date: new Date().toLocaleDateString(),
+      action: `Completed task: ${completedTodo}`,
+    });
   };
 
   return (

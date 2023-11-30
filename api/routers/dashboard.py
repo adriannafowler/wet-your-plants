@@ -1,6 +1,5 @@
 from fastapi import APIRouter
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse, FileResponse
 from pathlib import Path
 
 router = APIRouter()

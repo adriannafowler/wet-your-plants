@@ -35,3 +35,4 @@ const WeatherWidget = ({ zipcode }) => {
   );
 };
 
+export default WeatherWidget;
