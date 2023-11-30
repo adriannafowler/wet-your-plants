@@ -57,7 +57,7 @@ class PlantRepository:
                     record = result.fetchone()
                     return self.record_to_plant_out(record)
         except Exception as e:
-            logging.error("Error in creating plant: %s", e)
+            logging.error("Error in creating plant:", e)
             raise
 
     def delete(self, plant_id: int) -> bool:

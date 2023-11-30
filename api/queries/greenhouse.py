@@ -1,6 +1,6 @@
 import logging
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List
 from queries.pool import pool
 from acls import get_plant_details
 
@@ -102,3 +102,47 @@ class PlantRepository:
         except Exception as e:
             logging.error("Error in creating plant: %s", e)
             raise
+
+    def get_all(self, user_id: int) -> List[PlantOut]:
+        plants = []
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM plants
+                        WHERE owner_id = %s;
+                        """,
+                        [user_id]
+                    )
+                    records = result.fetchall()
+                    print("records:", records)
+                    for record in records:
+                        record_dict = {
+                            "id": record[0],
+                            "name": record[1],
+                            "source": record[2],
+                            "common_name": record[3],
+                            "type": record[4],
+                            "cycle": record[5],
+                            "watering": record[6],
+                            "sunlight": record[7],
+                            "indoor": record[8],
+                            "care_level": record[9],
+                            "maintenance": record[10],
+                            "description": record[11],
+                            "hardiness": record[12],
+                            "original_url": record[13],
+                            "dimensions": record[14],
+                            "owner_id": record[15],
+                            "status": record[16],
+                            "watering_schedule": record[17]
+                        }
+                        plants.append(PlantOut(**record_dict))
+            print("PLANTS:", plants)
+        except Exception as e:
+            logging.error("Error in getting plants: %s", e)
+            raise
+
+        return plants
