@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 from queries.pool import pool
 from acls import get_plant_details
-# GET DELETE PATCH
+
 
 class Error(BaseModel):
     message: str
@@ -145,7 +145,6 @@ class PlantRepository:
                         id = result.fetchone()[0]
                         if db.rowcount == 0:
                             raise ValueError("Update failed, plant not found or no change in data")
-                        #return new data
                         plant_data = {
                         "id": id,
                         "name": plant.name,
