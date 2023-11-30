@@ -55,6 +55,8 @@ class PlantRepository:
                         [plant_id]
                     )
                     record = result.fetchone()
+                    if record is None:
+                        raise ValueError(f"Plant with id {plant_id} not found")
                     return self.record_to_plant_out(record)
         except Exception as e:
             logging.error("Error in creating plant:", e)
