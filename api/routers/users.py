@@ -15,7 +15,7 @@ from authenticator import authenticator
 
 
 class UserForm(BaseModel):
-    email: str
+    username: str
     password: str
 
 
@@ -34,7 +34,7 @@ async def get_user(
     user_id: int,
     repo: UserQueries = Depends(),
 ):
-    return repo.get_user(user_id)
+    return repo.get(user_id)
 
 
 @router.post("/api/user", response_model=UserToken | HttpError)
@@ -54,7 +54,8 @@ async def create_user(
         )
     form = UserForm(username=info.email,password=info.password)
     token = await authenticator.login(response, request, form, queries)
-    return UserToken(user=user, **token.dict())
+    print(token)
+    return UserToken(account=user, **token.dict())
 
 
 @router.get("/token")

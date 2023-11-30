@@ -12,24 +12,25 @@ class PlantAuthenticator(Authenticator):
     async def get_account_data(
             self,
             email:str,
-            users: UserQueries,
+            accounts: UserQueries,
     ):
-        return users.get_user(email)
+        return accounts.get(email)
     
     def get_account_getter(
             self,
-            users: UserQueries = Depends(),
+            accounts: UserQueries = Depends(),
     ):
-        return users
+        return accounts
     
-    def get_hashed_password(self, user: UserOutWithPassword):
-        return user.hashed_password
+    def get_hashed_password(self, account: UserOutWithPassword):
+        return account.hashed_password
     
-    def get_account_data_for_cookie(self,user):
-        if isinstance(user,dict):
-            user = UserOutWithPassword(**user)
+    
+    def get_account_data_for_cookie(self,account):
+        if isinstance(account,dict):
+            user = UserOutWithPassword(**account)
 
-        return user.email, user.dict()
+        return account.email, account.dict()
     
 
 authenticator = PlantAuthenticator(os.environ.get("SIGNING_KEY"))

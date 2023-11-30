@@ -4,17 +4,16 @@ from routers.models import UserOutWithPassword
 
 
 class UserQueries:
-    def get(self, user_email:str) -> UserOutWithPassword:
-        print("here in get): " +user_email)
+    def get(self, user_id) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                         SELECT * 
                         FROM users
-                        WHERE email = %s;
+                        WHERE id = %s;
                         """,
-                    [user_email],
+                    [user_id],
                 )
                 try:
                     record = None
@@ -66,7 +65,7 @@ class UserQueries:
                 
     # def update_user(self,user_id,info):
     #     with pool.connection() as conn:
-    #         with conn.curson() as cur:
+    #         with conn.cursor() as cur:
     #             input = [
     #                 info.name,
     #                 info.email,
