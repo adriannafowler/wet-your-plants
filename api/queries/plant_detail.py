@@ -24,18 +24,18 @@ class PlantOut(BaseModel):
     id: int
     name: str
     source: str
-    common_name: str
-    type: str
-    cycle: str
-    watering: str
-    sunlight: str
-    indoor: bool
-    care_level: str
+    common_name: Optional[str]
+    type: Optional[str]
+    cycle: Optional[str]
+    watering: Optional[str]
+    sunlight: Optional[str]
+    indoor: Optional[bool]
+    care_level: Optional[str]
     maintenance: Optional[str]
-    description: str
-    hardiness: str
-    original_url: str
-    dimensions: str
+    description: Optional[str]
+    hardiness: Optional[str]
+    original_url: Optional[str]
+    dimensions: Optional[str]
     owner_id: int
     status: int
     watering_schedule: int
@@ -184,7 +184,7 @@ class PlantRepository:
                             UPDATE plants
                             SET status = %s
                             WHERE id = %s
-                            RETURNING *; 
+                            RETURNING *;
                         """,
                     [status_data.status, plant_id])
 
