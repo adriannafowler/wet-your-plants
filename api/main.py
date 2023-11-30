@@ -17,20 +17,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-@app.get("/api/launch-details")
-def launch_details():
-    return {
-        "launch_details": {
-            "module": 3,
-            "week": 17,
-            "day": 5,
-            "hour": 19,
-            "min": "00"
-        }
-    }
-
-
 app.include_router(authenticator.router)
 app.include_router(plant_detail.router)
 app.include_router(users.router)
