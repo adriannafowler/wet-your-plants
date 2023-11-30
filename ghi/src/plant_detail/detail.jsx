@@ -83,7 +83,6 @@ function PlantDetail(){
 
     const handleEditDialogClose = () => {
         setIsEditDialogOpen(false);
-        // Optionally, refresh plant details after closing the dialog
         };
 
         return (
