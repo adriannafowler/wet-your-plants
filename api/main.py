@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import plant_detail
+from routers import plant_detail, watering_schedules
 
 app = FastAPI()
 
@@ -29,3 +29,4 @@ def launch_details():
     }
 
 app.include_router(plant_detail.router)
+app.include_router(watering_schedules.router)

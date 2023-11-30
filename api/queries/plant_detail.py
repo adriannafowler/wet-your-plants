@@ -16,6 +16,10 @@ class PlantIn(BaseModel):
     watering_schedule: int
 
 
+class StatusIn(BaseModel):
+    status: int
+
+
 class PlantOut(BaseModel):
     id: int
     name: str
@@ -86,12 +90,10 @@ class PlantRepository:
                 )
                     current_data = db.fetchone()
                     current_owner_id, current_status = current_data
-                    print("current_data", current_data)
                     if current_data is None:
                         raise ValueError("Plant not found")
                     else:
                         details = get_plant_details(plant.species_id)
-                        print("DETAILS", details)
                         result = db.execute(
                             """
                             UPDATE plants
@@ -141,11 +143,9 @@ class PlantRepository:
                         if db.rowcount == 0:
                             raise ValueError("No updates made, plant data may be identical or plant not found")
                         id = result.fetchone()[0]
-                        print("plant ID:", id)
                         if db.rowcount == 0:
                             raise ValueError("Update failed, plant not found or no change in data")
                         #return new data
-                        print("rowcount", db.rowcount)
                         plant_data = {
                         "id": id,
                         "name": plant.name,
@@ -173,6 +173,29 @@ class PlantRepository:
                         #     raise ValueError("Update failed, plant not found")
         except Exception as e:
             logging.error("Error in updating plant: %s", e)
+            raise
+
+    def update_status(self, plant_id: int, status_data: StatusIn) -> PlantOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                            UPDATE plants
+                            SET status = %s
+                            WHERE id = %s
+                            RETURNING *; 
+                        """,
+                    [status_data.status, plant_id])
+
+                    updated_record = db.fetchone()
+                    if not updated_record:
+                        raise ValueError("Update failed, plant not found or no change in status")
+
+                    return self.record_to_plant_out(updated_record)
+
+        except Exception as e:
+            logging.error("Error in updating plant status: %s", e)
             raise
 
     def record_to_plant_out(self, record):

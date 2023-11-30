@@ -1,9 +1,7 @@
-import * as React from 'react';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -11,9 +9,12 @@ import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import './pd.css'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import Grid from '@mui/material/Grid'
 import EditIcon from '@mui/icons-material/Edit';
-import { AspectRatio, Fullscreen } from '@mui/icons-material';
+import { useParams } from 'react-router-dom';
+import React, { useEffect, useState, useRef } from "react";
+import { List, ListItemText } from '@mui/material';
+import DeleteDialog from './delete_modal';
+import EditDialog from './edit_modal';
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -51,10 +52,39 @@ function CustomTabPanel(props) {
 
 function PlantDetail(){
     const [value, setValue] = React.useState(0);
+    const [details, setDetails] = useState([])
+    const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+    const param = useParams()
+    const plant_id = param.id
+
+    const fetchData = async () => {
+        const url = `http://localhost:8000/greenhouse/${plant_id}/`
+        const response = await fetch(url)
+        if (response.ok) {
+            const data = await response.json()
+            setDetails(data)
+        }
+    }
+    useEffect(() => {
+        fetchData()
+    }, [])
 
     const handleChange = (event, newValue) => {
         setValue(newValue)
     }
+
+    const DeleteDialogRef = useRef()
+    const handleDeleteClick = () => {
+        DeleteDialogRef.current.showDialog()
+    }
+    const handleEditClick = () => {
+        setIsEditDialogOpen(true);
+        };
+
+    const handleEditDialogClose = () => {
+        setIsEditDialogOpen(false);
+        // Optionally, refresh plant details after closing the dialog
+        };
 
         return (
             <div className='card-container'>
@@ -62,15 +92,22 @@ function PlantDetail(){
                     <div className='media-content'>
                         <div className='image-container' sx={{}}>
                             <img
-                                src="https://www.thespruce.com/thmb/tBDy1ohOETN1l27cRTlTJWsN2iQ=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/GettyImages-921493782-9a70dc6a313e4497ba07412c2870573a.jpg"
+                                src={details.original_url}
                                 className='image'
                             />
-                            <button className='delete-button' variant="contained">
+                            <button className='delete-button' variant="contained" onClick={handleDeleteClick}>
                                 <HighlightOffIcon />
                             </button>
-                            <button className='edit-button' variant="contained">
+                            <DeleteDialog ref={DeleteDialogRef} />
+                            <button className='edit-button' variant="contained" onClick={handleEditClick}>
                                 <EditIcon />
                             </button>
+                            <EditDialog
+                                open={isEditDialogOpen}
+                                onClose={handleEditDialogClose}
+                                plantId={plant_id}
+                                initialData={details}
+                            />
                         </div>
                     </div>
                     <div className='details'>
@@ -84,27 +121,28 @@ function PlantDetail(){
                             </CardActions>
                             <CardContent>
                                 <Typography gutterBottom variant="h5" component="div">
-                                Pink Princess Philodendron
+                                {details.common_name === details.name
+                                    ? `${details.common_name}`
+                                    : `${details.common_name} ${details.name}`
+                                }
                                 </Typography>
-                                <CustomTabPanel value={value} index={0}>
-                                    Plant description here
+                                <CustomTabPanel value={value} index={0} className='description'>
+                                    {details.description}
                                 </CustomTabPanel>
                                 <CustomTabPanel value={value} index={1}>
-                                    Care instructions here
+                                    <List>
+                                        <ListItemText primary={`Care level: ${details.care_level}`} />
+                                        <ListItemText primary={`Watering needs: ${details.watering}`} />
+                                        <ListItemText primary={`Sunlight needs: ${details.sunlight}`} />
+                                        <ListItemText primary={`Indoor: ${details.indoor}`} />
+                                        <ListItemText primary={`Watering schedule: ${details.watering_schedule}`} />
+                                    </List>
                                 </CustomTabPanel>
                                 <CustomTabPanel value={value} index={2}>
                                     Care history here
                                 </CustomTabPanel>
                             </CardContent>
                         </Box>
-                        <Grid className='marketplace-buttons' container spacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} sx={{marginTop: 'auto'}}>
-                            <Grid item xs={6}>
-                                <Button className='button' type="button"> Add to Marketplace</Button>
-                            </Grid>
-                            <Grid item xs={6}>
-                                <Button className='button' type='button'>Make an Offer</Button>
-                            </Grid>
-                        </Grid>
                     </div>
                 </Card>
             </div>
@@ -113,12 +151,3 @@ function PlantDetail(){
         }
 
 export default PlantDetail;
-
-
-// function PlantDetail(){
-//     return(
-//         <h1>Hello World</h1>
-//     )
-// }
-
-// export default PlantDetail;

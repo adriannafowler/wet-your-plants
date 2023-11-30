@@ -11,7 +11,10 @@ function App() {
         <div>
             <BrowserRouter>
                 <Routes>
-                    <Route path="plant_id" element={<PlantDetail />}/>
+                    <Route path="greenhouse/">
+                        {/* <Route index element={<Greenhouse />} /> */}
+                        <Route path=":id/" element={<PlantDetail />}/>
+                    </Route>
                 </Routes>
             </BrowserRouter>
         </div>
