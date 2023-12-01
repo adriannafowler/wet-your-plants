@@ -66,3 +66,41 @@ class TodoRepository:
         except Exception as e:
             logging.error("Error in creating plant: %s", e)
             raise
+
+    def create(self, user_id: int, plant_id: int, todo: TodoIn,) -> TodoOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db. execute(
+                        """
+                        INSERT INTO todos
+                            (todo, due_date, time_completed, complete, status, plant_id, owner_id)
+                        VALUES
+                            (%s, %s, %s, %s, %s, %s, %s)
+                        RETURNING id;
+                        """,
+                        [
+                            todo.todo,
+                            todo.due_date,
+                            None,
+                            False,
+                            'upcoming',
+                            plant_id,
+                            user_id
+                        ]
+                    )
+                    id = result.fetchone()[0]
+                    todo_dict = {
+                        "id": id,
+                        "todo": todo.todo,
+                        "due_date": todo.due_date,
+                        "time_completed": None,
+                        "complete": False,
+                        "status": "upcoming",
+                        "plant_id": plant_id,
+                        "owner_id": user_id
+                    }
+                    return TodoOut(**todo_dict)
+        except Exception as e:
+            logging.error("Error in creating plant: %s", e)
+            raise

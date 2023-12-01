@@ -16,6 +16,16 @@ def get_all_todos(
 @router.delete("/dashboard/{todo_id}/")
 def delete_todo(
     todo_id: int,
+    plant_id: int,
     repo: TodoRepository = Depends(),
 ) -> bool:
     return repo.delete(todo_id)
+
+@router.post("/dashboard/")
+def create_todo(
+    user_id: int,
+    plant_id: int,
+    todo: TodoIn,
+    repo: TodoRepository = Depends()
+) -> TodoOut:
+    return repo.create(user_id, plant_id, todo)
