@@ -135,11 +135,8 @@ class PlantRepository:
                         )
                         if db.rowcount == 0:
                             raise ValueError("No updates made, plant data may be identical or plant not found")
-                        id = result.fetchone()[0]
-                        if db.rowcount == 0:
-                            raise ValueError("Update failed, plant not found or no change in data")
                         plant_data = {
-                        "id": id,
+                        "id": plant_id,
                         "name": plant.name,
                         "source": plant.source,
                         "common_name": details["common_name"],

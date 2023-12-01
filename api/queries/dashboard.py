@@ -104,3 +104,62 @@ class TodoRepository:
         except Exception as e:
             logging.error("Error in creating plant: %s", e)
             raise
+
+    def update(self, todo_id: int, todo: TodoIn,) -> TodoOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db. execute(
+                        """
+                        SELECT *
+                        FROM todos
+                        WHERE id = %s;
+                        """,
+                        [todo_id]
+                    )
+                    current_data = db.fetchone()
+                    if current_data is None:
+                        raise ValueError("Todo not found")
+                    else:
+                        result = db.execute(
+                            """
+                            UPDATE todos
+                            SET
+                                todo = %s,
+                                due_date = %s,
+                                time_completed = %s,
+                                complete = %s,
+                                status = %s,
+                                plant_id = %s,
+                                owner_id = %s
+                            WHERE id = %s
+                            RETURNING id, todo, due_date, time_completed, complete,
+                            status, plant_id, owner_id;
+                            """,
+                            [
+                                todo.todo,
+                                todo.due_date,
+                                current_data[3],
+                                current_data[4],
+                                current_data[5],
+                                current_data[6],
+                                current_data[7],
+                                current_data[0]
+                            ]
+                        )
+                        if db.rowcount == 0:
+                            raise ValueError("No updates made, todo data may be identical or plant not found")
+                    todo_dict = {
+                        "id": todo_id,
+                        "todo": todo.todo,
+                        "due_date": todo.due_date,
+                        "time_completed": current_data[3],
+                        "complete": current_data[4],
+                        "status": current_data[5],
+                        "plant_id": current_data[6],
+                        "owner_id": current_data[7]
+                    }
+                    return TodoOut(**todo_dict)
+        except Exception as e:
+            logging.error("Error in creating plant: %s", e)
+            raise

@@ -29,3 +29,11 @@ def create_todo(
     repo: TodoRepository = Depends()
 ) -> TodoOut:
     return repo.create(user_id, plant_id, todo)
+
+@router.put("/dashboard/")
+def update_todo(
+    todo_id: int,
+    todo: TodoIn,
+    repo: TodoRepository = Depends()
+) -> TodoOut:
+    return repo.update(todo_id, todo)
