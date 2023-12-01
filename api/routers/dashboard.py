@@ -12,3 +12,10 @@ def get_all_todos(
     repo: TodoRepository = Depends(),
 ) -> List[TodoOut]:
     return repo.get_all(user_id)
+
+@router.delete("/dashboard/{todo_id}/")
+def delete_todo(
+    todo_id: int,
+    repo: TodoRepository = Depends(),
+) -> bool:
+    return repo.delete(todo_id)

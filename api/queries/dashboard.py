@@ -50,3 +50,19 @@ class TodoRepository:
             raise
 
         return todos
+
+    def delete(self, todo_id:int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM todos
+                        WHERE id = %s
+                        """,
+                        [todo_id]
+                    )
+                    return True
+        except Exception as e:
+            logging.error("Error in creating plant: %s", e)
+            raise
