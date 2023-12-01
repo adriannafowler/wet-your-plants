@@ -63,6 +63,7 @@ class UserQueries:
                     }
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
                 
                 
     def update_user(self,user_id,info):
@@ -99,6 +100,8 @@ class UserQueries:
                     "message": "Update Failed"
                     }
 =======
+=======
+>>>>>>> b82aa3247392ac7fd6c89b0b4e2178e5a86acb81
 =======
 >>>>>>> b82aa3247392ac7fd6c89b0b4e2178e5a86acb81
 
