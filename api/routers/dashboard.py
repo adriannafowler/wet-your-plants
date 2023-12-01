@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Query
-from queries.dashboard import TodoIn, TodoOut, TodoRepository
+from queries.dashboard import TodoIn, CompleteIn, TodoOut, TodoRepository
 from typing import List
 
 
@@ -16,7 +16,6 @@ def get_all_todos(
 @router.delete("/dashboard/{todo_id}/")
 def delete_todo(
     todo_id: int,
-    plant_id: int,
     repo: TodoRepository = Depends(),
 ) -> bool:
     return repo.delete(todo_id)
@@ -37,3 +36,11 @@ def update_todo(
     repo: TodoRepository = Depends()
 ) -> TodoOut:
     return repo.update(todo_id, todo)
+
+@router.put("/complete/")
+def update_complete_todo(
+    todo_id: int,
+    complete: CompleteIn,
+    repo: TodoRepository = Depends()
+) -> TodoOut:
+    return repo.update_complete(todo_id, complete)

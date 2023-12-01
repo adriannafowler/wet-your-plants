@@ -8,6 +8,9 @@ class TodoIn(BaseModel):
     todo: str
     due_date: str
 
+class CompleteIn(BaseModel):
+    complete: bool
+
 class TodoOut(BaseModel):
     id: int
     todo: str
@@ -152,7 +155,7 @@ class TodoRepository:
                     todo_dict = {
                         "id": todo_id,
                         "todo": todo.todo,
-                        "due_date": todo.due_date,
+                        "due_date": str(todo.due_date),
                         "time_completed": current_data[3],
                         "complete": current_data[4],
                         "status": current_data[5],
@@ -161,5 +164,65 @@ class TodoRepository:
                     }
                     return TodoOut(**todo_dict)
         except Exception as e:
-            logging.error("Error in creating plant: %s", e)
+            logging.error("Error in creating todo: %s", e)
+            raise
+
+    def update_complete(self, todo_id: int, complete: CompleteIn,) -> TodoOut:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db. execute(
+                        """
+                        SELECT *
+                        FROM todos
+                        WHERE id = %s;
+                        """,
+                        [todo_id]
+                    )
+                    current_data = db.fetchone()
+                    if current_data is None:
+                        raise ValueError("Todo not found")
+                    else:
+                        # If complete is False, reset time_completed to NULL
+                        if not complete.complete:
+                            db.execute(
+                                """
+                                UPDATE todos
+                                SET complete = %s, time_completed = NULL
+                                WHERE id = %s
+                                RETURNING id, todo, due_date, time_completed, complete,
+                                status, plant_id, owner_id;
+                                """,
+                                [complete.complete, todo_id]
+                            )
+                        else:
+                            # If complete is True, leave time_completed as it is
+                            db.execute(
+                                """
+                                UPDATE todos
+                                SET complete = %s
+                                WHERE id = %s
+                                RETURNING id, todo, due_date, time_completed, complete,
+                                status, plant_id, owner_id;
+                                """,
+                                [complete.complete, todo_id]
+                            )
+
+                    updated_data = db.fetchone()
+                    if db.rowcount == 0:
+                        raise ValueError("No updates made, todo data may be identical or todo not found")
+
+                    todo_dict = {
+                        "id": updated_data[0],
+                        "todo": updated_data[1],
+                        "due_date": str(updated_data[2]),
+                        "time_completed": str(updated_data[3]) if updated_data[3] else None,
+                        "complete": updated_data[4],
+                        "status": updated_data[5],
+                        "plant_id": updated_data[6],
+                        "owner_id": updated_data[7]
+                    }
+                    return TodoOut(**todo_dict)
+        except Exception as e:
+            logging.error("Error in updating todo: %s", e)
             raise
