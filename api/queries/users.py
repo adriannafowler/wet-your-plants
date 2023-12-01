@@ -63,36 +63,36 @@ class UserQueries:
                     }
                 
                 
-    # def update_user(self,user_id,info):
-    #     with pool.connection() as conn:
-    #         with conn.cursor() as cur:
-    #             input = [
-    #                 info.name,
-    #                 info.email,
-    #                 info.password,
-    #                 info.zipcode,
-    #                 user_id
-    #             ]
-    #             cur.execute(
-    #                 """
-    #                     UPDATE users
-    #                     SET name = %s,
-    #                         email = %s,
-    #                         password = %s,
-    #                         zipcode = %s,
-    #                     WHERE id = %s
-    #                     RETURNING id, name, email, password, zipcode
-    #                 """,
-    #                 input,
-    #             )
-    #             try:
-    #                 record = None
-    #                 for row in cur.fetchall():
-    #                     record = {}
-    #                     for i, column in enumerate(cur.description):
-    #                         record[column.name] = row[i]
-    #                 return record
-    #             except Exception:
-    #                 return {
-    #                 "message": "Update Failed"
-    #                 }
+    def update_user(self,user_id,info):
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                input = [
+                    info.name,
+                    info.email,
+                    info.password,
+                    info.zipcode,
+                    user_id
+                ]
+                cur.execute(
+                    """
+                        UPDATE users
+                        SET name = %s,
+                            email = %s,
+                            password = %s,
+                            zipcode = %s
+                        WHERE id = %s
+                        RETURNING id, name, email, password, zipcode
+                    """,
+                    input,
+                )
+                try:
+                    record = None
+                    for row in cur.fetchall():
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                    return record
+                except Exception:
+                    return {
+                    "message": "Update Failed"
+                    }

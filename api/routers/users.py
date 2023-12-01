@@ -54,9 +54,24 @@ async def create_user(
         )
     form = UserForm(username=info.email,password=info.password)
     token = await authenticator.login(response, request, form, queries)
-    print(token)
     return UserToken(account=user, **token.dict())
 
+@router.put("/api/user/{users_id}/",response_model=UserOut)
+async def update_user(
+    info: UserIn,
+    user_id: int,
+    queries: UserQueries = Depends(),
+):
+    hashed_password = authenticator.hash_password(info.password)
+    info.password = hashed_password
+    try:
+        user = queries.update_user(user_id,info)
+    except DuplicateUserError:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Email already in use",
+        )
+    return user
 
 @router.get("/token")
 async def get_token(
