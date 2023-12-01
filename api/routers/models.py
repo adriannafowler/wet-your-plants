@@ -12,7 +12,6 @@ class UserOut(BaseModel):
     id: int
     name: str
     email: str
-    password: str
     zipcode: str
 
 

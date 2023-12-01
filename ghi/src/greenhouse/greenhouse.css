@@ -1,0 +1,13 @@
+big {
+    background-color: antiquewhite;
+}
+
+body {
+    color: black;
+    margin-left: 105px;
+    margin-right: 105px;
+}
+
+.header {
+    justify-content: space-between;
+}
