@@ -40,4 +40,6 @@ NOV 30, 2023
             I work on care dashboard backend
     - created a roadmap for care dashboard backend and weather data functionality for front end
 
-
+DEC 1, 2023
+    - created dashboard CREATE, DELETE, GET (all by user), and PUT(update todo, and update just complete bool), queries and routes
+    - testes all routes and queries, all are functional
