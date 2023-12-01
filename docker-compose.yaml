@@ -1,27 +1,59 @@
-# volumes:
-services:
-  fastapi:
-    environment:
-      CORS_HOST: http://localhost:3000
-    build:
-      context: api
-      dockerfile: Dockerfile.dev
-    ports:
-      - 8000:8000
-    volumes:
-      - ./api:/app
+volumes:
+    fastapi:
+    ghi:
+    postgres:
+    pg-admin:
 
-  ghi:
-    image: node:lts-bullseye
-    command: /bin/bash run.sh
-    working_dir: /app
-    volumes:
-      - ./ghi:/app
-    ports:
-      - "3000:3000"
-    environment:
-      HOST_OS: ${OS}
-      NODE_ENV: development
-      HOST: "0.0.0.0"
-      PUBLIC_URL: http://localhost:3000
-      REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+services:
+    fastapi:
+        environment:
+            DATABASE_URL: postgresql://user:password@postgres:5432/postgres
+            CORS_HOST: http://localhost:3000
+            SIGNING_KEY: ${SIGNING_KEY}
+        build:
+            context: api
+            dockerfile: Dockerfile.dev
+        ports:
+            - 8000:8000
+        volumes:
+            - ./api:/app
+
+    ghi:
+        image: node:lts-bullseye
+        command: /bin/bash run.sh
+        working_dir: /app
+        volumes:
+            - ./ghi:/app
+        ports:
+            - "3000:3000"
+        environment:
+            HOST_OS: ${OS}
+            NODE_ENV: development
+            HOST: "0.0.0.0"
+            PUBLIC_URL: http://localhost:3000
+            REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+
+    # PostgreSQL service configuration
+    postgres:
+        image: postgres:14.2-bullseye # Use the specified PostgreSQL image
+        volumes:
+            - postgres:/var/lib/postgresql/data
+            - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Initialize the database with the provided SQL script
+        environment: # Environment variables for the PostgreSQL service
+            POSTGRES_USER: user # Default user for PostgreSQL
+            POSTGRES_PASSWORD: password # Password for the default user
+            POSTGRES_DB: postgres # Default database name
+        ports:
+            - "15432:5432" # Map port 15432 of the host to port 5432 of the container
+
+    # pgAdmin service configuration
+    pg-admin:
+        image: dpage/pgadmin4 # Use the specified pgAdmin image
+        volumes:
+            - pg-admin:/var/lib/pgadmin # Use the 'pg-admin' volume for pgAdmin data
+        ports:
+            - 8082:80 # Map port 8082 of the host to port 80 of the container
+        environment: # Environment variables for the pgAdmin service
+            PGADMIN_DEFAULT_EMAIL: me@me.com # Default email for pgAdmin login
+            PGADMIN_DEFAULT_PASSWORD: password # Password for the default email
+            PGADMIN_DISABLE_POSTFIX: 1 # Disable postfix service within the container
