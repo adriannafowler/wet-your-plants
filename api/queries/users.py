@@ -9,7 +9,7 @@ class UserQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                        SELECT * 
+                        SELECT *
                         FROM users
                         WHERE id = %s;
                         """,
@@ -26,7 +26,7 @@ class UserQueries:
                     return {
                         "message": "Could not get user record for this user id"
                     }
-                
+
 
     def create_user(self,info,hashed_password) -> UserOutWithPassword:
         with pool.connection() as conn:
@@ -52,7 +52,7 @@ class UserQueries:
                 try:
                     record = None
                     row = cur.fetchone()
-                    if row is not None:  
+                    if row is not None:
                         record = {}
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
@@ -61,8 +61,8 @@ class UserQueries:
                     return {
                         "message": "Email already exists"
                     }
-                
-                
+
+
     # def update_user(self,user_id,info):
     #     with pool.connection() as conn:
     #         with conn.cursor() as cur:

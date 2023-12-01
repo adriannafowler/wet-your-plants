@@ -33,7 +33,6 @@ class PlantOut(BaseModel):
     original_url: Optional[str]
     dimensions: Optional[str]
     owner_id: int
-    status: int
     watering_schedule: int
 
 
@@ -49,9 +48,9 @@ class PlantRepository:
                         INSERT INTO plants
                             (name, source, common_name, type, cycle, watering, sunlight,
                             indoor, care_level, maintenance, description, hardiness, original_url,
-                            dimensions, owner_id, status, watering_schedule)
+                            dimensions, owner_id, watering_schedule)
                         VALUES
-                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
                         [
@@ -70,7 +69,6 @@ class PlantRepository:
                             details["original_url"],
                             details["dimensions"],
                             user_id,
-                            1,
                             plant.watering_schedule
                         ]
                     )
@@ -94,7 +92,6 @@ class PlantRepository:
                         "original_url": details["original_url"],
                         "dimensions": details["dimensions"],
                         "owner_id": user_id,
-                        "status": 1,
                         "watering_schedule": plant.watering_schedule
                     }
                     print("Plant data:", plant_data)
@@ -136,8 +133,7 @@ class PlantRepository:
                             "original_url": record[13],
                             "dimensions": record[14],
                             "owner_id": record[15],
-                            "status": record[16],
-                            "watering_schedule": record[17]
+                            "watering_schedule": record[16]
                         }
                         plants.append(PlantOut(**record_dict))
             print("PLANTS:", plants)

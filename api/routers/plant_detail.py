@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Query
-from queries.plant_detail import PlantIn, PlantOut, PlantRepository, StatusIn
+from queries.plant_detail import PlantIn, PlantOut, PlantRepository
 
 
 router = APIRouter()
@@ -27,11 +27,3 @@ def update_plant(
     repo: PlantRepository = Depends(),
 ) -> PlantOut:
     return repo.update(plant_id, plant)
-
-@router.put("/greenhouse/update-status/{plant_id}/")
-def update_plant_status(
-    plant_id: int,
-    status_data: StatusIn,
-    repo: PlantRepository = Depends(),
-) -> PlantOut:
-    return repo.update_status(plant_id, status_data)

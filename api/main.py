@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import weather_router, dashboard_router
 import os
-from routers import plant_detail, users, watering_schedules, greenhouse
+from routers import plant_detail, users, watering_schedules, greenhouse, dashboard
 from authenticator import authenticator
 
 app = FastAPI()
@@ -18,8 +17,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(weather_router, prefix="/weather-data", tags=["weather"])
-app.include_router(dashboard_router, tags=["dashboard"])
+
 app.include_router(authenticator.router)
 app.include_router(plant_detail.router)
 app.include_router(users.router)
