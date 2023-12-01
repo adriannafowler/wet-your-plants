@@ -45,10 +45,11 @@ CREATE TABLE IF NOT EXISTS todos (
     id SERIAL PRIMARY KEY,
     todo TEXT NOT NULL,
     due_date DATE NOT NULL,
-    time_completed TIMESTAMP,
+    time_completed TIMESTAMP DEFAULT NULL,
     complete BOOL DEFAULT false,
     status TEXT REFERENCES status(status),
-    plant_id INTEGER NOT NULL REFERENCES plants(id)
+    plant_id INTEGER NOT NULL REFERENCES plants(id),
+    owner_id INTEGER NOT NULL REFERENCES users(id)
 );
 
 CREATE OR REPLACE FUNCTION update_time_completed()
@@ -174,4 +175,24 @@ INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, 
 SELECT 'Orchid', 'Orchid Gallery', 'Orchid', 'Type2', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Medium', 'Medium', 'An exotic orchid', 'Moderate', 'http://example.com/orchid', '9x9', 3, 1
 WHERE NOT EXISTS (
     SELECT 1 FROM plants WHERE name = 'Orchid' AND source = 'Orchid Gallery'
+);
+
+
+-- TODOS SEED DATA
+INSERT INTO todos (todo, due_date, time_completed, complete, status, plant_id, owner_id)
+SELECT 'water plant', '2023-12-12', null, false, 'upcoming', 1, 1
+WHERE NOT EXISTS (
+    SELECT 1 FROM todos WHERE todo = 'water plant' AND owner_id = 1
+);
+
+INSERT INTO todos (todo, due_date, time_completed, complete, status, plant_id, owner_id)
+SELECT 'fertilize and water plant', '2023-12-12', null, false, 'upcoming', 2, 1
+WHERE NOT EXISTS (
+    SELECT 1 FROM todos WHERE todo = 'fertilize and water plant' AND owner_id = 1
+);
+
+INSERT INTO todos (todo, due_date, time_completed, complete, status, plant_id, owner_id)
+SELECT 'water plant', '2023-12-12', null, false, 'upcoming', 3, 2
+WHERE NOT EXISTS (
+    SELECT 1 FROM todos WHERE todo = 'water plant' AND owner_id = 2 AND plant_id = 3
 );
