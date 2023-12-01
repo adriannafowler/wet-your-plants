@@ -28,7 +28,7 @@ class PlantAuthenticator(Authenticator):
     
     def get_account_data_for_cookie(self,account):
         if isinstance(account,dict):
-            user = UserOutWithPassword(**account)
+            account = UserOutWithPassword(**account)
 
         return account.email, account.dict()
     

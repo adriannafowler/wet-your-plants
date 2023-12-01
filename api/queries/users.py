@@ -4,16 +4,16 @@ from routers.models import UserOutWithPassword
 
 
 class UserQueries:
-    def get(self, user_id) -> UserOutWithPassword:
+    def get(self, email) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 cur.execute(
                     """
                         SELECT *
                         FROM users
-                        WHERE id = %s;
+                        WHERE email = %s;
                         """,
-                    [user_id],
+                    [email],
                 )
                 try:
                     record = None
@@ -61,7 +61,6 @@ class UserQueries:
                     return {
                         "message": "Email already exists"
                     }
-<<<<<<< HEAD
 
     def update_user(self,user_id,info):
         with pool.connection() as conn:
@@ -96,5 +95,3 @@ class UserQueries:
                     return {
                     "message": "Update Failed"
                     }
-=======
->>>>>>> 10131d479847172bc064721f74cb85bacd264ae1

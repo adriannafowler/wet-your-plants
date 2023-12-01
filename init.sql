@@ -67,111 +67,111 @@ FOR EACH ROW
 EXECUTE FUNCTION update_time_completed();
 
 
--- USERS SEED DATA
-INSERT INTO users (name, email, password, zipcode, hashed_password)
-SELECT 'John Doe', 'johndoe@example.com', 'pass123', '12345', 'hash'
-WHERE NOT EXISTS (
-    SELECT 1 FROM users WHERE email = 'johndoe@example.com'
-);
+-- -- USERS SEED DATA
+-- INSERT INTO users (name, email, password, zipcode, hashed_password)
+-- SELECT 'John Doe', 'johndoe@example.com', 'pass123', '12345', 'hash'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM users WHERE email = 'johndoe@example.com'
+-- );
 
-INSERT INTO users (name, email, password, zipcode, hashed_password)
-SELECT 'Jane Smith', 'janesmith@example.com', 'pass456', '23456', 'hash'
-WHERE NOT EXISTS (
-    SELECT 1 FROM users WHERE email = 'janesmith@example.com'
-);
+-- INSERT INTO users (name, email, password, zipcode, hashed_password)
+-- SELECT 'Jane Smith', 'janesmith@example.com', 'pass456', '23456', 'hash'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM users WHERE email = 'janesmith@example.com'
+-- );
 
-INSERT INTO users (name, email, password, zipcode, hashed_password)
-SELECT 'Alice Johnson', 'alicejohnson@example.com', 'pass789', '34567', 'hash'
-WHERE NOT EXISTS (
-    SELECT 1 FROM users WHERE email = 'alicejohnson@example.com'
-);
-
-
--- WATERING SCHEDULES SEED DATA
-INSERT INTO watering_schedules (schedule)
-SELECT '2x per week'
-WHERE NOT EXISTS (
-    SELECT 1 FROM watering_schedules WHERE schedule = '2x per week'
-);
-
-INSERT INTO watering_schedules (schedule)
-SELECT '1x per week'
-WHERE NOT EXISTS (
-    SELECT 1 FROM watering_schedules WHERE schedule = '1x per week'
-);
-
-INSERT INTO watering_schedules (schedule)
-SELECT 'every 2 weeks'
-WHERE NOT EXISTS (
-    SELECT 1 FROM watering_schedules WHERE schedule = 'every 2 weeks'
-);
-
-INSERT INTO watering_schedules (schedule)
-SELECT 'every 4 weeks'
-WHERE NOT EXISTS (
-    SELECT 1 FROM watering_schedules WHERE schedule = 'every 4 weeks'
-);
-
-INSERT INTO watering_schedules (schedule)
-SELECT 'every 6 weeks'
-WHERE NOT EXISTS (
-    SELECT 1 FROM watering_schedules WHERE schedule = 'every 6 weeks'
-);
+-- INSERT INTO users (name, email, password, zipcode, hashed_password)
+-- SELECT 'Alice Johnson', 'alicejohnson@example.com', 'pass789', '34567', 'hash'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM users WHERE email = 'alicejohnson@example.com'
+-- );
 
 
--- STATUS SEED DATA
-INSERT INTO status (status)
-SELECT 'upcoming'
-WHERE NOT EXISTS (
-    SELECT 1 FROM status WHERE status = 'upcoming'
-);
+-- -- WATERING SCHEDULES SEED DATA
+-- INSERT INTO watering_schedules (schedule)
+-- SELECT '2x per week'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM watering_schedules WHERE schedule = '2x per week'
+-- );
 
-INSERT INTO status (status)
-SELECT 'overdue'
-WHERE NOT EXISTS (
-    SELECT 1 FROM status WHERE status = 'overdue'
-);
+-- INSERT INTO watering_schedules (schedule)
+-- SELECT '1x per week'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM watering_schedules WHERE schedule = '1x per week'
+-- );
 
-INSERT INTO status (status)
-SELECT 'due today'
-WHERE NOT EXISTS (
-    SELECT 1 FROM status WHERE status = 'due today'
-);
+-- INSERT INTO watering_schedules (schedule)
+-- SELECT 'every 2 weeks'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM watering_schedules WHERE schedule = 'every 2 weeks'
+-- );
+
+-- INSERT INTO watering_schedules (schedule)
+-- SELECT 'every 4 weeks'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM watering_schedules WHERE schedule = 'every 4 weeks'
+-- );
+
+-- INSERT INTO watering_schedules (schedule)
+-- SELECT 'every 6 weeks'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM watering_schedules WHERE schedule = 'every 6 weeks'
+-- );
 
 
---PLANTS SEED DATA
-INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
-SELECT 'Fern', 'Nature Store', 'Fern', 'Type1', 'Annual', 'Regular', 'Partial Shade', TRUE, 'Easy', 'Low', 'A green fern', 'Hardy', 'http://example.com/fern', '10x10', 1, 1
-WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Fern' AND source = 'Nature Store'
-);
+-- -- STATUS SEED DATA
+-- INSERT INTO status (status)
+-- SELECT 'upcoming'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM status WHERE status = 'upcoming'
+-- );
 
-INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
-SELECT 'Cactus', 'Desert Flora', 'Cactus', 'Type2', 'Perennial', 'Sparse', 'Full Sun', FALSE, 'Medium', 'Medium', 'A spiky cactus', 'Very Hardy', 'http://example.com/cactus', '5x5', 1, 5
-WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Cactus' AND source = 'Desert Flora'
-);
+-- INSERT INTO status (status)
+-- SELECT 'overdue'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM status WHERE status = 'overdue'
+-- );
 
-INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
-SELECT 'Rose', 'Garden Shop', 'Rose', 'Type1', 'Perennial', 'Regular', 'Full Sun', FALSE, 'Hard', 'High', 'A beautiful rose', 'Moderate', 'http://example.com/rose', '12x12', 2, 3
-WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Rose' AND source = 'Garden Shop'
-);
+-- INSERT INTO status (status)
+-- SELECT 'due today'
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM status WHERE status = 'due today'
+-- );
 
-INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
-SELECT 'Tulip', 'Flower Store', 'Tulip', 'Type3', 'Annual', 'Regular', 'Full Sun', TRUE, 'Easy', 'Low', 'Colorful tulips', 'Hardy', 'http://example.com/tulip', '8x8', 2, 2
-WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Tulip' AND source = 'Flower Store'
-);
 
-INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
-SELECT 'Bonsai', 'Bonsai Tree Shop', 'Bonsai', 'Type4', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Hard', 'High', 'A miniature tree', 'Hardy', 'http://example.com/bonsai', '15x15', 3, 2
-WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Bonsai' AND source = 'Bonsai Tree Shop'
-);
+-- --PLANTS SEED DATA
+-- INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
+-- SELECT 'Fern', 'Nature Store', 'Fern', 'Type1', 'Annual', 'Regular', 'Partial Shade', TRUE, 'Easy', 'Low', 'A green fern', 'Hardy', 'http://example.com/fern', '10x10', 1, 1
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM plants WHERE name = 'Fern' AND source = 'Nature Store'
+-- );
 
-INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
-SELECT 'Orchid', 'Orchid Gallery', 'Orchid', 'Type2', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Medium', 'Medium', 'An exotic orchid', 'Moderate', 'http://example.com/orchid', '9x9', 3, 1
-WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Orchid' AND source = 'Orchid Gallery'
-);
+-- INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
+-- SELECT 'Cactus', 'Desert Flora', 'Cactus', 'Type2', 'Perennial', 'Sparse', 'Full Sun', FALSE, 'Medium', 'Medium', 'A spiky cactus', 'Very Hardy', 'http://example.com/cactus', '5x5', 1, 5
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM plants WHERE name = 'Cactus' AND source = 'Desert Flora'
+-- );
+
+-- INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
+-- SELECT 'Rose', 'Garden Shop', 'Rose', 'Type1', 'Perennial', 'Regular', 'Full Sun', FALSE, 'Hard', 'High', 'A beautiful rose', 'Moderate', 'http://example.com/rose', '12x12', 2, 3
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM plants WHERE name = 'Rose' AND source = 'Garden Shop'
+-- );
+
+-- INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
+-- SELECT 'Tulip', 'Flower Store', 'Tulip', 'Type3', 'Annual', 'Regular', 'Full Sun', TRUE, 'Easy', 'Low', 'Colorful tulips', 'Hardy', 'http://example.com/tulip', '8x8', 2, 2
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM plants WHERE name = 'Tulip' AND source = 'Flower Store'
+-- );
+
+-- INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
+-- SELECT 'Bonsai', 'Bonsai Tree Shop', 'Bonsai', 'Type4', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Hard', 'High', 'A miniature tree', 'Hardy', 'http://example.com/bonsai', '15x15', 3, 2
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM plants WHERE name = 'Bonsai' AND source = 'Bonsai Tree Shop'
+-- );
+
+-- INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
+-- SELECT 'Orchid', 'Orchid Gallery', 'Orchid', 'Type2', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Medium', 'Medium', 'An exotic orchid', 'Moderate', 'http://example.com/orchid', '9x9', 3, 1
+-- WHERE NOT EXISTS (
+--     SELECT 1 FROM plants WHERE name = 'Orchid' AND source = 'Orchid Gallery'
+-- );
