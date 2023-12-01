@@ -9,7 +9,7 @@ class UserQueries:
             with conn.cursor() as cur:
                 cur.execute(
                     """
-                        SELECT * 
+                        SELECT *
                         FROM users
                         WHERE id = %s;
                         """,
@@ -26,7 +26,7 @@ class UserQueries:
                     return {
                         "message": "Could not get user record for this user id"
                     }
-                
+
 
     def create_user(self,info,hashed_password) -> UserOutWithPassword:
         with pool.connection() as conn:
@@ -52,7 +52,7 @@ class UserQueries:
                 try:
                     record = None
                     row = cur.fetchone()
-                    if row is not None:  
+                    if row is not None:
                         record = {}
                         for i, column in enumerate(cur.description):
                             record[column.name] = row[i]
@@ -61,6 +61,7 @@ class UserQueries:
                     return {
                         "message": "Email already exists"
                     }
+<<<<<<< HEAD
                 
                 
     def update_user(self,user_id,info):
@@ -96,3 +97,40 @@ class UserQueries:
                     return {
                     "message": "Update Failed"
                     }
+=======
+
+
+    # def update_user(self,user_id,info):
+    #     with pool.connection() as conn:
+    #         with conn.cursor() as cur:
+    #             input = [
+    #                 info.name,
+    #                 info.email,
+    #                 info.password,
+    #                 info.zipcode,
+    #                 user_id
+    #             ]
+    #             cur.execute(
+    #                 """
+    #                     UPDATE users
+    #                     SET name = %s,
+    #                         email = %s,
+    #                         password = %s,
+    #                         zipcode = %s,
+    #                     WHERE id = %s
+    #                     RETURNING id, name, email, password, zipcode
+    #                 """,
+    #                 input,
+    #             )
+    #             try:
+    #                 record = None
+    #                 for row in cur.fetchall():
+    #                     record = {}
+    #                     for i, column in enumerate(cur.description):
+    #                         record[column.name] = row[i]
+    #                 return record
+    #             except Exception:
+    #                 return {
+    #                 "message": "Update Failed"
+    #                 }
+>>>>>>> b82aa3247392ac7fd6c89b0b4e2178e5a86acb81

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Query
-from queries.watering_schedules import ScheduleIn, ScheduleOut, get_schedules
+from queries.watering_schedules import get_schedules
 
 
 router = APIRouter()
