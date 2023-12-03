@@ -23,6 +23,11 @@ def get_plant_details(species_id):
 
     response = requests.get(url)
     content = json.loads(response.content)
+    sunlight = ""
+    if 'sunlight' in content and isinstance(content['sunlight'], list):
+        sunlight = ", ".join(content['sunlight'])
+    else:
+        sunlight = ""
 
     try:
         return {
@@ -32,7 +37,7 @@ def get_plant_details(species_id):
             "dimensions": f"{content['dimensions']['min_value']} - {content['dimensions']['max_value']} feet",
             "cycle": content["cycle"],
             "watering": content["watering"],
-            "sunlight": str(content["sunlight"]),
+            "sunlight": sunlight,
             "hardiness": f"min: {content['hardiness']['min']} max: {content['hardiness']['max']}",
             "maintenance": content["maintenance"],
             "indoor": content["indoor"],

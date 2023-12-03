@@ -3,7 +3,7 @@ from pydantic import BaseModel
 from typing import Optional
 from queries.pool import pool
 from acls import get_plant_details
-# GET DELETE PATCH
+
 
 class Error(BaseModel):
     message: str
@@ -20,20 +20,19 @@ class PlantOut(BaseModel):
     id: int
     name: str
     source: str
-    common_name: str
-    type: str
-    cycle: str
-    watering: str
-    sunlight: str
-    indoor: bool
-    care_level: str
+    common_name: Optional[str]
+    type: Optional[str]
+    cycle: Optional[str]
+    watering: Optional[str]
+    sunlight: Optional[str]
+    indoor: Optional[bool]
+    care_level: Optional[str]
     maintenance: Optional[str]
-    description: str
-    hardiness: str
-    original_url: str
-    dimensions: str
+    description: Optional[str]
+    hardiness: Optional[str]
+    original_url: Optional[str]
+    dimensions: Optional[str]
     owner_id: int
-    status: int
     watering_schedule: int
 
 
@@ -53,7 +52,7 @@ class PlantRepository:
                     record = result.fetchone()
                     return self.record_to_plant_out(record)
         except Exception as e:
-            logging.error("Error in creating plant: %s", e)
+            logging.error("Error in creating plant:", e)
             raise
 
     def delete(self, plant_id: int) -> bool:
@@ -78,20 +77,18 @@ class PlantRepository:
                 with conn.cursor() as db:
                     db.execute(
                     """
-                    SELECT owner_id, status
+                    SELECT owner_id
                     FROM plants
                     WHERE id = %s;
                     """,
                     [plant_id]
                 )
                     current_data = db.fetchone()
-                    current_owner_id, current_status = current_data
-                    print("current_data", current_data)
+                    current_owner_id = current_data[0]
                     if current_data is None:
                         raise ValueError("Plant not found")
                     else:
                         details = get_plant_details(plant.species_id)
-                        print("DETAILS", details)
                         result = db.execute(
                             """
                             UPDATE plants
@@ -110,12 +107,11 @@ class PlantRepository:
                                 , original_url = %s
                                 , dimensions = %s
                                 , owner_id = %s
-                                , status = %s
                                 , watering_schedule = %s
                             WHERE id = %s
                             RETURNING id, name, source, common_name, type, cycle, watering, sunlight,
                                 indoor, care_level, maintenance, description, hardiness, original_url,
-                                dimensions, owner_id, status, watering_schedule;
+                                dimensions, owner_id, watering_schedule;
                             """,
                             [
                                 plant.name,
@@ -133,21 +129,14 @@ class PlantRepository:
                                 details["original_url"],
                                 details["dimensions"],
                                 current_owner_id,
-                                current_status,
                                 plant_id,
                                 plant.watering_schedule
                             ]
                         )
                         if db.rowcount == 0:
                             raise ValueError("No updates made, plant data may be identical or plant not found")
-                        id = result.fetchone()[0]
-                        print("plant ID:", id)
-                        if db.rowcount == 0:
-                            raise ValueError("Update failed, plant not found or no change in data")
-                        #return new data
-                        print("rowcount", db.rowcount)
                         plant_data = {
-                        "id": id,
+                        "id": plant_id,
                         "name": plant.name,
                         "source": plant.source,
                         "common_name": details["common_name"],
@@ -163,14 +152,10 @@ class PlantRepository:
                         "original_url": details["original_url"],
                         "dimensions": details["dimensions"],
                         "owner_id": current_owner_id,
-                        "status": current_status,
                         "watering_schedule": plant.watering_schedule
                     }
-                        # if updated_record:
                         print("Plant data:", plant_data)
                         return PlantOut(**plant_data)
-                        # else:
-                        #     raise ValueError("Update failed, plant not found")
         except Exception as e:
             logging.error("Error in updating plant: %s", e)
             raise
@@ -193,6 +178,5 @@ class PlantRepository:
                 original_url=record[13],
                 dimensions=record[14],
                 owner_id=record[15],
-                status=record[16],
-                watering_schedule=record[17]
+                watering_schedule=record[16]
         )

@@ -29,7 +29,7 @@ const SearchBar = ({setSearchQuery, onSearch}) => (
         </form>
     );
 
-export default function AddPlantDialog({ open, onClose, plantId, initialData }) {
+export default function EditDialog({ open, onClose, plantId, initialData }) {
     const PERENUAL_API_KEY = import.meta.env.VITE_PERENUAL_API_KEY;
     const [formData, setFormData] = useState(initialData);
     const [step, setStep] = useState(1);
@@ -95,6 +95,10 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
         }
     }, [searchQuery]);
 
+    useEffect(() => {
+        setFormData(initialData); // Set initial form data
+    }, [initialData]);
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
@@ -108,8 +112,8 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
                 species_id: speciesId,
                 watering_schedule: formData.watering_schedule
             }
-            const response = await fetch(`http://localhost:8000/greenhouse/`, {
-                method: 'POST',
+            const response = await fetch(`http://localhost:8000/greenhouse/${plantId}/`, {
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(submitData)
             });
@@ -118,8 +122,8 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
                 throw new Error('Failed to update the plant.');
             }
 
-            console.log('Plant created successfully');
-            onClose();
+            console.log('Plant updated successfully');
+            onClose(); // Close the dialog after successful update
         } catch (error) {
             console.error('Error:', error);
         }
@@ -127,7 +131,7 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
 
     return (
         <Dialog open={open} onClose={onClose}>
-            <DialogTitle>Create Plant</DialogTitle>
+            <DialogTitle>Edit Plant</DialogTitle>
             <DialogContent>
                 {step === 1 && (
                     <>
