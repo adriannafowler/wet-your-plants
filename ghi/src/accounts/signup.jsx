@@ -2,8 +2,13 @@ import React, { useState } from 'react';
 
 
 const SignUpForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formData, setFormData] = useState({
+                email: "",
+                password: "",
+                name: "",
+                zipcode: ""
+        });
+  
 
   const signUp = async (e) => {
     e.preventDefault();
@@ -22,8 +27,10 @@ const SignUpForm = () => {
 
     if (response.ok) {
         setFormData({
-            email: '',
-            password: ''
+            email: "",
+            password: "",
+            name: "",
+            zipcode: ""
         })
     }
 
@@ -31,6 +38,15 @@ const SignUpForm = () => {
     console.log('User registered:', userData);
 
   };
+  
+  const handleFormChange = (e) => {
+            const value = e.target.value;
+            const inputName = e.target.name;
+            setFormData({
+                ...formData,
+                [inputName]: value
+            });
+        }
 
   return (
     <div>
@@ -40,8 +56,8 @@ const SignUpForm = () => {
         <input
           type="email"
           id="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          value={formData.email}
+          onChange={handleFormChange}
           required
         />
 
@@ -49,8 +65,24 @@ const SignUpForm = () => {
         <input
           type="password"
           id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
+          value={formData.password}
+          onChange={handleFormChange}
+          required
+        />
+        <label htmlFor="name">Name:</label>
+        <input
+          type="name"
+          id="name"
+          value={formData.name}
+          onChange={handleFormChange}
+          required
+        />
+        <label htmlFor="zipcode">Zipcode:</label>
+        <input
+          type="zipcode"
+          id="zipcode"
+          value={formData.zipcode}
+          onChange={handleFormChange}
           required
         />
 

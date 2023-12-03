@@ -5,10 +5,19 @@ import Construct from './Construct'
 import './App.css'
 import PlantDetail from './plant_detail/detail'
 import Greenhouse from './greenhouse/greenhouse'
+import { AuthProvider } from "./authorization/authorization";
+
+
+
+const URL = import.meta.env.VITE_APP_API_HOST;
+if (!URL) {
+    throw Error("VITE_APP_API_HOST was undefined");
+}
+
 
 function App() {
     return (
-        <div>
+        <AuthProvider baseUrl={URL}>
             <BrowserRouter>
                 <Routes>
                     <Route path="greenhouse/">
@@ -17,7 +26,7 @@ function App() {
                     </Route>
                 </Routes>
             </BrowserRouter>
-        </div>
+        // </AuthProvider>
     )
 }
 
