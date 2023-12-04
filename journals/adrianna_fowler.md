@@ -36,8 +36,7 @@ NOV 30, 2023
     - fixed a bug with my update plant query
     - created query and routers for greenhouse, GET all plants for user, and POST plant fixed for current app functionality
     - worked with Jason to merge and push everything to main
-    - working with Danny to switch some responsibilities, he is going to finish up styling plant-detail and modals, while
-            I work on care dashboard backend
+    - working with Danny to switch some responsibilities, he is going to finish up styling plant-detail and modals, while I work on care dashboard backend
     - created a roadmap for care dashboard backend and weather data functionality for front end
 
 DEC 1, 2023
@@ -47,5 +46,3 @@ DEC 1, 2023
 DEC 4, 2023
     - reorganized backend so that all pydantic models are found in models.py
     - refactored dashboard.py, added docstrings
-
-
