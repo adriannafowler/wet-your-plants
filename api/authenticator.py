@@ -16,6 +16,8 @@ class PlantAuthenticator(Authenticator):
     ):
         return accounts.get(email)
     
+
+    
     def get_account_getter(
             self,
             accounts: UserQueries = Depends(),

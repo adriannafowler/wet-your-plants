@@ -29,12 +29,12 @@ class HttpError(BaseModel):
 
 router = APIRouter()
 
-@router.get("/users/{users_id}/", response_model=UserOut)
+@router.get("/users/{user_id}/", response_model=UserOut)
 async def get_user(
     user_id: int,
     repo: UserQueries = Depends(),
-):
-    return repo.get(user_id)
+) -> UserOut:
+    return repo.get_by_id(user_id)
 
 
 @router.post("/api/user", response_model=UserToken | HttpError)
@@ -59,13 +59,13 @@ async def create_user(
 @router.put("/api/user/{users_id}/",response_model=UserOut)
 async def update_user(
     info: UserIn,
-    user_id: int,
+    users_id: int,
     queries: UserQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
     info.password = hashed_password
     try:
-        user = queries.update_user(user_id,info)
+        user = queries.update_user(users_id,info)
     except DuplicateUserError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

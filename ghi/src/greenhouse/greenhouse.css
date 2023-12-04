@@ -1,13 +1,62 @@
-big {
-    background-color: antiquewhite;
+/* .big {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+} */
+
+.hamburger {
+    height: 64px;
+    width: 64px;
+    display: block;
+    margin: auto;
+}
+
+.icon_div {
+    width: 100px;
+}
+
+.watering_can {
+    height: 64px;
+    width: 64px;
+    display: block;
+    margin: auto;
+}
+
+.inventory_name {
+    font-size: 50px;
+    font-family: cursive;
+    justify-content: space-around;
 }
 
 body {
-    color: black;
-    margin-left: 105px;
-    margin-right: 105px;
+    background-color: antiquewhite;
 }
 
 .header {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+}
+
+.plant_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 64px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    justify-content: center;
+    align-content: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.plant_image {
+    height: 100px;
+    width: 100px;
 }
