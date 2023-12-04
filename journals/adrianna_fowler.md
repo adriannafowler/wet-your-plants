@@ -45,4 +45,5 @@ DEC 1, 2023
 
 DEC 4, 2023
     - reorganized backend so that all pydantic models are found in models.py
-    - refactored dashboard.py, added docstrings
+    - refactored dashboard.py, added docstrings, endpoints working
+    - refactored greenhouse.py, added docstrings, endpoints working
