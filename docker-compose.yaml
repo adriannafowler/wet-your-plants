@@ -10,6 +10,8 @@ services:
             DATABASE_URL: postgresql://user:password@postgres:5432/postgres
             CORS_HOST: http://localhost:3000
             SIGNING_KEY: ${SIGNING_KEY}
+            CHOKIDAR_USEPOLLING: "true"
+
         build:
             context: api
             dockerfile: Dockerfile.dev
@@ -32,6 +34,7 @@ services:
             HOST: "0.0.0.0"
             PUBLIC_URL: http://localhost:3000
             REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+            CHOKIDAR_USEPOLLING: "true"
 
     # PostgreSQL service configuration
     postgres:

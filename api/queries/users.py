@@ -26,6 +26,30 @@ class UserQueries:
                     return {
                         "message": "Could not get user record for this user id"
                     }
+                
+    
+    def get_by_id(self, id) -> UserOutWithPassword:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute(
+                    """
+                        SELECT *
+                        FROM users
+                        WHERE id = %s;
+                        """,
+                    [id],
+                )
+                try:
+                    record = None
+                    for row in cur.fetchall():
+                        record = {}
+                        for i, column in enumerate(cur.description):
+                            record[column.name] = row[i]
+                    return UserOutWithPassword(**record)
+                except Exception:
+                    return {
+                        "message": "Could not get user record for this user id"
+                    }
 
 
     def create_user(self,info,hashed_password) -> UserOutWithPassword:
