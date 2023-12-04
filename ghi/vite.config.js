@@ -6,7 +6,7 @@ export default defineConfig({
     plugins: [react()],
     server: {
         watch: {
-            userPolling: true,
+            usePolling: true,
         },
         host: true,
         strictPort: true,

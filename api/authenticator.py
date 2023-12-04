@@ -33,7 +33,7 @@ class PlantAuthenticator(Authenticator):
         return account.email, account.dict()
     
 
-authenticator = PlantAuthenticator(os.environ.get("SIGNING_KEY"))
+authenticator = PlantAuthenticator(os.environ["SIGNING_KEY"])
     
     
 

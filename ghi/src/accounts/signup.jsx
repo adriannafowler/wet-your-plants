@@ -13,7 +13,7 @@ const SignUpForm = () => {
   const signUp = async (e) => {
     e.preventDefault();
 
-    const signupUrl = 'https://localhost:8000/api/users/';
+    const signupUrl = 'http://localhost:8000/api/user';
 
     const fetchConfig = {
         method: "post",
@@ -24,7 +24,7 @@ const SignUpForm = () => {
     };
 
     const response = await fetch(signupUrl, fetchConfig);
-
+    console.log(response)
     if (response.ok) {
         setFormData({
             email: "",
@@ -56,6 +56,7 @@ const SignUpForm = () => {
         <input
           type="email"
           id="email"
+          name="email"
           value={formData.email}
           onChange={handleFormChange}
           required
@@ -65,22 +66,25 @@ const SignUpForm = () => {
         <input
           type="password"
           id="password"
+          name="password"
           value={formData.password}
           onChange={handleFormChange}
           required
         />
         <label htmlFor="name">Name:</label>
         <input
-          type="name"
+          type="text"
           id="name"
+          name="name"
           value={formData.name}
           onChange={handleFormChange}
           required
         />
         <label htmlFor="zipcode">Zipcode:</label>
         <input
-          type="zipcode"
+          type="text"
           id="zipcode"
+          name="zipcode"
           value={formData.zipcode}
           onChange={handleFormChange}
           required

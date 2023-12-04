@@ -6,8 +6,8 @@ import './App.css'
 import PlantDetail from './plant_detail/detail'
 import Greenhouse from './greenhouse/greenhouse'
 import { AuthProvider } from "./authorization/authorization";
-
-
+import SignUpForm from './accounts/signup'
+import SignInForm from './accounts/signin'
 
 const URL = import.meta.env.VITE_APP_API_HOST;
 if (!URL) {
@@ -24,9 +24,15 @@ function App() {
                         <Route index element={<Greenhouse />} />
                         <Route path=":id/" element={<PlantDetail />} />
                     </Route>
+                    <Route path="signup/">
+                        <Route index element={<SignUpForm />} />
+                    </Route>
+                    <Route path="signin/">
+                        <Route index element={<SignInForm />} />
+                    </Route>
                 </Routes>
             </BrowserRouter>
-        // </AuthProvider>
+         </AuthProvider>
     )
 }
 
