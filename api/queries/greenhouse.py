@@ -7,11 +7,25 @@ from acls import get_plant_details
 
 class PlantRepository:
     def create(self, plant: PlantIn, user_id: int) -> PlantOut:
+        """
+        Creates a new plant record in the database with the provided plant information and user ID.
+
+        Parameters
+        ----------
+        plant : PlantIn
+            An instance of PlantIn containing the new plant's information.
+        user_id : int
+            The ID of the user creating the new plant record.
+
+        Returns
+        -------
+        PlantOut
+            A PlantOut object representing the newly created plant record.
+        """
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     details = get_plant_details(plant.species_id)
-                    print("Plant details:", details)
                     result = db.execute(
                         """
                         INSERT INTO plants
@@ -20,7 +34,7 @@ class PlantRepository:
                             dimensions, owner_id, watering_schedule)
                         VALUES
                             (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-                        RETURNING id;
+                        RETURNING *;
                         """,
                         [
                             plant.name,
@@ -41,36 +55,28 @@ class PlantRepository:
                             plant.watering_schedule
                         ]
                     )
-                    id = result.fetchone()[0]
-                    print("new plant ID:", id)
-                    print("RESULT:", result)
-                    plant_data = {
-                        "id": id,
-                        "name": plant.name,
-                        "source": plant.source,
-                        "common_name": details["common_name"],
-                        "type": details["type"],
-                        "cycle": details["cycle"],
-                        "watering": details["watering"],
-                        "sunlight": details["sunlight"],
-                        "indoor": details["indoor"],
-                        "care_level": details["care_level"],
-                        "maintenance": details["maintenance"],
-                        "description": details["description"],
-                        "hardiness": details["hardiness"],
-                        "original_url": details["original_url"],
-                        "dimensions": details["dimensions"],
-                        "owner_id": user_id,
-                        "watering_schedule": plant.watering_schedule
-                    }
-                    print("Plant data:", plant_data)
-                    return PlantOut(**plant_data)
+                    record = result.fetchone()
+                    print("RECORD:", record)
+                    return self.record_out(record)
         except Exception as e:
             logging.error("Error in creating plant: %s", e)
             raise
 
     def get_all(self, user_id: int) -> List[PlantOut]:
-        plants = []
+        """
+        Retrieves a list of all plant records associated with the specified user ID.
+
+        Parameters
+        ----------
+        user_id : int
+            The ID of the user whose plant records are to be retrieved.
+
+        Returns
+        -------
+        List[PlantOut]
+            A list of PlantOut objects, each representing a plant owned by the user.
+            If the user has no plants, an empty list is returned.
+        """
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -83,31 +89,42 @@ class PlantRepository:
                         [user_id]
                     )
                     records = result.fetchall()
-                    print("records:", records)
-                    for record in records:
-                        record_dict = {
-                            "id": record[0],
-                            "name": record[1],
-                            "source": record[2],
-                            "common_name": record[3],
-                            "type": record[4],
-                            "cycle": record[5],
-                            "watering": record[6],
-                            "sunlight": record[7],
-                            "indoor": record[8],
-                            "care_level": record[9],
-                            "maintenance": record[10],
-                            "description": record[11],
-                            "hardiness": record[12],
-                            "original_url": record[13],
-                            "dimensions": record[14],
-                            "owner_id": record[15],
-                            "watering_schedule": record[16]
-                        }
-                        plants.append(PlantOut(**record_dict))
-            print("PLANTS:", plants)
+                    return[self.record_out(record) for record in records]
         except Exception as e:
             logging.error("Error in getting plants: %s", e)
             raise
 
-        return plants
+    def record_out(self, record) -> PlantOut:
+        """
+        Converts a database record into a PlantOut object.
+
+        Parameters
+        ----------
+        record : tuple
+            A tuple representing a row from the plants database table.
+
+        Returns
+        -------
+        PlantOut
+            A PlantOut object representing the plant item.
+        """
+        record_dict = {
+            "id": record[0],
+            "name": record[1],
+            "source": record[2],
+            "common_name": record[3],
+            "type": record[4],
+            "cycle": record[5],
+            "watering": record[6],
+            "sunlight": record[7],
+            "indoor": record[8],
+            "care_level": record[9],
+            "maintenance": record[10],
+            "description": record[11],
+            "hardiness": record[12],
+            "original_url": record[13],
+            "dimensions": record[14],
+            "owner_id": record[15],
+            "watering_schedule": record[16]
+        }
+        return PlantOut(**record_dict)
