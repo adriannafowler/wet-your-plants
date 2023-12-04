@@ -10,21 +10,8 @@ from fastapi import (
 from jwtdown_fastapi.authentication import Token
 from queries.users import UserQueries
 from queries.pool import pool
-from routers.models import UserOut,DuplicateUserError,UserIn
+from models import UserOut,DuplicateUserError,UserIn, UserForm, UserToken, HttpError
 from authenticator import authenticator
-
-
-class UserForm(BaseModel):
-    username: str
-    password: str
-
-
-class UserToken(Token):
-    account: UserOut
-
-
-class HttpError(BaseModel):
-    detail: str
 
 
 router = APIRouter()
@@ -42,7 +29,7 @@ async def create_user(
     info: UserIn,
     request: Request,
     response: Response,
-    queries: UserQueries = Depends(),   
+    queries: UserQueries = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
     try:

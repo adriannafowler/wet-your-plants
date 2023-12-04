@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Query
-from queries.plant_detail import PlantIn, PlantOut, PlantRepository
+from fastapi import APIRouter, Depends
+from queries.plant_detail import PlantRepository
+from models import PlantIn, PlantOut
 
 
 router = APIRouter()

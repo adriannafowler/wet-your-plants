@@ -1,6 +1,5 @@
-from pydantic import BaseModel
 from queries.pool import pool
-from routers.models import UserOutWithPassword
+from models import UserOutWithPassword
 
 
 class UserQueries:

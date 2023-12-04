@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter
 from queries.watering_schedules import get_schedules
 
 

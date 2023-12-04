@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Query
-from queries.dashboard import TodoIn, CompleteIn, TodoOut, TodoRepository
+from fastapi import APIRouter, Depends
+from queries.dashboard import TodoRepository
+from models import TodoIn, CompleteIn, TodoOut
 from typing import List
 
 

@@ -1,5 +1,6 @@
-from fastapi import APIRouter, Depends, Query
-from queries.greenhouse import PlantIn, PlantOut, PlantRepository
+from fastapi import APIRouter, Depends
+from queries.greenhouse import PlantRepository
+from models import PlantIn, PlantOut
 from typing import List
 
 

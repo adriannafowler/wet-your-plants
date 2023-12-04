@@ -1,39 +1,8 @@
 import logging
-from pydantic import BaseModel
 from typing import Optional
 from queries.pool import pool
+from models import PlantIn, PlantOut
 from acls import get_plant_details
-
-
-class Error(BaseModel):
-    message: str
-
-
-class PlantIn(BaseModel):
-    name: str
-    source: str
-    species_id: int
-    watering_schedule: int
-
-
-class PlantOut(BaseModel):
-    id: int
-    name: str
-    source: str
-    common_name: Optional[str]
-    type: Optional[str]
-    cycle: Optional[str]
-    watering: Optional[str]
-    sunlight: Optional[str]
-    indoor: Optional[bool]
-    care_level: Optional[str]
-    maintenance: Optional[str]
-    description: Optional[str]
-    hardiness: Optional[str]
-    original_url: Optional[str]
-    dimensions: Optional[str]
-    owner_id: int
-    watering_schedule: int
 
 
 class PlantRepository:

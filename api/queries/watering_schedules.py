@@ -1,17 +1,8 @@
 import logging
-from pydantic import BaseModel
 from typing import Optional, List
 from queries.pool import pool
-from acls import get_plant_details
+from models import ScheduleOut
 
-
-class ScheduleIn(BaseModel):
-    id: int
-    schedule: str
-
-class ScheduleOut(BaseModel):
-    id: int
-    schedule: str
 
 def get_schedules() -> List[ScheduleOut]:
     schedules = []
