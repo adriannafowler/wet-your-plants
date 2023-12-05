@@ -36,7 +36,7 @@ CREATE TABLE IF NOT EXISTS plants (
     hardiness TEXT,
     original_url TEXT,
     dimensions TEXT,
-    owner_id INTEGER NOT NULL REFERENCES users(id),
+    owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     watering_schedule INTEGER REFERENCES watering_schedules(id)
     );
 
@@ -48,8 +48,8 @@ CREATE TABLE IF NOT EXISTS todos (
     time_completed TIMESTAMP DEFAULT NULL,
     complete BOOL DEFAULT false,
     status TEXT REFERENCES status(status),
-    plant_id INTEGER NOT NULL REFERENCES plants(id),
-    owner_id INTEGER NOT NULL REFERENCES users(id)
+    plant_id INTEGER NOT NULL REFERENCES plants(id) ON DELETE CASCADE,
+    owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
 );
 
 CREATE OR REPLACE FUNCTION update_time_completed()

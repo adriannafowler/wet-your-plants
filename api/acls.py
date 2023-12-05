@@ -3,29 +3,14 @@ import requests
 from keys import PERENUAL_API_KEY, OPEN_WEATHER_API_KEY
 
 
-def get_plant_species(name):
-    url = f"https://perenual.com/api/species-list?key={PERENUAL_API_KEY}&q={name}"
-
-    response = requests.get(url)
-    content = json.loads(response.content)
-
-    try:
-        result = {"species_id": []}
-        for item in content["data"]:
-            result["species_id"].append(item["id"])
-        return result
-    except (KeyError, IndexError):
-        return {"species_id": None}
-
-
 def get_plant_details(species_id):
     url = f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
 
     response = requests.get(url)
     content = json.loads(response.content)
     sunlight = ""
-    if 'sunlight' in content and isinstance(content['sunlight'], list):
-        sunlight = ", ".join(content['sunlight'])
+    if "sunlight" in content and isinstance(content["sunlight"], list):
+        sunlight = ", ".join(content["sunlight"])
     else:
         sunlight = ""
 

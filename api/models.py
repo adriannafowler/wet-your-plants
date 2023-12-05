@@ -24,6 +24,7 @@ class UserOutWithPassword(UserOut):
 class DuplicateUserError(ValueError):
     pass
 
+
 class UserForm(BaseModel):
     username: str
     password: str
@@ -36,12 +37,15 @@ class UserToken(Token):
 class HttpError(BaseModel):
     detail: str
 
+
 class TodoIn(BaseModel):
     todo: str
     due_date: str
 
+
 class CompleteIn(BaseModel):
     complete: bool
+
 
 class TodoOut(BaseModel):
     id: int
@@ -52,6 +56,7 @@ class TodoOut(BaseModel):
     status: Optional[str]
     plant_id: int
     owner_id: int
+
 
 class PlantIn(BaseModel):
     name: str
@@ -79,9 +84,11 @@ class PlantOut(BaseModel):
     owner_id: int
     watering_schedule: int
 
+
 class ScheduleIn(BaseModel):
     id: int
     schedule: str
+
 
 class ScheduleOut(BaseModel):
     id: int

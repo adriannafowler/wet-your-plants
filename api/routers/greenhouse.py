@@ -7,7 +7,6 @@ from typing import List
 router = APIRouter()
 
 
-
 @router.post("/greenhouse/")
 def create_plant(
     plant: PlantIn,

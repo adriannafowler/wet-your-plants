@@ -27,15 +27,15 @@ class TodoRepository:
                         FROM todos
                         WHERE owner_id = %s
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     records = result.fetchall()
-                    return[self.record_out(record) for record in records]
+                    return [self.record_out(record) for record in records]
         except Exception as e:
             logging.error("Error in getting plants: %s", e)
             raise
 
-    def delete(self, todo_id:int) -> bool:
+    def delete(self, todo_id: int) -> bool:
         """
         Deletes a todo item identified by the provided todo_id.
 
@@ -57,14 +57,19 @@ class TodoRepository:
                         DELETE FROM todos
                         WHERE id = %s
                         """,
-                        [todo_id]
+                        [todo_id],
                     )
                     return db.rowcount > 0
         except Exception as e:
             logging.error("Error in deleting todo: %s", e)
             raise
 
-    def create(self, user_id: int, plant_id: int, todo: TodoIn,) -> TodoOut:
+    def create(
+        self,
+        user_id: int,
+        plant_id: int,
+        todo: TodoIn,
+    ) -> TodoOut:
         """
         Creates a new todo item.
 
@@ -85,7 +90,7 @@ class TodoRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    result = db. execute(
+                    result = db.execute(
                         """
                         INSERT INTO todos
                             (todo, due_date, status, plant_id, owner_id)
@@ -96,10 +101,10 @@ class TodoRepository:
                         [
                             todo.todo,
                             todo.due_date,
-                            'upcoming',
+                            "upcoming",
                             plant_id,
-                            user_id
-                        ]
+                            user_id,
+                        ],
                     )
                     record = result.fetchone()
                     return self.record_out(record)
@@ -107,7 +112,11 @@ class TodoRepository:
             logging.error("Error in creating plant: %s", e)
             raise
 
-    def update(self, todo_id: int, todo: TodoIn,) -> TodoOut:
+    def update(
+        self,
+        todo_id: int,
+        todo: TodoIn,
+    ) -> TodoOut:
         """
         Updates an existing todo item identified by todo_id with new information.
 
@@ -139,21 +148,23 @@ class TodoRepository:
                         WHERE id = %s
                         RETURNING *;
                         """,
-                        [
-                            todo.todo,
-                            todo.due_date,
-                            todo_id
-                        ]
+                        [todo.todo, todo.due_date, todo_id],
                     )
                     if db.rowcount == 0:
-                        raise ValueError("No updates made, todo data may be identical or plant not found")
+                        raise ValueError(
+                            "No updates made, todo data may be identical or plant not found"
+                        )
                     record = db.fetchone()
                 return self.record_out(record)
         except Exception as e:
             logging.error("Error in creating todo: %s", e)
             raise
 
-    def update_complete(self, todo_id: int, complete: CompleteIn,) -> TodoOut:
+    def update_complete(
+        self,
+        todo_id: int,
+        complete: CompleteIn,
+    ) -> TodoOut:
         """
         Updates the completion status of a todo item.
 
@@ -172,19 +183,21 @@ class TodoRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
-                    db. execute(
+                    db.execute(
                         """
                         SELECT *
                         FROM todos
                         WHERE id = %s;
                         """,
-                        [todo_id]
+                        [todo_id],
                     )
                     current_data = db.fetchone()
                     if current_data is None:
                         raise ValueError("Todo not found")
 
-                    new_time_completed = "NULL" if not complete.complete else "time_completed"
+                    new_time_completed = (
+                        "NULL" if not complete.complete else "time_completed"
+                    )
 
                     db.execute(
                         f"""
@@ -193,7 +206,7 @@ class TodoRepository:
                         WHERE id = %s
                         RETURNING *;
                         """,
-                        [complete.complete, todo_id]
+                        [complete.complete, todo_id],
                     )
                     record = db.fetchone()
                     return self.record_out(record)
@@ -223,7 +236,6 @@ class TodoRepository:
             "complete": record[4],
             "status": record[5],
             "plant_id": record[6],
-            "owner_id": record[7]
+            "owner_id": record[7],
         }
-        print("type", type(TodoOut(**todo_dict)))
         return TodoOut(**todo_dict)

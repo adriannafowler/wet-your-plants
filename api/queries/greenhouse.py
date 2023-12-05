@@ -52,11 +52,10 @@ class PlantRepository:
                             details["original_url"],
                             details["dimensions"],
                             user_id,
-                            plant.watering_schedule
-                        ]
+                            plant.watering_schedule,
+                        ],
                     )
                     record = result.fetchone()
-                    print("RECORD:", record)
                     return self.record_out(record)
         except Exception as e:
             logging.error("Error in creating plant: %s", e)
@@ -86,10 +85,10 @@ class PlantRepository:
                         FROM plants
                         WHERE owner_id = %s;
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     records = result.fetchall()
-                    return[self.record_out(record) for record in records]
+                    return [self.record_out(record) for record in records]
         except Exception as e:
             logging.error("Error in getting plants: %s", e)
             raise
@@ -125,6 +124,6 @@ class PlantRepository:
             "original_url": record[13],
             "dimensions": record[14],
             "owner_id": record[15],
-            "watering_schedule": record[16]
+            "watering_schedule": record[16],
         }
         return PlantOut(**record_dict)
