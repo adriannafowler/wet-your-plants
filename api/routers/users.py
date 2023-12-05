@@ -83,7 +83,7 @@ async def get_token(
             return {
                 "access_token": request.cookies[authenticator.cookie_name],
                 "type": "Bearer",
-                "user": user,
+                "account": user,
             }
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

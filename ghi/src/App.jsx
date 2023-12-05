@@ -14,8 +14,8 @@ if (!URL) {
     throw Error("VITE_APP_API_HOST was undefined");
 }
 
-
 function App() {
+    console.log(URL)
     return (
         <AuthProvider baseUrl={URL}>
             <BrowserRouter>

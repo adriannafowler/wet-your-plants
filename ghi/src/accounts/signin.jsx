@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-
+import useToken from "@galvanize-inc/jwtdown-for-react";
 
 const SignInForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const { login } = useToken();
 
 
 const handleSubmit = async (e) => {
@@ -12,7 +13,7 @@ const handleSubmit = async (e) => {
     e.target.reset();
   };
   
-
+console.log(email, password)
   return (
     <div>
       <h2>Sign In</h2>
