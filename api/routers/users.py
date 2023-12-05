@@ -10,7 +10,7 @@ from fastapi import (
 from jwtdown_fastapi.authentication import Token
 from queries.users import UserQueries
 from queries.pool import pool
-from routers.models import UserOut,DuplicateUserError,UserIn
+from routers.models import UserOut,DuplicateUserError,UserIn,UserOutWithPassword
 from authenticator import authenticator
 
 
@@ -82,5 +82,5 @@ async def get_token(
         return {
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",
-            "user": user,
+            "account": user,
         }
