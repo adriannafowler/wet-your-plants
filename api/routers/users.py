@@ -72,9 +72,9 @@ async def update_user(
 
 @router.get("/token")
 async def get_token(
-    request:  Request,
-    user: dict =Depends(authenticator.try_get_current_account_data),
-)-> UserToken | None:
+    request: Request,
+    user: dict = Depends(authenticator.try_get_current_account_data),
+) -> UserToken | None:
     if user and authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],
