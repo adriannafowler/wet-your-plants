@@ -10,10 +10,6 @@ stages:
 lint-test-job:
   image: python:3-bullseye
   stage: test
-  cache:
-    paths:
-      - .cache/pip
-    expire_in: 1 week
   before_script:
     - pip install black
   script:
