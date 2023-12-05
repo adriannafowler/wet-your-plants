@@ -5,7 +5,7 @@ from queries.users import (
     UserQueries,
     
 )
-from routers.models import UserOutWithPassword
+from routers.models import UserOutWithPassword,UserOut
 
 
 class PlantAuthenticator(Authenticator):
@@ -25,12 +25,13 @@ class PlantAuthenticator(Authenticator):
         return accounts
     
     def get_hashed_password(self, account: UserOutWithPassword):
+        print(account)
         return account.hashed_password
     
     
     def get_account_data_for_cookie(self,account):
         if isinstance(account,dict):
-            account = UserOutWithPassword(**account)
+            account = UserOut(**account)
 
         return account.email, account.dict()
     

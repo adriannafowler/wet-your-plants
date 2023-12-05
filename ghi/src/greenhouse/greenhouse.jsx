@@ -23,37 +23,61 @@
 // </>
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useAuthContext } from '@galvanize-inc/jwtdown-for-react'
 import './greenhouse.css'
 
 const Greenhouse = () => {
-    // const [info, setInfo] = useState([])
-    // const { token } = useAuthContext()
+    const [user_id, setUserId] = useState([])
+    const [info, setInfo] = useState([])
+    const [plants, setPlants] = useState([])
 
-    // const fetchToken = async () => {
-    //     const url = `http://localhost:8000/token/`
-    //     const response = await fetch(url, {
-    //         credentials: 'include',
-    //     })
-    //     if (response.ok) {
-    //         const data = await response.json()
-    //         console.log(data)
-    //         setInfo(data)
-    //     }
-    // }
+    const fetchToken = async () => {
+        try {
+            const url = `http://localhost:8000/token/`
+            const response = await fetch(url, {
+                credentials: 'include',
+            })
 
-    // const fetchName = async () => {
-    //     const url = `http://localhost:8000/users/${user_id}/`
-    //     const response = await fetch(url)
-    //     if (response.ok) {
-    //         const data = await response.json()
-    //         console.log(data)
-    //         setInfo(data)
-    //     }
-    // }
+            if (!response.ok) {
+                throw new Error('HTTP error!')
+            }
+            const data = await response.json()
+            console.log(data)
+            setUserId(data.account.id)
+        } catch (error) {
+            console.error('Error fetching token:', error)
+        }
+    }
+
+    const fetchName = async () => {
+        const url = `http://localhost:8000/users/${user_id}/`
+        const response = await fetch(url)
+        if (response.ok) {
+            const data2 = await response.json()
+            console.log(data2)
+            setInfo(data2)
+        }
+    }
+
+    const fetchPlants = async () => {
+        const url = `http://localhost:8000/greenhouse/`
+        const response = await fetch(url)
+        if (response.ok) {
+            const data = await response.json()
+            const filteredData = data.filter((item) => item.id === user_id)
+            setPlants(filteredData)
+        }
+    }
+
+    useEffect(() => {
+        fetchToken()
+    }, [])
+
+    useEffect(() => {
+        fetchName()
+    }, [])
 
     // useEffect(() => {
-    //     fetchName()
+    //     fetchPlants()
     // }, [])
 
     return (
@@ -66,7 +90,9 @@ const Greenhouse = () => {
                             src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/threads-app-icon.png"
                         ></img>
                     </div>
-                    <div className="inventory_name">{info.name}</div>
+                    <div className="inventory_name">
+                        {info.name}'s Greenhouse
+                    </div>
                     <div className="icon_div">
                         <img
                             className="watering_can"
