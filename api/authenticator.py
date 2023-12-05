@@ -32,3 +32,4 @@ class PlantAuthenticator(Authenticator):
 
 
 authenticator = PlantAuthenticator(os.environ.get("SIGNING_KEY"))
+authenticator = PlantAuthenticator(os.environ["SIGNING_KEY"])
