@@ -15,7 +15,6 @@ if (!URL) {
 }
 
 function App() {
-    console.log(URL)
     return (
         <AuthProvider baseUrl={URL}>
             <BrowserRouter>

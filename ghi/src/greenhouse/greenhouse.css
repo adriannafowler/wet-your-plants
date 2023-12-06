@@ -6,21 +6,25 @@
 } */
 
 .hamburger {
-    height: 64px;
-    width: 64px;
-    display: block;
+    height: 100px;
+    width: 100px;
     margin: auto;
 }
 
 .icon_div {
-    width: 100px;
+    height: 128px;
+    width: 128px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
 
 .watering_can {
-    height: 64px;
-    width: 64px;
-    display: block;
+    height: 128px;
+    width: 128px;
     margin: auto;
+    justify-self: center;
+    align-self: center;
 }
 
 .inventory_name {
@@ -34,10 +38,11 @@ body {
 }
 
 .header {
-    margin-top: 32px;
+    margin-top: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: center;
 }
 
 .plant_container {
@@ -59,4 +64,20 @@ body {
 .plant_image {
     height: 100px;
     width: 100px;
+    align-self: center;
+    justify-self: center;
+    flex-shrink: 0;
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.plant_name {
+    width: auto;
+    height: 16px;
+    text-align: center;
 }

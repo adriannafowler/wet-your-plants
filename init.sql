@@ -168,7 +168,7 @@ WHERE NOT EXISTS (
 INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
 SELECT 'Bonsai', 'Bonsai Tree Shop', 'Bonsai', 'Type4', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Hard', 'High', 'A miniature tree', 'Hardy', 'http://example.com/bonsai', '15x15', 3, 2
 WHERE NOT EXISTS (
-    SELECT 1 FROM plants WHERE name = 'Bonsai' AND source = 'Bonsai Tree Shop'
+    SELECT 1 FROM plants WHERE name = 'Bonsai' AND source = 'Bonsai Tree Shop' 
 );
 
 INSERT INTO plants (name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, watering_schedule)
