@@ -8,6 +8,7 @@ import Greenhouse from './greenhouse/greenhouse'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import SignInForm from './accounts/signin'
+import Homepage from './main/home'
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
@@ -29,6 +30,9 @@ function App() {
                     </Route>
                     <Route path="signin/">
                         <Route index element={<SignInForm />} />
+                    </Route>
+                    <Route path="homepage/">
+                        <Route index element={<Homepage />} />
                     </Route>
                 </Routes>
             </BrowserRouter>
