@@ -1,104 +1,71 @@
-import React, { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
-import { useAuthContext } from '@galvanize-inc/jwtdown-for-react'
+import useToken, { useAuthContext } from '@galvanize-inc/jwtdown-for-react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const SignInForm = () => {
-    const [email, setEmail] = useState('')
+    const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
-    const [errorMessage, setErrorMessage] = useState('')
-    const [passwordVisible, setPasswordVisible] = useState(false)
-    const { token, setToken, baseUrl } = useAuthContext()
     const navigate = useNavigate()
-
-    const handleSubmit = async (e) => {
-        e.preventDefault()
-        try {
-            const newToken = await getToken(baseUrl, email, password)
-            if (newToken) {
-                setToken(newToken)
-                setErrorMessage('')
-            } else {
-                throw new Error('Failed to get token after login.')
-            }
-        } catch (error) {
-            console.error('An error occurred during login:', error)
-            setErrorMessage('An error occurred during login. Please try again.')
-            setTimeout(() => {
-                setErrorMessage('')
-            }, 1000)
-        }
-    }
+    const { login } = useToken()
+    const { token } = useAuthContext()
 
     useEffect(() => {
         if (token) {
-            navigate('/')
-            setErrorMessage('')
+            navigate('/greenhouse/')
         }
     }, [token])
 
-    const togglePasswordVisibility = () => {
-        setPasswordVisible(!passwordVisible)
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        login(username, password)
+        e.target.reset()
     }
 
     return (
-        <div className="card text-bg-light mb-3">
-            <h5 className="card-header">Login</h5>
-            <div className="card-body">
-                {errorMessage && (
-                    <p className="alert alert-danger mb-3" role="alert">
-                        {errorMessage}
-                    </p>
-                )}
-                <form onSubmit={handleSubmit}>
-                    <div className="mb-3">
-                        <label htmlFor="email" className="form-label">
-                            Email:
-                        </label>
-                        <input
-                            id="email"
-                            type="email"
-                            className="form-control"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
+        <>
+            {!token ? (
+                <div className="card text-bg-light mb-3">
+                    <h5 className="card-header">Login</h5>
+                    <div className="card-body">
+                        <form onSubmit={(e) => handleSubmit(e)}>
+                            <div className="mb-3">
+                                <label className="form-label">Username:</label>
+                                <input
+                                    name="username"
+                                    type="text"
+                                    className="form-control"
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div className="mb-3">
+                                <label className="form-label">Password:</label>
+                                <input
+                                    name="password"
+                                    type="password"
+                                    className="form-control"
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                />
+                            </div>
+                            <div>
+                                <input
+                                    className="btn btn-primary"
+                                    type="submit"
+                                    value="Login"
+                                />
+                            </div>
+                        </form>
                     </div>
-                    <div className="mb-3">
-                        <label htmlFor="password" className="form-label">
-                            Password:
-                        </label>
-                        <div className="input-group">
-                            <input
-                                id="password"
-                                type={passwordVisible ? 'text' : 'password'}
-                                className="form-control rounded-right"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button
-                                type="button"
-                                className="btn btn-outline-secondary"
-                                onClick={togglePasswordVisibility}
-                            >
-                                {passwordVisible ? 'Hide' : 'Show'}
-                            </button>
-                        </div>
-                    </div>
-                    <button
-                        type="submit"
-                        className="btn btn-primary"
-                        value="Login"
-                    >
-                        Login
-                    </button>
-                </form>
-                <p className="mt-3">
-                    Want to make an account?{' '}
-                    <Link to="/signup">Click here to sign up</Link>
-                </p>
-            </div>
-        </div>
+                </div>
+            ) : (
+                <div>
+                    <h1>Redirecting.....</h1>
+                </div>
+            )}
+        </>
     )
 }
 
