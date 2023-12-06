@@ -6,13 +6,46 @@ class UserQueries:
     def get(self, email) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
+                result = cur.execute(
+                    """
+                        SELECT *
+                        FROM users
+                        WHERE email = %s
+                        """,
+                    [email],
+                )
+                try:
+                    record = result.fetchone()
+                    return UserOutWithPassword(
+                        id = record[0],
+                        name = record[1],
+                        email = record[2],
+                        password = record[3],
+                        zipcode = record[4],
+                        hashed_password = record[5],
+                    )
+                    # record = None
+                    # for row in cur.fetchall():
+                    #     record = {}
+                    #     for i, column in enumerate(cur.description):
+                    #         record[column.name] = row[i]
+                    # return UserOutWithPassword(**record)
+                except Exception:
+                    return {
+                        "message": "Could not get user record for this user id"
+                    }
+                
+    
+    def get_by_id(self, id) -> UserOutWithPassword:
+        with pool.connection() as conn:
+            with conn.cursor() as cur:
                 cur.execute(
                     """
                         SELECT *
                         FROM users
-                        WHERE email = %s;
+                        WHERE id = %s;
                         """,
-                    [email],
+                    [id],
                 )
                 try:
                     record = None

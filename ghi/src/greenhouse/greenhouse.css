@@ -1,13 +1,83 @@
-big {
-    background-color: antiquewhite;
+/* .big {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+} */
+
+.hamburger {
+    height: 100px;
+    width: 100px;
+    margin: auto;
+}
+
+.icon_div {
+    height: 128px;
+    width: 128px;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.watering_can {
+    height: 128px;
+    width: 128px;
+    margin: auto;
+    justify-self: center;
+    align-self: center;
+}
+
+.inventory_name {
+    font-size: 50px;
+    font-family: cursive;
+    justify-content: space-around;
 }
 
 body {
-    color: black;
-    margin-left: 105px;
-    margin-right: 105px;
+    background-color: antiquewhite;
 }
 
 .header {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+}
+
+.plant_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 64px;
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 20px;
+    justify-content: center;
+    align-content: center;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+}
+
+.plant_image {
+    height: 100px;
+    width: 100px;
+    align-self: center;
+    justify-self: center;
+    flex-shrink: 0;
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.plant_name {
+    width: auto;
+    height: 16px;
+    text-align: center;
 }

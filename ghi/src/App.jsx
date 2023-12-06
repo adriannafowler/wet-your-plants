@@ -5,15 +5,14 @@ import Construct from './Construct'
 import './App.css'
 import PlantDetail from './plant_detail/detail'
 import Greenhouse from './greenhouse/greenhouse'
-import { AuthProvider } from "./authorization/authorization";
+import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import SignInForm from './accounts/signin'
 
-const URL = import.meta.env.VITE_APP_API_HOST;
+const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
-    throw Error("VITE_APP_API_HOST was undefined");
+    throw Error('VITE_APP_API_HOST was undefined')
 }
-
 
 function App() {
     return (
@@ -32,7 +31,7 @@ function App() {
                     </Route>
                 </Routes>
             </BrowserRouter>
-         </AuthProvider>
+        </AuthProvider>
     )
 }
 
