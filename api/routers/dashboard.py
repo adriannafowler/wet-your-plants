@@ -15,7 +15,7 @@ def get_all_todos(
     user: UserOut = Depends(authenticator.get_current_account_data)
 ) -> List[TodoOut] | None:
     try:
-        return repo.get_all(user.get("id"))   
+        return repo.get_all(user.get("id"))
     except Exception:
         return {"message":"Could not get todo list"}
 
