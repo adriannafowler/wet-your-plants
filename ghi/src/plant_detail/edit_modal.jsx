@@ -62,11 +62,12 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
 
     const getPlantSpecies = async (searchQuery) => {
         const response = await fetch(
-            `https://perenual.com/api/species-list?key=${PERENUAL_API_KEY}&q=${searchQuery}`
+            `http://localhost:8000/species_ids/${searchQuery}`,
+            {credentials: 'include'}
         )
         if (response.ok) {
             const data = await response.json()
-            setSearchResults(data.data)
+            setSearchResults(data.species)
         }
     }
 
@@ -86,7 +87,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                         style={{ cursor: 'pointer', padding: '10px' }}
                     >
                         <img
-                            src={item.default_image?.medium_url || sadPlant}
+                            src={item.original_url || sadPlant}
                             alt={item.common_name}
                             style={{ width: '100px', height: 'auto' }}
                         />
@@ -112,7 +113,6 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
     }
 
     const handleSubmit = async () => {
-        console.log('formData:', formData)
         try {
             const submitData = {
                 name: formData.name,
@@ -135,7 +135,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
             }
 
             console.log('Plant updated successfully')
-            onClose() // Close the dialog after successful update
+            onClose()
         } catch (error) {
             console.error('Error:', error)
         }

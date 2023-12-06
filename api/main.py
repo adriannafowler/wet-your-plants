@@ -7,6 +7,7 @@ from routers import (
     watering_schedules,
     greenhouse,
     dashboard,
+    get_plant_species
 )
 from authenticator import authenticator
 
@@ -28,3 +29,4 @@ app.include_router(users.router)
 app.include_router(watering_schedules.router)
 app.include_router(greenhouse.router)
 app.include_router(dashboard.router)
+app.include_router(get_plant_species.router)
