@@ -10,7 +10,15 @@ from fastapi import (
 from jwtdown_fastapi.authentication import Token
 from queries.users import UserQueries
 from queries.pool import pool
-from routers.models import UserOut,DuplicateUserError,UserIn,UserOutWithPassword
+from models import (
+    UserOut,
+    DuplicateUserError,
+    UserIn,
+    UserOutWithPassword,
+    UserToken,
+    HttpError,
+    UserForm
+    )
 from authenticator import authenticator
 
 

@@ -1,4 +1,4 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends
 from queries.watering_schedules import get_schedules
 from models import UserOut
 from authenticator import authenticator
