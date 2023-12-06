@@ -26,6 +26,9 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './greenhouse.css'
 import Can from './watering_can.svg'
+import AddIcon from '@mui/icons-material/Add'
+import { IconButton } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
@@ -75,7 +78,6 @@ const Greenhouse = () => {
 
     useEffect(() => {
         fetchToken()
-        console.log(newToken)
     }, [])
 
     useEffect(() => {
@@ -89,20 +91,27 @@ const Greenhouse = () => {
                     <div className="top">
                         <div className="header">
                             <div className="icon_div">
-                                <hamburger />
-                                <img
-                                    className="hamburger"
-                                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/threads-app-icon.png"
-                                ></img>
+                                <IconButton style={{ fontSize: '120px' }}>
+                                    <MenuIcon className="add_plant_icon"></MenuIcon>
+                                </IconButton>
                             </div>
                             <div className="inventory_name">
                                 {info}'s Greenhouse
                             </div>
                             <div className="icon_div">
-                                <img className="watering_can" src={Can}></img>
+                                <button>
+                                    <img
+                                        className="watering_can"
+                                        src={Can}
+                                    ></img>
+                                </button>
                             </div>
                         </div>
-                        <div className="weather_bar_div"></div>
+                        <div className="add_plant_div">
+                            <IconButton style={{ fontSize: '36px' }}>
+                                <AddIcon className="add_plant_icon"></AddIcon>
+                            </IconButton>
+                        </div>
                     </div>
                     <div className="middle">
                         <div className="plant_container">

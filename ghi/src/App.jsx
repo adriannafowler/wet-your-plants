@@ -1,7 +1,4 @@
-import { useState, useEffect } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import ErrorNotification from './ErrorNotification'
-import Construct from './Construct'
 import './App.css'
 import PlantDetail from './plant_detail/detail'
 import Greenhouse from './greenhouse/greenhouse'

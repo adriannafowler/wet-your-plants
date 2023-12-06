@@ -126,6 +126,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(submitData),
+                    credentials: 'include',
                 }
             )
 
