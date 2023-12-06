@@ -3,6 +3,7 @@ from queries.dashboard import TodoIn, CompleteIn, TodoOut, TodoRepository
 from models import UserOut
 from typing import List
 from authenticator import authenticator
+from typing import Optional
 
 
 
@@ -14,10 +15,22 @@ def get_all_todos(
     repo: TodoRepository = Depends(),
     user: UserOut = Depends(authenticator.get_current_account_data)
 ) -> List[TodoOut] | None:
-    try:
-        return repo.get_all(user.get("id"))
-    except Exception:
-        return {"message":"Could not get todo list"}
+    # try:
+    return repo.get_all(user.get("id"))
+    # except Exception:
+    #     raise HTTPException
+    # return [
+    #     TodoOut(
+    #         id=1,
+    #         todo="Sample Todo",
+    #         due_date="2023-12-05",
+    #         time_completed=None,
+    #         complete=False,
+    #         status="upcoming",
+    #         plant_id=2,
+    #         owner_id=user.id
+    #     )
+    # ]
 
 
 @router.delete("/dashboard/{todo_id}/")
