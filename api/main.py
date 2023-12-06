@@ -1,16 +1,20 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 import os
-from routers import dashboard, users, plant_detail, watering_schedules, greenhouse
+from routers import (
+    plant_detail,
+    users,
+    watering_schedules,
+    greenhouse,
+    dashboard,
+)
 from authenticator import authenticator
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        os.environ.get("CORS_HOST", "http://localhost:3000"),
-    ],
+    allow_origins=[os.environ.get("CORS_HOST", "http://localhost:3000")],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

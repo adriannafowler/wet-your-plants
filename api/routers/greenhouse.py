@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, Query
 from queries.greenhouse import PlantIn, PlantOut, PlantRepository
-from routers.models import UserOut
+from models import UserOut
 from authenticator import authenticator
 from typing import List
 
@@ -25,7 +25,6 @@ def get_all_plants(
     user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> List[PlantOut]:
     try:
-        return repo.get_all(user.get("id"))   
+        return repo.get_all(user.get("id"))
     except Exception:
         return {"message":"Could not get plant list"}
-

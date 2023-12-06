@@ -1,6 +1,6 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from queries.watering_schedules import get_schedules
-from routers.models import UserOut
+from models import UserOut
 from authenticator import authenticator
 
 router = APIRouter()

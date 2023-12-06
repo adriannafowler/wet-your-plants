@@ -1,19 +1,23 @@
 import logging
-from pydantic import BaseModel
-from typing import Optional, List
+from typing import List
 from queries.pool import pool
-from acls import get_plant_details
+from models import ScheduleOut
 
-
-class ScheduleIn(BaseModel):
-    id: int
-    schedule: str
-
-class ScheduleOut(BaseModel):
-    id: int
-    schedule: str
 
 def get_schedules() -> List[ScheduleOut]:
+    """
+    Retrieves a list of all watering schedules from the database.
+
+    Parameters
+    ----------
+    None
+
+    Returns
+    -------
+    List[ScheduleOut]
+        A list of ScheduleOut objects, each representing a watering schedule.
+        If there are no schedules, an empty list is returned.
+    """
     schedules = []
     try:
         with pool.connection() as conn:
@@ -25,12 +29,9 @@ def get_schedules() -> List[ScheduleOut]:
                     """
                 )
                 records = result.fetchall()
-                print("result:", result)
-                print("records:", records)
                 for record in records:
                     record_dict = {"id": record[0], "schedule": record[1]}
                     schedules.append(ScheduleOut(**record_dict))
-                print(schedules)
     except Exception as e:
         logging.error("Error in fetching watering schedules: %s", e)
 

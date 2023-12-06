@@ -1,6 +1,5 @@
-from pydantic import BaseModel
 from queries.pool import pool
-from routers.models import UserOutWithPassword
+from models import UserOutWithPassword
 
 
 class UserQueries:
@@ -60,8 +59,7 @@ class UserQueries:
                         "message": "Could not get user record for this user id"
                     }
 
-
-    def create_user(self,info,hashed_password) -> UserOutWithPassword:
+    def create_user(self, info, hashed_password) -> UserOutWithPassword:
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 params = [
@@ -69,7 +67,7 @@ class UserQueries:
                     info.email,
                     info.password,
                     info.zipcode,
-                    hashed_password
+                    hashed_password,
                 ]
                 cur.execute(
                     """
@@ -91,11 +89,9 @@ class UserQueries:
                             record[column.name] = row[i]
                     return UserOutWithPassword(**record)
                 except Exception:
-                    return {
-                        "message": "Email already exists"
-                    }
+                    return {"message": "Email already exists"}
 
-    def update_user(self,user_id,info):
+    def update_user(self, user_id, info):
         with pool.connection() as conn:
             with conn.cursor() as cur:
                 input = [
@@ -103,7 +99,7 @@ class UserQueries:
                     info.email,
                     info.password,
                     info.zipcode,
-                    user_id
+                    user_id,
                 ]
                 cur.execute(
                     """
@@ -125,6 +121,4 @@ class UserQueries:
                             record[column.name] = row[i]
                     return record
                 except Exception:
-                    return {
-                    "message": "Update Failed"
-                    }
+                    return {"message": "Update Failed"}

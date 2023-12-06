@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Depends, Response, HTTPException
 from queries.dashboard import TodoIn, CompleteIn, TodoOut, TodoRepository
-from routers.models import UserOut
+from models import UserOut
 from typing import List
 from authenticator import authenticator
+from typing import Optional
 
 
 
@@ -14,10 +15,23 @@ def get_all_todos(
     repo: TodoRepository = Depends(),
     user: UserOut = Depends(authenticator.get_current_account_data)
 ) -> List[TodoOut] | None:
-    try:
-        return repo.get_all(user.get("id"))
-    except Exception:
-        return {"message":"Could not get todo list"}
+    # try:
+    return repo.get_all(user.get("id"))
+    # except Exception:
+    #     raise HTTPException
+    # return [
+    #     TodoOut(
+    #         id=1,
+    #         todo="Sample Todo",
+    #         due_date="2023-12-05",
+    #         time_completed=None,
+    #         complete=False,
+    #         status="upcoming",
+    #         plant_id=2,
+    #         owner_id=user.id
+    #     )
+    # ]
+
 
 @router.delete("/dashboard/{todo_id}/")
 def delete_todo(
@@ -26,6 +40,7 @@ def delete_todo(
     user: dict = Depends(authenticator.get_current_account_data)
 ) -> bool:
     return repo.delete(todo_id)
+
 
 @router.post("/dashboard/")
 def create_todo(
@@ -42,6 +57,7 @@ def create_todo(
         response.status_code = 500
         return {"message": "Count not create todo"}
 
+
 @router.put("/dashboard/")
 def update_todo(
     todo_id: int,
@@ -50,6 +66,7 @@ def update_todo(
     user: UserOut = Depends(authenticator.get_current_account_data)
 ) -> TodoOut:
     return repo.update(todo_id, todo)
+
 
 @router.put("/complete/")
 def update_complete_todo(
