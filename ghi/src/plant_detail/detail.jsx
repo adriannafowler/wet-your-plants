@@ -57,7 +57,9 @@ function PlantDetail() {
 
     const fetchData = async () => {
         const url = `http://localhost:8000/greenhouse/${plant_id}/`
-        const response = await fetch(url)
+        const response = await fetch(url, {
+            credentials: 'include',
+        })
         if (response.ok) {
             const data = await response.json()
             setDetails(data)

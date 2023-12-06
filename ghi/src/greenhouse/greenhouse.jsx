@@ -26,12 +26,18 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './greenhouse.css'
 import Can from './watering_can.svg'
-import { useAuthContext } from '@galvanize-inc/jwtdown-for-react'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
     const [plants, setPlants] = useState([])
-    const { token } = useAuthContext
+    const [newToken, setNewToken] = useState([])
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        if (!newToken) {
+            navigate('/signin/')
+        }
+    }, [newToken])
 
     const fetchToken = async () => {
         try {
@@ -45,6 +51,7 @@ const Greenhouse = () => {
             }
             const data = await response.json()
             setInfo(data.account.name)
+            setNewToken(data.access_token)
         } catch (error) {
             console.error('Error fetching token:', error)
         }
@@ -68,15 +75,16 @@ const Greenhouse = () => {
 
     useEffect(() => {
         fetchToken()
+        console.log(newToken)
     }, [])
 
     useEffect(() => {
         fetchPlants()
-    }, [token])
+    }, [newToken])
 
     return (
         <>
-            {!token ? (
+            {newToken ? (
                 <div className="overall">
                     <div className="top">
                         <div className="header">
