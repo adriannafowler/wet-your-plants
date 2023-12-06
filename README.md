@@ -193,9 +193,8 @@ To fully enjoy this application on your local machine, please make sure to follo
 1. Clone the repository down to your local machine
 2. CD into the new project directory
 3. code . to open your IDE
-4. Create a file in "api" named keys.py
-5. # keys.py
-PERENUAL_API_KEY = "Replace with key from plantID API"
-OPEN_WEATHER_API_KEY = "Replace with key from openweathermap API"
+4. Create a file in "api" named keys.py (insert the code below)
+5.  PERENUAL_API_KEY = "Replace with key from plantID API"
+    OPEN_WEATHER_API_KEY = "Replace with key from openweathermap API"
 6. Run `docker compose build`
 7. Run `docker compose up`
