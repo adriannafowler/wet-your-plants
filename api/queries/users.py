@@ -31,7 +31,9 @@ class UserQueries:
                     #         record[column.name] = row[i]
                     # return UserOutWithPassword(**record)
                 except Exception:
-                    return {"message": "Could not get user record for this user id"}
+                    return {
+                        "message": "Could not get user record for this user id"
+                    }
 
     def get_by_id(self, id) -> UserOutWithPassword:
         with pool.connection() as conn:
@@ -52,7 +54,9 @@ class UserQueries:
                             record[column.name] = row[i]
                     return UserOutWithPassword(**record)
                 except Exception:
-                    return {"message": "Could not get user record for this user id"}
+                    return {
+                        "message": "Could not get user record for this user id"
+                    }
 
     def create_user(self, info, hashed_password) -> UserOutWithPassword:
         with pool.connection() as conn:

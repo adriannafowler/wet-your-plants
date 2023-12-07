@@ -33,7 +33,9 @@ class FakeTodoRepository:
 
 
 def fake_get_current_account_data():
-    return dict(UserOut(id=1, name="test test", email="test@test.com", zipcode="12345"))
+    return dict(
+        UserOut(id=1, name="test test", email="test@test.com", zipcode="12345")
+    )
 
 
 test_dict1 = {

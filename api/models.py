@@ -2,13 +2,6 @@ from pydantic import BaseModel
 from typing import Optional
 from jwtdown_fastapi.authentication import Token
 
-class SpeciesIn(BaseModel):
-    query: str
-
-
-class SpeciesOut(BaseModel):
-    species_id: int
-
 
 class UserIn(BaseModel):
     name: str
