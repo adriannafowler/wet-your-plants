@@ -1,28 +1,47 @@
+@import url('https://fonts.googleapis.com/css2?family=YourFontName&display=swap'); /* Replace with actual fonts from the design */
+
+:root {
+  --background-color: #ffffff; /* Replace with actual color code from the design */
+  --card-color: #f8f8f8; /* Replace with actual color code from the design */
+  --text-color: #333333; /* Replace with actual color code from the design */
+  --font-family: 'YourFontName', sans-serif; /* Replace with actual font family from the design */
+}
+
 .homepage {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   grid-gap: 16px;
   padding: 16px;
+  background-color: var(--background-color);
 }
 
 .content-card {
-  position: relative;
-  overflow: hidden;
+  background-color: var(--card-color);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
   transition: transform 0.2s ease-in-out;
-
-  img {
-    width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  h3 {
-    margin: 8px 0;
-  }
-
-  &:hover {
-    transform: scale(1.05);
-  }
 }
+
+.content-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px 8px 0 0;
+}
+
+.content-card .card-content {
+  padding: 16px;
+  font-family: var(--font-family);
+}
+
+.content-card h3 {
+  color: var(--text-color);
+  margin: 0;
+}
+
+.content-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Additional styles may be required to match the mockup exactly */
