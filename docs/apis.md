@@ -77,7 +77,7 @@ Output:
     "original_url" : string,
     "dimensions" : string,
     "owner_id" : integer,
-    "watering_schedule : integer,
+    "watering_schedule" : integer,
     "id" : id,
 }
 ```
