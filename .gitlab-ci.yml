@@ -1,5 +1,12 @@
 services:
     - docker:dind
+    - postgres:latest
+    
+variables:
+  POSTGRES_DB: test_db
+  POSTGRES_USER: user
+  POSTGRES_PASSWORD: password
+  DATABASE_URL: "postgres://user:password@postgres:5432/test_db"
 
 stages:
     - test
