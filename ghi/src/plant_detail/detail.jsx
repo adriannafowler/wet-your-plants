@@ -198,7 +198,7 @@ function PlantDetail() {
                                                 primary={`Indoor: ${details.indoor}`}
                                             />
                                             <ListItemText
-                                                primary={`Watering schedule: ${details.watering_schedule.schedule}`}
+                                                primary={`Watering schedule: ${details.watering_schedule}`}
                                             />
                                         </List>
                                     </CustomTabPanel>

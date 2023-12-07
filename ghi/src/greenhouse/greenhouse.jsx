@@ -40,7 +40,10 @@ const Greenhouse = () => {
                 throw new Error('HTTP error!')
             }
             const data = await response.json()
-            setInfo(data.account.name)
+            const fullName = data.account.name
+            const splitName = fullName.split(' ')
+            const firstName = splitName.length > 0 ? splitName[0] : ''
+            setInfo(firstName)
             setNewToken(data.access_token)
         } catch (error) {
             console.error('Error fetching token:', error)
