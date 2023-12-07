@@ -4,7 +4,7 @@ import PlantDetail from './plant_detail/detail'
 import Greenhouse from './greenhouse/greenhouse'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
-import SignInForm from './accounts/signin'
+import LogInForm from './accounts/signin'
 import Homepage from './main/home'
 
 const URL = import.meta.env.VITE_APP_API_HOST
@@ -25,7 +25,7 @@ function App() {
                         <Route index element={<SignUpForm />} />
                     </Route>
                     <Route path="signin/">
-                        <Route index element={<SignInForm />} />
+                        <Route index element={<LogInForm />} />
                     </Route>
                     <Route path="homepage/">
                         <Route index element={<Homepage />} />
