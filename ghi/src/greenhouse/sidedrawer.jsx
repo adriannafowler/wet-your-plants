@@ -1,9 +1,19 @@
 import React, { useState } from 'react'
 import { Typography, Drawer, Box, IconButton, Stack } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import useToken from '@galvanize-inc/jwtdown-for-react'
+import { useNavigate } from 'react-router-dom'
 
 const SideDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+    const { logout } = useToken()
+    const navigate = useNavigate()
+
+    const handleLogout = (event) => {
+        event.preventDefault()
+        logout()
+        navigate('/signin')
+    }
 
     return (
         <>
@@ -47,7 +57,7 @@ const SideDrawer = () => {
                     <IconButton>
                         <Typography>Greenhouse</Typography>
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={handleLogout}>
                         <Typography>Logout</Typography>
                     </IconButton>
                 </Stack>
