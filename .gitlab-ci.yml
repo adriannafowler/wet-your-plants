@@ -1,7 +1,7 @@
 services:
     - docker:dind
     - postgres:latest
-    
+
 variables:
   POSTGRES_DB: test_db
   POSTGRES_USER: user
@@ -31,6 +31,7 @@ api-unit-tests-job:
   script:
     - cd api
     - pip install -r requirements.txt
+    - echo $SIGNING_KEY | wc -c
     - python -m pytest
 
 # Build API Image:
