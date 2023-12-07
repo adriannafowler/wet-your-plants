@@ -1,11 +1,3 @@
-DROP TABLE IF EXISTS plants;
-DROP TABLE IF EXISTS users;
-DROP TABLE IF EXISTS status;
-DROP TABLE IF EXISTS offers;
-DROP TABLE IF EXISTS post;
-DROP TABLE IF EXISTS watering_schedules;
-
-
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
@@ -16,19 +8,19 @@ CREATE TABLE IF NOT EXISTS users (
     );
 
 
-CREATE TABLE status (
+CREATE TABLE IF NOT EXISTS status (
     id SERIAL PRIMARY KEY,
-    status TEXT NOT NULL
+    status TEXT NOT NULL UNIQUE
     );
 
 
-CREATE TABLE watering_schedules (
+CREATE TABLE IF NOT EXISTS watering_schedules (
     id SERIAL PRIMARY KEY,
     schedule TEXT NOT NULL UNIQUE
 );
 
 
-CREATE TABLE plants (
+CREATE TABLE IF NOT EXISTS plants (
     id SERIAL PRIMARY KEY,
     name TEXT NOT NULL,
     source TEXT NOT NULL,
@@ -44,55 +36,85 @@ CREATE TABLE plants (
     hardiness TEXT,
     original_url TEXT,
     dimensions TEXT,
-    owner_id INTEGER NOT NULL REFERENCES users(id),
-    status INTEGER REFERENCES  status(id),
+    owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     watering_schedule INTEGER REFERENCES watering_schedules(id)
     );
 
 
-CREATE TABLE offers (
+CREATE TABLE IF NOT EXISTS todos (
     id SERIAL PRIMARY KEY,
-    price DECIMAL(10, 2) NOT NULL,
-    buyer_id INTEGER NOT NULL REFERENCES users(id),
-    plant_id INTEGER NOT NULL REFERENCES plants(id)
-    );
+    todo TEXT NOT NULL,
+    due_date DATE NOT NULL,
+    time_completed TIMESTAMP DEFAULT NULL,
+    complete BOOL DEFAULT false,
+    status TEXT REFERENCES status(status),
+    plant_id INTEGER NOT NULL REFERENCES plants(id) ON DELETE CASCADE,
+    owner_id INTEGER NOT NULL REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE OR REPLACE FUNCTION update_time_completed()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NEW.complete = true THEN
+        NEW.time_completed = CURRENT_TIMESTAMP;
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER trigger_update_time_completed
+BEFORE UPDATE ON todos
+FOR EACH ROW
+EXECUTE FUNCTION update_time_completed();
 
 
-CREATE TABLE post (
-    id SERIAL PRIMARY KEY,
-    price DECIMAL(10, 2) NOT NULL,
-    plant_id INTEGER NOT NULL REFERENCES plants(id),
-    owner_id INTEGER NOT NULL REFERENCES users(id),
-    created_on DATE NOT NULL
+-- WATERING SCHEDULES SEED DATA
+INSERT INTO watering_schedules (schedule)
+SELECT '2x per week'
+WHERE NOT EXISTS (
+    SELECT 1 FROM watering_schedules WHERE schedule = '2x per week'
+);
+
+INSERT INTO watering_schedules (schedule)
+SELECT '1x per week'
+WHERE NOT EXISTS (
+    SELECT 1 FROM watering_schedules WHERE schedule = '1x per week'
+);
+
+INSERT INTO watering_schedules (schedule)
+SELECT 'every 2 weeks'
+WHERE NOT EXISTS (
+    SELECT 1 FROM watering_schedules WHERE schedule = 'every 2 weeks'
+);
+
+INSERT INTO watering_schedules (schedule)
+SELECT 'every 4 weeks'
+WHERE NOT EXISTS (
+    SELECT 1 FROM watering_schedules WHERE schedule = 'every 4 weeks'
+);
+
+INSERT INTO watering_schedules (schedule)
+SELECT 'every 6 weeks'
+WHERE NOT EXISTS (
+    SELECT 1 FROM watering_schedules WHERE schedule = 'every 6 weeks'
 );
 
 
-INSERT INTO users (name, email, password, zipcode, hashed_password) VALUES
-('John Doe', 'johndoe@example.com', 'pass123', '12345', 'hash'),
-('Jane Smith', 'janesmith@example.com', 'pass456', '23456', 'hash'),
-('Alice Johnson', 'alicejohnson@example.com', 'pass789', '34567', 'hash');
+-- STATUS SEED DATA
+INSERT INTO status (status)
+SELECT 'upcoming'
+WHERE NOT EXISTS (
+    SELECT 1 FROM status WHERE status = 'upcoming'
+);
 
+INSERT INTO status (status)
+SELECT 'overdue'
+WHERE NOT EXISTS (
+    SELECT 1 FROM status WHERE status = 'overdue'
+);
 
-INSERT INTO watering_schedules (schedule) VALUES
-('2x per week'),
-('1x per week'),
-('every 2 weeks'),
-('1x per month'),
-('every 6 weeks');
-
-
-INSERT INTO status (status) VALUES
-('OK'),
-('LISTED'),
-('PENDING'),
-('SOLD');
-
-
-INSERT INTO plants
-(name, source, common_name, type, cycle, watering, sunlight, indoor, care_level, maintenance, description, hardiness, original_url, dimensions, owner_id, status, watering_schedule) VALUES
-('Fern', 'Nature Store', 'Fern', 'Type1', 'Annual', 'Regular', 'Partial Shade', TRUE, 'Easy', 'Low', 'A green fern', 'Hardy', 'http://example.com/fern', '10x10', 1, 1, 1),
-('Cactus', 'Desert Flora', 'Cactus', 'Type2', 'Perennial', 'Sparse', 'Full Sun', FALSE, 'Medium', 'Medium', 'A spiky cactus', 'Very Hardy', 'http://example.com/cactus', '5x5', 1, 1, 5),
-('Rose', 'Garden Shop', 'Rose', 'Type1', 'Perennial', 'Regular', 'Full Sun', FALSE, 'Hard', 'High', 'A beautiful rose', 'Moderate', 'http://example.com/rose', '12x12', 2, 1, 3),
-('Tulip', 'Flower Store', 'Tulip', 'Type3', 'Annual', 'Regular', 'Full Sun', TRUE, 'Easy', 'Low', 'Colorful tulips', 'Hardy', 'http://example.com/tulip', '8x8', 2, 1, 2),
-('Bonsai', 'Bonsai Tree Shop', 'Bonsai', 'Type4', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Hard', 'High', 'A miniature tree', 'Hardy', 'http://example.com/bonsai', '15x15', 3, 1, 2),
-('Orchid', 'Orchid Gallery', 'Orchid', 'Type2', 'Perennial', 'Regular', 'Partial Shade', TRUE, 'Medium', 'Medium', 'An exotic orchid', 'Moderate', 'http://example.com/orchid', '9x9', 3, 1, 1);
+INSERT INTO status (status)
+SELECT 'due today'
+WHERE NOT EXISTS (
+    SELECT 1 FROM status WHERE status = 'due today'
+);

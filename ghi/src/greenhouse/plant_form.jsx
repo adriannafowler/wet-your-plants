@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import sadPlant from './sad-plant.svg'
+import sadPlant from '../public/sad-plant.svg'
 
 const SearchBar = ({setSearchQuery, onSearch}) => (
     <form>
@@ -29,9 +29,12 @@ const SearchBar = ({setSearchQuery, onSearch}) => (
         </form>
     );
 
-export default function AddPlantDialog({ open, onClose, plantId, initialData }) {
-    const PERENUAL_API_KEY = import.meta.env.VITE_PERENUAL_API_KEY;
-    const [formData, setFormData] = useState(initialData);
+export default function AddPlantDialog({ open, onClose,}) {
+    const [formData, setFormData] = useState({
+        name: '',
+        source: '',
+        watering_schedule: 2
+    });
     const [step, setStep] = useState(1);
     const [speciesId, setSpeciesId] = useState(null);
     const [searchResults, setSearchResults] = useState([])
@@ -40,7 +43,9 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
 
     const fetchWateringSchedules = async () => {
         const url = 'http://localhost:8000/watering-schedules/'
-        const response = await fetch(url)
+        const response = await fetch(url, {
+            credentials: 'include'
+        })
         if (response.ok) {
             const data = await response.json()
             setWateringSchedules(data)
@@ -59,18 +64,24 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
     };
 
     const getPlantSpecies = async (searchQuery) => {
-        const response = await fetch (`https://perenual.com/api/species-list?key=${PERENUAL_API_KEY}&q=${searchQuery}`)
+        const response = await fetch(
+            `http://localhost:8000/species_ids/${searchQuery}`,
+            {credentials: 'include'}
+        )
         if (response.ok) {
             const data = await response.json()
-            setSearchResults(data.data)
+            setSearchResults(data.species)
         }
     }
 
     const handleSpeciesSelect = (selectedSpecies) => {
         setSpeciesId(selectedSpecies.id);
-        setFormData({ ...formData, common_name: selectedSpecies.common_name });
+        setFormData({ ...formData, species_id: selectedSpecies.id });
         setStep(2);
     };
+
+    useEffect(() => {
+    }, [formData, speciesId]);
 
     const SearchResultsDropdown = ({ searchResults, onSelect }) => {
         return (
@@ -78,9 +89,9 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
                 {searchResults.map((item) => (
                     <div key={item.id} onClick={() => onSelect(item)} style={{ cursor: 'pointer', padding: '10px' }}>
                         <img
-                            src={item.default_image?.medium_url || sadPlant}
+                            src={item.original_url || sadPlant}
                             alt={item.common_name}
-                            style={{ width: '100px', height: 'auto' }}
+                            style={{ width: '200px', height: 'auto' }}
                         />
                     <div>{item.common_name}</div>
                 </div>
@@ -100,25 +111,32 @@ export default function AddPlantDialog({ open, onClose, plantId, initialData }) 
     };
 
     const handleSubmit = async () => {
-        console.log('formData:', formData)
+        const submitData = {
+            name: formData.name,
+            source: formData.source,
+            species_id: formData.species_id,
+            watering_schedule: formData.watering_schedule
+        };
+
+
         try {
-            const submitData = {
-                name: formData.name,
-                source: formData.source,
-                species_id: speciesId,
-                watering_schedule: formData.watering_schedule
-            }
             const response = await fetch(`http://localhost:8000/greenhouse/`, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(submitData)
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add authorization header if needed
+                },
+                body: JSON.stringify(submitData),
+                credentials: 'include'
             });
 
             if (!response.ok) {
-                throw new Error('Failed to update the plant.');
+                const errorDetails = await response.json();
+                console.error('Submission error details:', errorDetails);
+                throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            console.log('Plant created successfully');
+            const data = await response.json();
             onClose();
         } catch (error) {
             console.error('Error:', error);

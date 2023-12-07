@@ -10,6 +10,7 @@ services:
             DATABASE_URL: postgresql://user:password@postgres:5432/postgres
             CORS_HOST: http://localhost:3000
             SIGNING_KEY: ${SIGNING_KEY}
+            WAIT_HOST: postgres:5432
         build:
             context: api
             dockerfile: Dockerfile.dev
@@ -17,6 +18,8 @@ services:
             - 8000:8000
         volumes:
             - ./api:/app
+        depends_on:
+            - postgres
 
     ghi:
         image: node:lts-bullseye
@@ -31,7 +34,7 @@ services:
             NODE_ENV: development
             HOST: "0.0.0.0"
             PUBLIC_URL: http://localhost:3000
-            REACT_APP_API_HOST: ${REACT_APP_API_HOST}
+            VITE_APP_API_HOST: ${VITE_APP_API_HOST}
 
     # PostgreSQL service configuration
     postgres:
@@ -57,3 +60,5 @@ services:
             PGADMIN_DEFAULT_EMAIL: me@me.com # Default email for pgAdmin login
             PGADMIN_DEFAULT_PASSWORD: password # Password for the default email
             PGADMIN_DISABLE_POSTFIX: 1 # Disable postfix service within the container
+        depends_on:
+            - postgres

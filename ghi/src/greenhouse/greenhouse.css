@@ -1,0 +1,143 @@
+/* .big {
+    color: black;
+    display: flex;
+    flex-direction: row;
+    align-content: space-between;
+} */
+
+@font-face {
+    font-family: 'estirada';
+    src: url('../public/fonts/Cupcakie.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+.hamburger {
+    height: 100px;
+    width: 100px;
+    margin: auto;
+}
+
+.icon_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 125px;
+    height: auto;
+    border-radius: 50%;
+    border: 2px solid #c7d7bb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+}
+
+.watering_can_button {
+    border: none;
+    background-color: transparent;
+    padding: 0; /* Removes padding to ensure the image fits well */
+}
+
+.watering_can {
+    height: 100%; /* Make the image fill the container */
+    width: 100%; /* Make the image fill the container */
+    object-fit: contain; /* Ensures that the entire image is visible */
+    border-radius: 50%; /* If you want the image itself to be circular (not necessary since the container is already circular and hiding overflow) */
+}
+
+.watering_can:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Simulates being pressed */
+}
+
+.inventory_name {
+    font-size: 95px;
+    font-family: 'Cupcakie';
+    justify-content: space-around;
+    color: #c7d7bb;
+}
+
+body {
+    background-color: #fbf2ed;
+}
+
+.header {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.plant_container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.card {
+    border: none; /* Removes the border */
+    padding: 20px;
+    justify-content: center;
+    align-content: center;
+    background-color: transparent;
+    border-radius: 8px; /* Rounds the corners of the card */
+    box-shadow: none;
+}
+
+.plant_image {
+    height: 200px;
+    width: 200px;
+    align-self: center;
+    justify-self: center;
+    flex-shrink: 0;
+    border-radius: 15px; /* Rounds the corners of the image */
+}
+
+.plant_link {
+    text-decoration: none; /* Removes underline */
+}
+
+.plant_name {
+    font-size: 25px;
+    font-family: 'Virgil', sans-serif; /* Fallback to sans-serif */
+    color: #79a6a3;
+    width: auto;
+    height: 16px;
+    text-align: center;
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.plant_name:hover {
+    filter: brightness(65%); /* Darkens the color */
+    /* Or specify a specific darker color:
+    color: #darker-shade-color; */
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.plant_name {
+    width: auto;
+    height: 16px;
+    text-align: center;
+}
+
+.add_plant_div {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.add_plant_icon {
+    width: 64px;
+    height: 64px;
+}
+
+.plant_link {
+    text-decoration: none;
+}
