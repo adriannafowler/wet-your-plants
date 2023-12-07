@@ -7,7 +7,7 @@ from routers import (
     watering_schedules,
     greenhouse,
     dashboard,
-    get_plant_species
+    get_plant_species,
 )
 from authenticator import authenticator
 
@@ -20,6 +20,12 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+
+@app.get("/")
+def root():
+    return {"message": "You hit the root path!"}
+
 
 print(os.environ.get("CORS_HOST", "http://localhost:3000"))
 

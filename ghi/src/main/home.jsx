@@ -1,6 +1,6 @@
 import React from 'react';
 import './home.css';
-import Nav from '/.nav';
+import Nav from './nav';
 
 const Homepage = () => {
   // Plant data for content cards to match the design mockup

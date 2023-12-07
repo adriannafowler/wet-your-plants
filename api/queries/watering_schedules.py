@@ -3,6 +3,7 @@ from typing import List
 from queries.pool import pool
 from models import ScheduleOut
 
+
 class ScheduleRepository:
     def get_schedules(self) -> List[ScheduleOut]:
         """

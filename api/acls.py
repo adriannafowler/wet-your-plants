@@ -2,6 +2,7 @@ import json
 import requests
 from keys import PERENUAL_API_KEY, OPEN_WEATHER_API_KEY
 
+
 def get_plant_species(query):
     url = f"https://perenual.com/api/species-list?key={PERENUAL_API_KEY}&q={query}"
 
@@ -16,12 +17,16 @@ def get_plant_species(query):
         result = {"species": []}
         for item in content.get("data", []):
             default_image = item.get("default_image")
-            original_url = default_image.get("original_url") if default_image is not None else None
+            original_url = (
+                default_image.get("original_url")
+                if default_image is not None
+                else None
+            )
 
             species_data = {
                 "id": item.get("id"),
                 "common_name": item.get("common_name"),
-                "original_url": original_url
+                "original_url": original_url,
             }
             result["species"].append(species_data)
         return result
@@ -30,9 +35,7 @@ def get_plant_species(query):
 
 
 def get_plant_details(species_id):
-    url = (
-        f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
-    )
+    url = f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
 
     response = requests.get(url)
     content = json.loads(response.content)
