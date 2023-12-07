@@ -14,7 +14,7 @@ import React, { useEffect, useState, useRef } from 'react'
 import { List, ListItemText } from '@mui/material'
 import DeleteDialog from './delete_modal'
 import EditDialog from './edit_modal'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props
