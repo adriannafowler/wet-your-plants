@@ -46,19 +46,50 @@ const SideDrawer = () => {
                     role="presentation"
                     backgroundColor="#cfd6e0"
                 >
-                    <Typography variant="h5" component="div">
+                    <Typography
+                        variant="h4"
+                        component="div"
+                        style={{
+                            fontFamily: 'Virgil, sans-serif',
+                            color: 'white',
+                        }}
+                    >
                         Menu
                     </Typography>
                 </Box>
                 <Stack spacing={2} p={2}>
                     <IconButton>
-                        <Typography>Home</Typography>
+                        <Typography
+                            style={{
+                                fontFamily: 'Virgil, sans-serif',
+                                fontSize: 18,
+                                color: 'white',
+                            }}
+                        >
+                            Home
+                        </Typography>
                     </IconButton>
                     <IconButton>
-                        <Typography>Greenhouse</Typography>
+                        <Typography
+                            style={{
+                                fontFamily: 'Virgil, sans-serif',
+                                fontSize: 18,
+                                color: 'white',
+                            }}
+                        >
+                            Greenhouse
+                        </Typography>
                     </IconButton>
                     <IconButton onClick={handleLogout}>
-                        <Typography>Logout</Typography>
+                        <Typography
+                            style={{
+                                fontFamily: 'Virgil, sans-serif',
+                                fontSize: 18,
+                                color: 'white',
+                            }}
+                        >
+                            Logout
+                        </Typography>
                     </IconButton>
                 </Stack>
             </Drawer>

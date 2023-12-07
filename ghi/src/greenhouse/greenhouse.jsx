@@ -6,7 +6,7 @@ import Can from './watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
 import { IconButton, Typography, Drawer, Box } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
-import AddPlantDialog from "./plant_form";
+import AddPlantDialog from './plant_form'
 
 import SideDrawer from './sidedrawer'
 
@@ -16,15 +16,15 @@ const Greenhouse = () => {
     const [newToken, setNewToken] = useState([])
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const navigate = useNavigate()
-    const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false);
+    const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false)
 
     const handleAddPlantClick = () => {
-        setIsAddPlantDialogOpen(true);
-    };
+        setIsAddPlantDialogOpen(true)
+    }
 
     const handleAddPlantDialogClose = () => {
-        setIsAddPlantDialogOpen(false);
-    };
+        setIsAddPlantDialogOpen(false)
+    }
 
     useEffect(() => {
         if (!newToken) {
@@ -74,7 +74,6 @@ const Greenhouse = () => {
         fetchPlants()
     }, [newToken])
 
-
     return (
         <>
             {newToken ? (
@@ -88,20 +87,20 @@ const Greenhouse = () => {
                                 {info}'s Greenhouse
                             </div>
                             <div className="icon_div">
-                                <button className='watering_can_button'>
+                                <button className="watering_can_button">
                                     <img
                                         className="watering_can"
                                         src={Can}
                                     ></img>
-                                </IconButton>
+                                </button>
                             </div>
                         </div>
                         <div className="add_plant_div">
                             <IconButton
-                                    className='add-plant-button'
-                                    onClick={handleAddPlantClick}
-                                    style={{ fontSize: '36px' }}
-                                    >
+                                className="add-plant-button"
+                                onClick={handleAddPlantClick}
+                                style={{ fontSize: '36px' }}
+                            >
                                 <AddIcon className="add_plant_icon"></AddIcon>
                             </IconButton>
                             <AddPlantDialog
@@ -114,11 +113,10 @@ const Greenhouse = () => {
                         <div className="plant_container">
                             {plants.map((plant) => (
                                 <a
-                                    className='plant_link'
-                                    key={plant.id}
+                                    className="plant_link"
                                     href={`http://localhost:3000/greenhouse/${plant.id}`}
                                 >
-                                    <div className="card">
+                                    <div className="card" key={plant.id}>
                                         <div className="card_content">
                                             <img
                                                 className="plant_image"
