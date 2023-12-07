@@ -2,30 +2,43 @@ import json
 import requests
 from keys import PERENUAL_API_KEY, OPEN_WEATHER_API_KEY
 
-
-def get_plant_species(name):
-    url = f"https://perenual.com/api/species-list?key={PERENUAL_API_KEY}&q={name}"
-
-    response = requests.get(url)
-    content = json.loads(response.content)
+def get_plant_species(query):
+    url = f"https://perenual.com/api/species-list?key={PERENUAL_API_KEY}&q={query}"
 
     try:
-        result = {"species_id": []}
-        for item in content["data"]:
-            result["species_id"].append(item["id"])
+        response = requests.get(url)
+        response.raise_for_status()
+        content = response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
+
+    try:
+        result = {"species": []}
+        for item in content.get("data", []):
+            default_image = item.get("default_image")
+            original_url = default_image.get("original_url") if default_image is not None else None
+
+            species_data = {
+                "id": item.get("id"),
+                "common_name": item.get("common_name"),
+                "original_url": original_url
+            }
+            result["species"].append(species_data)
         return result
-    except (KeyError, IndexError):
-        return {"species_id": None}
+    except (KeyError, IndexError) as e:
+        return {"error": f"Data processing error: {str(e)}"}
 
 
 def get_plant_details(species_id):
-    url = f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
+    url = (
+        f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
+    )
 
     response = requests.get(url)
     content = json.loads(response.content)
     sunlight = ""
-    if 'sunlight' in content and isinstance(content['sunlight'], list):
-        sunlight = ", ".join(content['sunlight'])
+    if "sunlight" in content and isinstance(content["sunlight"], list):
+        sunlight = ", ".join(content["sunlight"])
     else:
         sunlight = ""
 

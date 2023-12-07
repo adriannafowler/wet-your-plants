@@ -1,22 +1,22 @@
-import React, { useEffect, useState } from "react";
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
-import Dialog from '@mui/material/Dialog';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogTitle from '@mui/material/DialogTitle';
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from "@mui/icons-material/Search";
-import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import sadPlant from './sad-plant.svg'
+import React, { useEffect, useState } from 'react'
+import Button from '@mui/material/Button'
+import TextField from '@mui/material/TextField'
+import Dialog from '@mui/material/Dialog'
+import DialogActions from '@mui/material/DialogActions'
+import DialogContent from '@mui/material/DialogContent'
+import DialogTitle from '@mui/material/DialogTitle'
+import IconButton from '@mui/material/IconButton'
+import SearchIcon from '@mui/icons-material/Search'
+import { Select, MenuItem, InputLabel, FormControl } from '@mui/material'
+import sadPlant from '../public/sad-plant.svg'
 
-const SearchBar = ({setSearchQuery, onSearch}) => (
+const SearchBar = ({ setSearchQuery, onSearch }) => (
     <form>
         <TextField
             id="search-bar"
             className="text"
             onChange={(e) => {
-            setSearchQuery(e.target.value);
+                setSearchQuery(e.target.value)
             }}
             label="Enter a plant name"
             variant="outlined"
@@ -24,23 +24,25 @@ const SearchBar = ({setSearchQuery, onSearch}) => (
             size="small"
         />
         <IconButton type="submit" aria-label="search" onClick={onSearch}>
-            <SearchIcon style={{ fill: "blue" }} />
+            <SearchIcon style={{ fill: 'blue' }} />
         </IconButton>
-        </form>
-    );
+    </form>
+)
 
 export default function EditDialog({ open, onClose, plantId, initialData }) {
-    const PERENUAL_API_KEY = import.meta.env.VITE_PERENUAL_API_KEY;
-    const [formData, setFormData] = useState(initialData);
-    const [step, setStep] = useState(1);
-    const [speciesId, setSpeciesId] = useState(null);
+    const PERENUAL_API_KEY = import.meta.env.VITE_PERENUAL_API_KEY
+    const [formData, setFormData] = useState(initialData)
+    const [step, setStep] = useState(1)
+    const [speciesId, setSpeciesId] = useState(null)
     const [searchResults, setSearchResults] = useState([])
-    const [searchQuery, setSearchQuery] = useState("");
+    const [searchQuery, setSearchQuery] = useState('')
     const [wateringSchedules, setWateringSchedules] = useState([])
 
     const fetchWateringSchedules = async () => {
         const url = 'http://localhost:8000/watering-schedules/'
-        const response = await fetch(url)
+        const response = await fetch(url, {
+            credentials: 'include',
+        })
         if (response.ok) {
             const data = await response.json()
             setWateringSchedules(data)
@@ -48,86 +50,97 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
     }
 
     useEffect(() => {
-        fetchWateringSchedules();
-    }, []);
+        fetchWateringSchedules()
+    }, [])
 
     const onSearch = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
         if (searchQuery) {
-            await getPlantSpecies(searchQuery);
+            await getPlantSpecies(searchQuery)
         }
-    };
+    }
 
     const getPlantSpecies = async (searchQuery) => {
-        const response = await fetch (`https://perenual.com/api/species-list?key=${PERENUAL_API_KEY}&q=${searchQuery}`)
+        const response = await fetch(
+            `http://localhost:8000/species_ids/${searchQuery}`,
+            {credentials: 'include'}
+        )
         if (response.ok) {
             const data = await response.json()
-            setSearchResults(data.data)
+            setSearchResults(data.species)
         }
     }
 
     const handleSpeciesSelect = (selectedSpecies) => {
-        setSpeciesId(selectedSpecies.id);
-        setFormData({ ...formData, common_name: selectedSpecies.common_name });
-        setStep(2);
-    };
+        setSpeciesId(selectedSpecies.id)
+        setFormData({ ...formData, common_name: selectedSpecies.common_name })
+        setStep(2)
+    }
 
     const SearchResultsDropdown = ({ searchResults, onSelect }) => {
         return (
             <div style={{ maxHeight: '200px', overflowY: 'auto' }}>
                 {searchResults.map((item) => (
-                    <div key={item.id} onClick={() => onSelect(item)} style={{ cursor: 'pointer', padding: '10px' }}>
+                    <div
+                        key={item.id}
+                        onClick={() => onSelect(item)}
+                        style={{ cursor: 'pointer', padding: '10px' }}
+                    >
                         <img
-                            src={item.default_image?.medium_url || sadPlant}
+                            src={item.original_url || sadPlant}
                             alt={item.common_name}
-                            style={{ width: '100px', height: 'auto' }}
+                            style={{ width: '200px', height: 'auto' }}
                         />
-                    <div>{item.common_name}</div>
-                </div>
+                        <div>{item.common_name}</div>
+                    </div>
                 ))}
             </div>
-        );
-    };
+        )
+    }
 
     useEffect(() => {
         if (searchQuery) {
-            getPlantSpecies(searchQuery);
+            getPlantSpecies(searchQuery)
         }
-    }, [searchQuery]);
+    }, [searchQuery])
 
     useEffect(() => {
-        setFormData(initialData); // Set initial form data
-    }, [initialData]);
+        setFormData(initialData)
+    }, [initialData])
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
-    };
+        setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
 
     const handleSubmit = async () => {
-        console.log('formData:', formData)
         try {
             const submitData = {
                 name: formData.name,
                 source: formData.source,
                 species_id: speciesId,
-                watering_schedule: formData.watering_schedule
+                watering_schedule: formData.watering_schedule,
             }
-            const response = await fetch(`http://localhost:8000/greenhouse/${plantId}/`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(submitData)
-            });
+            console.log("submitData:", submitData)
+            const response = await fetch(
+                `http://localhost:8000/greenhouse/${plantId}/`,
+                {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(submitData),
+                    credentials: 'include'
+                }
+            )
 
             if (!response.ok) {
-                throw new Error('Failed to update the plant.');
+                throw new Error('Failed to update the plant.')
             }
 
-            console.log('Plant updated successfully');
-            onClose(); // Close the dialog after successful update
+            console.log('Plant updated successfully')
+            onClose()
         } catch (error) {
-            console.error('Error:', error);
+            console.error('Error:', error)
         }
-    };
+    }
 
     return (
         <Dialog open={open} onClose={onClose}>
@@ -135,8 +148,14 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
             <DialogContent>
                 {step === 1 && (
                     <>
-                        <SearchBar setSearchQuery={setSearchQuery} onSearch={onSearch} />
-                        <SearchResultsDropdown searchResults={searchResults} onSelect={handleSpeciesSelect} />
+                        <SearchBar
+                            setSearchQuery={setSearchQuery}
+                            onSearch={onSearch}
+                        />
+                        <SearchResultsDropdown
+                            searchResults={searchResults}
+                            onSelect={handleSpeciesSelect}
+                        />
                     </>
                 )}
                 {step === 2 && (
@@ -162,15 +181,25 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                             onChange={handleChange}
                         />
                         <FormControl fullWidth margin="dense">
-                            <InputLabel id="watering-schedule-label">Watering Schedule</InputLabel>
+                            <InputLabel id="watering-schedule-label">
+                                Watering Schedule
+                            </InputLabel>
                             <Select
                                 labelId="watering-schedule-label"
                                 value={formData.watering_schedule}
                                 label="Watering Schedule"
-                                onChange={(e) => setFormData({ ...formData, watering_schedule: e.target.value })}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData,
+                                        watering_schedule: e.target.value,
+                                    })
+                                }
                             >
                                 {wateringSchedules.map((schedule) => (
-                                    <MenuItem key={schedule.id} value={schedule.id}>
+                                    <MenuItem
+                                        key={schedule.id}
+                                        value={schedule.id}
+                                    >
                                         {schedule.schedule}
                                     </MenuItem>
                                 ))}
@@ -180,17 +209,15 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                 )}
             </DialogContent>
             <DialogActions>
-            {step === 2 && (
+                {step === 2 && (
                     <>
                         <Button onClick={() => setStep(1)}>Back</Button>
                         <Button onClick={onClose}>Cancel</Button>
                         <Button onClick={handleSubmit}>Submit</Button>
                     </>
                 )}
-                {step === 1 && (
-                    <Button onClick={onClose}>Cancel</Button>
-                )}
+                {step === 1 && <Button onClick={onClose}>Cancel</Button>}
             </DialogActions>
         </Dialog>
-    );
+    )
 }
