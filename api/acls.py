@@ -4,8 +4,9 @@ from dotenv import load_dotenv
 import os
 
 load_dotenv()
-PERENUAL_API_KEY = os.getenv('PERENUAL_API_KEY')
-OPEN_WEATHER_API_KEY = os.getenv('OPEN_WEATHER_API_KEY')
+PERENUAL_API_KEY = os.getenv("PERENUAL_API_KEY")
+OPEN_WEATHER_API_KEY = os.getenv("OPEN_WEATHER_API_KEY")
+
 
 def get_plant_species(query):
     url = f"https://perenual.com/api/species-list?key={PERENUAL_API_KEY}&q={query}"
