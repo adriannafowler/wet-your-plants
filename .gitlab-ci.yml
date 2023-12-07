@@ -3,10 +3,10 @@ services:
     - postgres:latest
 
 variables:
-  POSTGRES_DB: test_db
-  POSTGRES_USER: user
-  POSTGRES_PASSWORD: password
-  DATABASE_URL: "postgres://user:password@postgres:5432/test_db"
+  POSTGRES_DB: $POSTGRES_DB
+  POSTGRES_USER: $POSTGRES_USER
+  POSTGRES_PASSWORD: $POSTGRES_PASSWORD
+  DATABASE_URL: $DATABASE_URL
   SIGNING_KEY: $SIGNING_KEY
 
 stages:
