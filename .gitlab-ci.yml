@@ -31,8 +31,8 @@ api-unit-tests-job:
   script:
     - cd api
     - pip install -r requirements.txt
-    - echo $SIGNING_KEY | wc -c
-    - python -m pytest
+    - echo ${SIGNING_KEY}| wc -c
+    - SIGNING_KEY=${SIGNING_KEY} python -m pytest
 
 # Build API Image:
 build-api-image:
