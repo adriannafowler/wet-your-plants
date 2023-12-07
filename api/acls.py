@@ -2,6 +2,32 @@ import json
 import requests
 from keys import PERENUAL_API_KEY, OPEN_WEATHER_API_KEY
 
+def get_plant_species(query):
+    url = f"https://perenual.com/api/species-list?key={PERENUAL_API_KEY}&q={query}"
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        content = response.json()
+    except requests.exceptions.RequestException as e:
+        return {"error": str(e)}
+
+    try:
+        result = {"species": []}
+        for item in content.get("data", []):
+            default_image = item.get("default_image")
+            original_url = default_image.get("original_url") if default_image is not None else None
+
+            species_data = {
+                "id": item.get("id"),
+                "common_name": item.get("common_name"),
+                "original_url": original_url
+            }
+            result["species"].append(species_data)
+        return result
+    except (KeyError, IndexError) as e:
+        return {"error": f"Data processing error: {str(e)}"}
+
 
 def get_plant_details(species_id):
     url = (

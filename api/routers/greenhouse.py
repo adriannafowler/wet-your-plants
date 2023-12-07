@@ -11,7 +11,6 @@ router = APIRouter()
 @router.post("/greenhouse/")
 def create_plant(
     plant: PlantIn,
-    user_id: int,
     repo: PlantRepository = Depends(),
     user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> PlantOut:

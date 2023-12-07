@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material'
-import sadPlant from './sad-plant.svg'
+import sadPlant from '../public/sad-plant.svg'
 
 const SearchBar = ({ setSearchQuery, onSearch }) => (
     <form>
@@ -62,11 +62,12 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
 
     const getPlantSpecies = async (searchQuery) => {
         const response = await fetch(
-            `https://perenual.com/api/species-list?key=${PERENUAL_API_KEY}&q=${searchQuery}`
+            `http://localhost:8000/species_ids/${searchQuery}`,
+            {credentials: 'include'}
         )
         if (response.ok) {
             const data = await response.json()
-            setSearchResults(data.data)
+            setSearchResults(data.species)
         }
     }
 
@@ -86,9 +87,9 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                         style={{ cursor: 'pointer', padding: '10px' }}
                     >
                         <img
-                            src={item.default_image?.medium_url || sadPlant}
+                            src={item.original_url || sadPlant}
                             alt={item.common_name}
-                            style={{ width: '100px', height: 'auto' }}
+                            style={{ width: '200px', height: 'auto' }}
                         />
                         <div>{item.common_name}</div>
                     </div>
@@ -104,7 +105,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
     }, [searchQuery])
 
     useEffect(() => {
-        setFormData(initialData) // Set initial form data
+        setFormData(initialData)
     }, [initialData])
 
     const handleChange = (e) => {
@@ -112,7 +113,6 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
     }
 
     const handleSubmit = async () => {
-        console.log('formData:', formData)
         try {
             const submitData = {
                 name: formData.name,
@@ -120,13 +120,14 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                 species_id: speciesId,
                 watering_schedule: formData.watering_schedule,
             }
+            console.log("submitData:", submitData)
             const response = await fetch(
                 `http://localhost:8000/greenhouse/${plantId}/`,
                 {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(submitData),
-                    credentials: 'include',
+                    credentials: 'include'
                 }
             )
 
@@ -135,7 +136,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
             }
 
             console.log('Plant updated successfully')
-            onClose() // Close the dialog after successful update
+            onClose()
         } catch (error) {
             console.error('Error:', error)
         }

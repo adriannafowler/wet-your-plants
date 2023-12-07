@@ -32,6 +32,7 @@ class PlantRepository:
                         [plant_id],
                     )
                     record = result.fetchone()
+                    print("!!!!!!!!!!!!!")
                     return self.record_out(record)
         except Exception as e:
             logging.error("Error in creating plant:", e)
