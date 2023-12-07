@@ -4,7 +4,9 @@ from keys import PERENUAL_API_KEY, OPEN_WEATHER_API_KEY
 
 
 def get_plant_details(species_id):
-    url = f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
+    url = (
+        f"https://perenual.com/api/species/details/{species_id}?key={PERENUAL_API_KEY}"
+    )
 
     response = requests.get(url)
     content = json.loads(response.content)

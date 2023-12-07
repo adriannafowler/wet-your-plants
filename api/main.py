@@ -20,7 +20,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-print( os.environ.get("CORS_HOST", "http://localhost:3000"))
+print(os.environ.get("CORS_HOST", "http://localhost:3000"))
 
 app.include_router(authenticator.router)
 app.include_router(plant_detail.router)

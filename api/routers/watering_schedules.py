@@ -5,9 +5,10 @@ from authenticator import authenticator
 
 router = APIRouter()
 
+
 @router.get("/watering-schedules/")
 def get_all_watering_schedules(
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ):
     schedules = get_schedules()
     return schedules

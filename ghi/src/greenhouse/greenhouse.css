@@ -25,6 +25,7 @@
     margin: auto;
     justify-self: center;
     align-self: center;
+    background-color: transparent;
 }
 
 .inventory_name {

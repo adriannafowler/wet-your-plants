@@ -1,4 +1,3 @@
-from pydantic import BaseModel
 from fastapi import (
     Depends,
     HTTPException,
@@ -7,22 +6,20 @@ from fastapi import (
     APIRouter,
     Request,
 )
-from jwtdown_fastapi.authentication import Token
 from queries.users import UserQueries
-from queries.pool import pool
 from models import (
     UserOut,
     DuplicateUserError,
     UserIn,
-    UserOutWithPassword,
     UserToken,
     HttpError,
-    UserForm
-    )
+    UserForm,
+)
 from authenticator import authenticator
 
 
 router = APIRouter()
+
 
 @router.get("/users/{user_id}/", response_model=UserOut)
 async def get_user(
@@ -61,7 +58,7 @@ async def update_user(
     hashed_password = authenticator.hash_password(info.password)
     info.password = hashed_password
     try:
-        user = queries.update_user(users_id,info)
+        user = queries.update_user(users_id, info)
     except DuplicateUserError:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -72,9 +69,9 @@ async def update_user(
 
 @router.get("/token")
 async def get_token(
-    request:  Request,
-    user: dict =Depends(authenticator.try_get_current_account_data),
-)-> UserToken | None:
+    request: Request,
+    user: dict = Depends(authenticator.try_get_current_account_data),
+) -> UserToken | None:
     if user and authenticator.cookie_name in request.cookies:
         return {
             "access_token": request.cookies[authenticator.cookie_name],

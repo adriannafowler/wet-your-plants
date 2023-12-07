@@ -4,7 +4,7 @@ from jwtdown_fastapi.authentication import Authenticator
 from queries.users import (
     UserQueries,
 )
-from models import UserOutWithPassword,UserOut
+from models import UserOutWithPassword, UserOut
 
 
 class PlantAuthenticator(Authenticator):
@@ -14,8 +14,6 @@ class PlantAuthenticator(Authenticator):
         accounts: UserQueries,
     ):
         return accounts.get(email)
-
-
 
     def get_account_getter(
         self,
@@ -27,9 +25,8 @@ class PlantAuthenticator(Authenticator):
         print(account)
         return account.hashed_password
 
-
-    def get_account_data_for_cookie(self,account):
-        if isinstance(account,dict):
+    def get_account_data_for_cookie(self, account):
+        if isinstance(account, dict):
             account = UserOut(**account)
 
         return account.email, account.dict()

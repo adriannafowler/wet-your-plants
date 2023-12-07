@@ -27,13 +27,15 @@ import { useState, useEffect } from 'react'
 import './greenhouse.css'
 import Can from './watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
-import { IconButton } from '@mui/material'
+import { IconButton, Typography, Drawer, Box } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
+import SideDrawer from './sidedrawer'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
     const [plants, setPlants] = useState([])
     const [newToken, setNewToken] = useState([])
+    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -91,20 +93,18 @@ const Greenhouse = () => {
                     <div className="top">
                         <div className="header">
                             <div className="icon_div">
-                                <IconButton style={{ fontSize: '120px' }}>
-                                    <MenuIcon className="add_plant_icon"></MenuIcon>
-                                </IconButton>
+                                <SideDrawer />
                             </div>
                             <div className="inventory_name">
                                 {info}'s Greenhouse
                             </div>
                             <div className="icon_div">
-                                <button>
+                                <IconButton style={{ fontSize: '120px' }}>
                                     <img
                                         className="watering_can"
                                         src={Can}
                                     ></img>
-                                </button>
+                                </IconButton>
                             </div>
                         </div>
                         <div className="add_plant_div">
@@ -119,17 +119,19 @@ const Greenhouse = () => {
                                 <a
                                     href={`http://localhost:3000/greenhouse/${plant.id}`}
                                 >
-                                    <div className="card" key={plant.id}>
-                                        <div className="card_content">
-                                            <img
-                                                className="plant_image"
-                                                src={plant.original_url}
-                                            ></img>
-                                            <h3 className="plant_name">
-                                                {plant.common_name}
-                                            </h3>
+                                    <Box>
+                                        <div className="card" key={plant.id}>
+                                            <div className="card_content">
+                                                <img
+                                                    className="plant_image"
+                                                    src={plant.original_url}
+                                                ></img>
+                                                <h3 className="plant_name">
+                                                    {plant.common_name}
+                                                </h3>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </Box>
                                 </a>
                             ))}
                         </div>

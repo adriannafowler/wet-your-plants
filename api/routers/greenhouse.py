@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Query
+from fastapi import APIRouter, Depends
 from queries.greenhouse import PlantIn, PlantOut, PlantRepository
 from models import UserOut
 from authenticator import authenticator
@@ -8,13 +8,12 @@ from typing import List
 router = APIRouter()
 
 
-
 @router.post("/greenhouse/")
 def create_plant(
     plant: PlantIn,
     user_id: int,
     repo: PlantRepository = Depends(),
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> PlantOut:
     return repo.create(plant, user.get("id"))
 
@@ -27,4 +26,4 @@ def get_all_plants(
     try:
         return repo.get_all(user.get("id"))
     except Exception:
-        return {"message":"Could not get plant list"}
+        return {"message": "Could not get plant list"}

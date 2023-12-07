@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Depends, Response, HTTPException
+from fastapi import APIRouter, Depends, Response
 from queries.dashboard import TodoIn, CompleteIn, TodoOut, TodoRepository
 from models import UserOut
 from typing import List
 from authenticator import authenticator
-from typing import Optional
-
 
 
 router = APIRouter()
@@ -13,7 +11,7 @@ router = APIRouter()
 @router.get("/dashboard/", response_model=List[TodoOut])
 def get_all_todos(
     repo: TodoRepository = Depends(),
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> List[TodoOut] | None:
     # try:
     return repo.get_all(user.get("id"))
@@ -37,7 +35,7 @@ def get_all_todos(
 def delete_todo(
     todo_id: int,
     repo: TodoRepository = Depends(),
-    user: dict = Depends(authenticator.get_current_account_data)
+    user: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
     return repo.delete(todo_id)
 
@@ -48,12 +46,12 @@ def create_todo(
     todo: TodoIn,
     response: Response,
     repo: TodoRepository = Depends(),
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> TodoOut:
     try:
         response.status_code = 200
-        return repo.create(user.get("id"), plant_id,todo)
-    except Exception as e:
+        return repo.create(user.get("id"), plant_id, todo)
+    except Exception:
         response.status_code = 500
         return {"message": "Count not create todo"}
 
@@ -63,7 +61,7 @@ def update_todo(
     todo_id: int,
     todo: TodoIn,
     repo: TodoRepository = Depends(),
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> TodoOut:
     return repo.update(todo_id, todo)
 
@@ -73,6 +71,6 @@ def update_complete_todo(
     todo_id: int,
     complete: CompleteIn,
     repo: TodoRepository = Depends(),
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> TodoOut:
     return repo.update_complete(todo_id, complete)
