@@ -9,10 +9,12 @@ const SideDrawer = () => {
     const { logout } = useToken()
     const navigate = useNavigate()
 
-    const handleLogout = (event) => {
+    const handleLogout = async (event) => {
         event.preventDefault()
-        logout()
-        navigate('/signin')
+        await logout()
+        setTimeout(() => {
+            navigate('/signin')
+        }, 1000)
     }
 
     return (

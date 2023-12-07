@@ -1,20 +1,17 @@
 import React from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import './greenhouse.css'
 import Can from './watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
-import { IconButton, Typography, Drawer, Box } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { IconButton } from '@mui/material'
 import AddPlantDialog from './plant_form'
-
 import SideDrawer from './sidedrawer'
+import './greenhouse.css'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
     const [plants, setPlants] = useState([])
     const [newToken, setNewToken] = useState([])
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const navigate = useNavigate()
     const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false)
 
