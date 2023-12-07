@@ -9,7 +9,7 @@ COPY tests.py tests.py
 COPY models.py models.py
 COPY authenticator.py authenticator.py
 COPY acls.py acls.py
-COPY migrations migrations
+# COPY migrations migrations
 RUN python -m pip install -r requirements.txt
 # CMD uvicorn main:app --host 0.0.0.0 --port 80 --forwarded-allow-ips "*"
 CMD python -m migrations up && uvicorn main:app --host 0.0.0.0 --port 80
