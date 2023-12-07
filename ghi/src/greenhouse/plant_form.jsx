@@ -124,16 +124,11 @@ export default function AddPlantDialog({ open, onClose }) {
         }
         window.location.reload()
 
-        // const handleReload = async () => {
-        //     window.location.reload()
-        // }
-
         try {
             const response = await fetch(`http://localhost:8000/greenhouse/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
-                    // Add authorization header if needed
                 },
                 body: JSON.stringify(submitData),
                 credentials: 'include',

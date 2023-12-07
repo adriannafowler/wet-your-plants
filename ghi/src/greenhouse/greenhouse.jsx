@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Can from './watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
-import { IconButton } from '@mui/material'
+import { IconButton, Tooltip } from '@mui/material'
 import AddPlantDialog from './plant_form'
 import SideDrawer from './sidedrawer'
 import './greenhouse.css'
@@ -93,13 +93,15 @@ const Greenhouse = () => {
                             </div>
                         </div>
                         <div className="add_plant_div">
-                            <IconButton
-                                className="add-plant-button"
-                                onClick={handleAddPlantClick}
-                                style={{ fontSize: '36px' }}
-                            >
-                                <AddIcon className="add_plant_icon"></AddIcon>
-                            </IconButton>
+                            <Tooltip title="Add a plant" arrow>
+                                <IconButton
+                                    className="add-plant-button"
+                                    onClick={handleAddPlantClick}
+                                    style={{ fontSize: '36px' }}
+                                >
+                                    <AddIcon className="add_plant_icon"></AddIcon>
+                                </IconButton>
+                            </Tooltip>
                             <AddPlantDialog
                                 open={isAddPlantDialogOpen}
                                 onClose={handleAddPlantDialogClose}
