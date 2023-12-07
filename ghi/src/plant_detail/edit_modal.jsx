@@ -8,7 +8,7 @@ import DialogTitle from '@mui/material/DialogTitle'
 import IconButton from '@mui/material/IconButton'
 import SearchIcon from '@mui/icons-material/Search'
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material'
-import sadPlant from './sad-plant.svg'
+import sadPlant from '../public/sad-plant.svg'
 
 const SearchBar = ({ setSearchQuery, onSearch }) => (
     <form>
@@ -89,7 +89,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                         <img
                             src={item.original_url || sadPlant}
                             alt={item.common_name}
-                            style={{ width: '100px', height: 'auto' }}
+                            style={{ width: '200px', height: 'auto' }}
                         />
                         <div>{item.common_name}</div>
                     </div>
@@ -105,7 +105,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
     }, [searchQuery])
 
     useEffect(() => {
-        setFormData(initialData) // Set initial form data
+        setFormData(initialData)
     }, [initialData])
 
     const handleChange = (e) => {
@@ -120,6 +120,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                 species_id: speciesId,
                 watering_schedule: formData.watering_schedule,
             }
+            console.log("submitData:", submitData)
             const response = await fetch(
                 `http://localhost:8000/greenhouse/${plantId}/`,
                 {

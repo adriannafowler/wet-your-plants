@@ -1,43 +1,34 @@
-//all of this code will need to be added to the main function/exported component
-//to be able to work with the
-// import AddPlantDialog from "./plant_form";
-
-// const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false);
-
-// const handleAddPlantClick = () => {
-//     setIsAddPlantDialogOpen(true);
-//     };
-
-// const handleAddPlantDialogClose = () => {
-//     setIsAddPlantDialogOpen(false);
-//     };
-// //In the returned jsx,
-// <>
-//     <button className='add-plant-button' variant="contained" onClick={handleAddPlantClick}>
-//         <AddPlantIcon />
-//     </button>
-//     <AddPlantDialog
-//         open={isAddPlantDialogOpen}
-//         onClose={handleAddPlantDialogClose}
-//     />
-// </>
 import React from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import './greenhouse.css'
 import Can from './watering_can.svg'
+import AddIcon from '@mui/icons-material/Add'
+import { IconButton } from '@mui/material'
+import MenuIcon from '@mui/icons-material/Menu'
+import AddPlantDialog from "./plant_form";
+
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
     const [plants, setPlants] = useState([])
     const [newToken, setNewToken] = useState([])
     const navigate = useNavigate()
+    const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false);
+
+    const handleAddPlantClick = () => {
+        setIsAddPlantDialogOpen(true);
+    };
+
+    const handleAddPlantDialogClose = () => {
+        setIsAddPlantDialogOpen(false);
+    };
 
     useEffect(() => {
         if (!newToken) {
             navigate('/signin/')
         }
-    }, [newToken])
+    }, [newToken, navigate])
 
     const fetchToken = async () => {
         try {
@@ -75,12 +66,12 @@ const Greenhouse = () => {
 
     useEffect(() => {
         fetchToken()
-        console.log(newToken)
     }, [])
 
     useEffect(() => {
         fetchPlants()
     }, [newToken])
+
 
     return (
         <>
@@ -88,29 +79,46 @@ const Greenhouse = () => {
                 <div className="overall">
                     <div className="top">
                         <div className="header">
-                            <div className="icon_div">
-                                <hamburger />
-                                <img
-                                    className="hamburger"
-                                    src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/threads-app-icon.png"
-                                ></img>
+                            <div className="icon_div_hamburger">
+                                <IconButton style={{ fontSize: '120px' }}>
+                                    <MenuIcon className="hamburger"></MenuIcon>
+                                </IconButton>
                             </div>
                             <div className="inventory_name">
                                 {info}'s Greenhouse
                             </div>
                             <div className="icon_div">
-                                <img className="watering_can" src={Can}></img>
+                                <button className='watering_can_button'>
+                                    <img
+                                        className="watering_can"
+                                        src={Can}
+                                    ></img>
+                                </button>
                             </div>
                         </div>
-                        <div className="weather_bar_div"></div>
+                        <div className="add_plant_div">
+                            <IconButton
+                                    className='add-plant-button'
+                                    onClick={handleAddPlantClick}
+                                    style={{ fontSize: '36px' }}
+                                    >
+                                <AddIcon className="add_plant_icon"></AddIcon>
+                            </IconButton>
+                            <AddPlantDialog
+                                open={isAddPlantDialogOpen}
+                                onClose={handleAddPlantDialogClose}
+                            />
+                        </div>
                     </div>
                     <div className="middle">
                         <div className="plant_container">
                             {plants.map((plant) => (
                                 <a
+                                    className='plant_link'
+                                    key={plant.id}
                                     href={`http://localhost:3000/greenhouse/${plant.id}`}
                                 >
-                                    <div className="card" key={plant.id}>
+                                    <div className="card">
                                         <div className="card_content">
                                             <img
                                                 className="plant_image"
