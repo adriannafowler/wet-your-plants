@@ -5,6 +5,9 @@ from queries.users import (
     UserQueries,
 )
 from models import UserOutWithPassword, UserOut
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 class PlantAuthenticator(Authenticator):
