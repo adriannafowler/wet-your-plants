@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import Can from './watering_can.svg'
+import Can from '../public/watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import AddPlantDialog from './plant_form'
