@@ -86,7 +86,7 @@ const Greenhouse = () => {
                             <div className="inventory_name">
                                 {info}'s Greenhouse
                             </div>
-                            <div className="icon_div">
+                            <div className="watering_can_div">
                                 <button className="watering_can_button">
                                     <img
                                         className="watering_can"
