@@ -63,7 +63,7 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
     const getPlantSpecies = async (searchQuery) => {
         const response = await fetch(
             `http://localhost:8000/species_ids/${searchQuery}`,
-            {credentials: 'include'}
+            { credentials: 'include' }
         )
         if (response.ok) {
             const data = await response.json()
@@ -120,14 +120,16 @@ export default function EditDialog({ open, onClose, plantId, initialData }) {
                 species_id: speciesId,
                 watering_schedule: formData.watering_schedule,
             }
-            console.log("submitData:", submitData)
+            window.location.reload()
+
+            console.log('submitData:', submitData)
             const response = await fetch(
                 `http://localhost:8000/greenhouse/${plantId}/`,
                 {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(submitData),
-                    credentials: 'include'
+                    credentials: 'include',
                 }
             )
 

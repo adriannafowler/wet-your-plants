@@ -9,10 +9,12 @@ const SideDrawer = () => {
     const { logout } = useToken()
     const navigate = useNavigate()
 
-    const handleLogout = (event) => {
+    const handleLogout = async (event) => {
         event.preventDefault()
-        logout()
-        navigate('/signin')
+        await logout()
+        setTimeout(() => {
+            navigate('/signin')
+        }, 1000)
     }
 
     return (
@@ -34,7 +36,7 @@ const SideDrawer = () => {
                     style: {
                         //
                         background: `url('https://i.pinimg.com/564x/c9/25/72/c9257250a8c6bb62663db10f88545045.jpg')`,
-                        backgroundSize: '325px 900px',
+                        backgroundSize: '325px 1000px',
                         backgroundRepeat: 'no-repeat',
                     },
                 }}

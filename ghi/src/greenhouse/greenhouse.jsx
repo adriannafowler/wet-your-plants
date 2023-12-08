@@ -1,20 +1,17 @@
 import React from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-import './greenhouse.css'
 import Can from './watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
-import { IconButton, Typography, Drawer, Box } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import { IconButton, Tooltip, Typography } from '@mui/material'
 import AddPlantDialog from './plant_form'
-
 import SideDrawer from './sidedrawer'
+import './greenhouse.css'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
     const [plants, setPlants] = useState([])
     const [newToken, setNewToken] = useState([])
-    const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const navigate = useNavigate()
     const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false)
 
@@ -43,7 +40,10 @@ const Greenhouse = () => {
                 throw new Error('HTTP error!')
             }
             const data = await response.json()
-            setInfo(data.account.name)
+            const fullName = data.account.name
+            const splitName = fullName.split(' ')
+            const firstName = splitName.length > 0 ? splitName[0] : ''
+            setInfo(firstName)
             setNewToken(data.access_token)
         } catch (error) {
             console.error('Error fetching token:', error)
@@ -101,6 +101,16 @@ const Greenhouse = () => {
                                 onClick={handleAddPlantClick}
                                 style={{ fontSize: '36px' }}
                             >
+                                <Typography
+                                    style={{
+                                        fontFamily: 'Virgil, sans-serif',
+                                        fontSize: 20,
+                                        color: '#79a6a3',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Add a plant
+                                </Typography>
                                 <AddIcon className="add_plant_icon"></AddIcon>
                             </IconButton>
                             <AddPlantDialog

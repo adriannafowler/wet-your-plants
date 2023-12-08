@@ -5,11 +5,12 @@ import DialogActions from '@mui/material/DialogActions'
 import DialogContent from '@mui/material/DialogContent'
 import DialogContentText from '@mui/material/DialogContentText'
 import DialogTitle from '@mui/material/DialogTitle'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 const DeleteDialog = forwardRef((props, ref) => {
     const [open, setOpen] = useState(false)
     const param = useParams()
+    const navigate = useNavigate()
     const plant_id = param.id
 
     useImperativeHandle(ref, () => ({
@@ -37,6 +38,7 @@ const DeleteDialog = forwardRef((props, ref) => {
                 throw new Error('Failed to delete the plant.')
             }
             console.log('Plant deleted successfully')
+            navigate('/greenhouse')
         } catch (error) {
             console.error('Error:', error)
         }

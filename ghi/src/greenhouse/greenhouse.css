@@ -1,10 +1,3 @@
-/* .big {
-    color: black;
-    display: flex;
-    flex-direction: row;
-    align-content: space-between;
-} */
-
 @font-face {
     font-family: 'estirada';
     src: url('../public/fonts/Cupcakie.otf') format('truetype');
@@ -14,7 +7,10 @@
     font-family: 'Virgil';
     src: url('../public/fonts/Virgil.woff2') format('truetype');
 }
-
+body {
+    padding-left: 200px;
+    padding-right: 200px;
+}
 .hamburger {
     height: 100px;
     width: 100px;
@@ -65,7 +61,7 @@ body {
     margin-top: 20px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
 }
 
@@ -122,12 +118,6 @@ body {
     align-content: center;
 }
 
-.plant_name {
-    width: auto;
-    height: 16px;
-    text-align: center;
-}
-
 .add_plant_div {
     display: flex;
     justify-content: flex-end;
@@ -140,4 +130,9 @@ body {
 
 .plant_link {
     text-decoration: none;
+}
+
+.inventory_name {
+    margin-left: 10px;
+    margin-right: 10px;
 }

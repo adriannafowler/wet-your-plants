@@ -1,8 +1,7 @@
 import useToken, { useAuthContext } from '@galvanize-inc/jwtdown-for-react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-
-const SignInForm = () => {
+const LogInForm = () => {
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const navigate = useNavigate()
@@ -17,8 +16,14 @@ const SignInForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        login(username, password)
-        e.target.reset()
+        try {
+            login(username, password)
+            setErrorMessage('')
+            e.target.reset()
+        } catch (error) {
+            console.error('Wrong username or password:', error)
+            setErrorMessage('Wrong username or password. Try again.')
+        }
     }
 
     return (
@@ -29,9 +34,9 @@ const SignInForm = () => {
                     <div className="card-body">
                         <form onSubmit={(e) => handleSubmit(e)}>
                             <div className="mb-3">
-                                <label className="form-label">Username:</label>
+                                <label className="form-label">Email:</label>
                                 <input
-                                    name="username"
+                                    name="email"
                                     type="text"
                                     className="form-control"
                                     onChange={(e) =>
@@ -69,4 +74,4 @@ const SignInForm = () => {
     )
 }
 
-export default SignInForm
+export default LogInForm
