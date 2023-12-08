@@ -1,6 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './home.css'
+import { Link as RouterLink } from 'react-router-dom';
 
 const Homepage = () => {
     // Plant data for content cards to match the design mockup
@@ -33,12 +34,12 @@ const Homepage = () => {
             </div>
             <div className="homepage">
                 {contentData.map((item) => (
-                    <div key={item.id} className="content-card">
-                        <img src={item.imageUrl} alt={item.title} />
-                        <div className="card-content">
-                            <h3>{item.title}</h3>
+                        <div key={item.id} className="content-card">
+                            <img src={item.imageUrl} alt={item.title} />
+                            <div className="card-content">
+                                <h3>{item.title}</h3>
+                            </div>
                         </div>
-                    </div>
                 ))}
             </div>
         </>

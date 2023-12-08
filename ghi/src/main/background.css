@@ -1,3 +1,40 @@
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+@font-face {
+    font-family: 'Coustard-Regular';
+    src: url('../public/fonts/Coustard-Regular.ttf') format('truetype');
+}
+
 .body {
     background-color: #FBF2ED !important;
+}
+
+.css-1k76al1  {
+    background-color: #FBF2ED !important;
+    outline: none !important;
+}
+
+.css-tcrtuv-MuiTypography-root {
+    font-family: 'Virgil' !important;
+    color: #79a6a3;
+}
+
+.css-1xatcrf-MuiTypography-root {
+    color: #79a6a3 !important;
+}
+
+.css-1vl95ex-MuiTypography-root {
+    color: #79a6a3 !important;
+}
+
+.css-9mgopn-MuiDivider-root {
+    border-color: #E7927F !important;
+}
+
+.css-zvs8dy-MuiTypography-root {
+    color: #C7D7BB !important;
+    font-family: 'Coustard-Regular' !important;
+    font-size: 75px !important;
 }
