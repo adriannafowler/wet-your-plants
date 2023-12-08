@@ -22,6 +22,25 @@ const Homepage = () => {
         },
         // Add more data as needed
     ]
+    // Plant data for content cards to match the design mockup
+    const contentData = [
+        {
+            id: 1,
+            imageUrl: 'https://via.placeholder.com/300x200.png?text=Plant+1',
+            title: 'Succulent Plant',
+        },
+        {
+            id: 2,
+            imageUrl: 'https://via.placeholder.com/300x200.png?text=Plant+2',
+            title: 'Fern Plant',
+        },
+        {
+            id: 3,
+            imageUrl: 'https://via.placeholder.com/300x200.png?text=Plant+3',
+            title: 'Cactus Plant',
+        },
+        // Add more data as needed
+    ]
 
     return (
         <nav>
