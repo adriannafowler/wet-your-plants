@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Typography, Drawer, Box, IconButton, Stack } from '@mui/material'
-import MenuIcon from '@mui/icons-material/Menu'
+import MenuIcon from './hamburger.svg'
 import useToken from '@galvanize-inc/jwtdown-for-react'
 import { useNavigate } from 'react-router-dom'
 
@@ -17,6 +17,20 @@ const SideDrawer = () => {
         }, 1000)
     }
 
+    const handleRedirectHome = async (event) => {
+        event.preventDefault()
+        setTimeout(() => {
+            navigate('/home')
+        }, 1000)
+    }
+
+    const handleRedirectGreenhouse = async (event) => {
+        event.preventDefault()
+        setTimeout(() => {
+            navigate('/greenhouse')
+        }, 1000)
+    }
+
     return (
         <>
             <IconButton
@@ -26,7 +40,7 @@ const SideDrawer = () => {
                 aria-label="logo"
                 onClick={() => setIsDrawerOpen(true)}
             >
-                <MenuIcon />
+                <img src={MenuIcon} style={{ width: 30, height: 30 }}></img>
             </IconButton>
             <Drawer
                 anchor="left"
@@ -60,7 +74,7 @@ const SideDrawer = () => {
                     </Typography>
                 </Box>
                 <Stack spacing={2} p={2}>
-                    <IconButton>
+                    <IconButton onClick={handleRedirectHome}>
                         <Typography
                             style={{
                                 fontFamily: 'Virgil, sans-serif',
@@ -71,7 +85,7 @@ const SideDrawer = () => {
                             Home
                         </Typography>
                     </IconButton>
-                    <IconButton>
+                    <IconButton onClick={handleRedirectGreenhouse}>
                         <Typography
                             style={{
                                 fontFamily: 'Virgil, sans-serif',
