@@ -13,7 +13,7 @@ const SideDrawer = () => {
         event.preventDefault()
         await logout()
         setTimeout(() => {
-            navigate('/signin')
+            navigate('/login')
         }, 1000)
     }
 
