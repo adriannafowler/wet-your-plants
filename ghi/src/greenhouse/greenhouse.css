@@ -118,12 +118,6 @@ body {
     align-content: center;
 }
 
-.plant_name {
-    width: auto;
-    height: 16px;
-    text-align: center;
-}
-
 .add_plant_div {
     display: flex;
     justify-content: flex-end;

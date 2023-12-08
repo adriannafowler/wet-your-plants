@@ -94,19 +94,6 @@ function PlantDetail() {
 
     return (
         <>
-            {/* <div className="return_button">
-                <IconButton>
-                    <Typography
-                        style={{
-                            fontFamily: 'Virgil, sans-serif',
-                            fontSize: 18,
-                            color: 'black',
-                        }}
-                    >
-                        Return To Greenhouse
-                    </Typography>
-                </IconButton>
-            </div> */}
             <div className="card-container">
                 <div className="return_button">
                     <a href="http://localhost:3000/greenhouse">

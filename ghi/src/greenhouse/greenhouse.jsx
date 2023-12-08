@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Can from './watering_can.svg'
 import AddIcon from '@mui/icons-material/Add'
-import { IconButton, Tooltip } from '@mui/material'
+import { IconButton, Tooltip, Typography } from '@mui/material'
 import AddPlantDialog from './plant_form'
 import SideDrawer from './sidedrawer'
 import './greenhouse.css'
@@ -96,15 +96,23 @@ const Greenhouse = () => {
                             </div>
                         </div>
                         <div className="add_plant_div">
-                            <Tooltip title="Add a plant" arrow>
-                                <IconButton
-                                    className="add-plant-button"
-                                    onClick={handleAddPlantClick}
-                                    style={{ fontSize: '36px' }}
+                            <IconButton
+                                className="add-plant-button"
+                                onClick={handleAddPlantClick}
+                                style={{ fontSize: '36px' }}
+                            >
+                                <Typography
+                                    style={{
+                                        fontFamily: 'Virgil, sans-serif',
+                                        fontSize: 20,
+                                        color: '#79a6a3',
+                                        fontWeight: 'bold',
+                                    }}
                                 >
-                                    <AddIcon className="add_plant_icon"></AddIcon>
-                                </IconButton>
-                            </Tooltip>
+                                    Add a plant
+                                </Typography>
+                                <AddIcon className="add_plant_icon"></AddIcon>
+                            </IconButton>
                             <AddPlantDialog
                                 open={isAddPlantDialogOpen}
                                 onClose={handleAddPlantDialogClose}
