@@ -6,7 +6,7 @@ import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import SignInForm from './accounts/signin'
 import Homepage from './main/home'
-import LoginForm from './accounts/login_modal'
+import LoginForm from './accounts/login'
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
