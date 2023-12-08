@@ -1,4 +1,4 @@
-##Wet Your Plants - Plant Care Assistant
+## Wet Your Plants - Plant Care Assistant
 
 - Adrianna Fowler
 - Danny Gomez
@@ -7,7 +7,7 @@
 
 Welcome to Wet Your Plants, your dedicated application for stress-free and consistent house plant care. This application is tailored for the less experienced or busy house plant enthusiasts, providing a robust solution to cultivate healthy and thriving plants. Whether you're new to plant care or navigating a busy schedule, Wet Your Plants is your partner in cultivating a green and vibrant indoor oasis.
 
-##Features
+## Features
 
 1. Home Page
 Explore the app's functionalities with a user-friendly interface that guides you through the features and benefits of Wet Your Plants.
@@ -31,7 +31,7 @@ Review your plant care journey with the Plant Care History feature. Store comple
 
 ## Design
 
-#Tech Stack
+# Tech Stack
 Backend: FastAPI
 Frontend: Vite + JavaScript
 Database: PostgreSQL
@@ -42,7 +42,7 @@ UI Framework: Material-UI
 - [GHI](docs/ghi.md)
 - [Integrations](docs/integrations.md)
 
-##Getting Started
+## Getting Started
 
 1. To fully enjoy this application on your local machine, please be sure to follow these steps:
 2. Clone this repository to your local machine.
