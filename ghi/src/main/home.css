@@ -1,12 +1,33 @@
-/* @import url('https://fonts.googleapis.com/css2?family=YourFontName&display=swap'); Replace with actual fonts from the design */
-
 :root {
   --background-color: #ffffff; /* Replace with actual color code from the design */
   --card-color: #f8f8f8; /* Replace with actual color code from the design */
   --text-color: #333333; /* Replace with actual color code from the design */
-  --font-family: 'YourFontName', sans-serif; /* Replace with actual font family from the design */
+  --font-family: 'Virgil', sans-serif; /* Replace with actual font family from the design */
+}
+@font-face {
+    font-family: 'Cupcakie';
+    src: url('../public/fonts/Cupcakie.otf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+.header {
+  margin-top: 0; /* Aligns the header to the top of the page */
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /* Positions title and button at opposite ends */
+  align-items: center;
+  padding: 0 16px 16px 16px; /* Add padding to match the design of the Greenhouse header */
+}
+.title {
+  font-size: 95px; /* Size from your Greenhouse header */
+  font-family: 'Cupcakie'; /* Font from your Greenhouse header */
+  margin: 0; /* Remove default margin */
+  color: #c7d7bb; /* Color from your Greenhouse header */
+}
 .homepage {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -37,6 +58,9 @@
 .content-card h3 {
   color: var(--text-color);
   margin: 0;
+  font-size: 25px; /* Adjust font size to match the design */
+  font-family: 'Virgil', sans-serif; /* Use Virgil font for plant names */
+  text-align: center; /* Center the plant names */
 }
 
 .content-card:hover {
@@ -44,4 +68,16 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Additional styles may be required to match the mockup exactly */
+.sign-in-button {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: white;
+  background-color: #333; /* Replace with the actual color from the design */
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-left: auto; /* Pushes the button to the far right */
+}
+
+.sign-in-button:hover {
+  background-color: #555; /* Replace with the actual hover color from the design */
+}
