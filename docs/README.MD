@@ -31,9 +31,9 @@ Review your plant care journey with the Plant Care History feature. Store comple
 
 # Design
 
+- [Wireframe](docs/wireframe.svg)
 - [API design](docs/apis.md)
 - [Data model](docs/data-model.md)
-- [GHI](docs/ghi.md)
 - [Integrations](docs/integrations.md)
 
 ### Tech Stack
