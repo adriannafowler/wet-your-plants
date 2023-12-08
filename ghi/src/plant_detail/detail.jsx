@@ -1,53 +1,41 @@
-import Card from '@mui/material/Card'
-import CardActions from '@mui/material/CardActions'
-import CardContent from '@mui/material/CardContent'
-import Typography from '@mui/material/Typography'
 import PropTypes from 'prop-types'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import Box from '@mui/material/Box'
 import './pd.css'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import EditIcon from '@mui/icons-material/Edit'
 import { useParams } from 'react-router-dom'
 import React, { useEffect, useState, useRef } from 'react'
-import { List, ListItemText } from '@mui/material'
+import {
+    List,
+    ListItemText,
+    CardActions,
+    CardContent,
+    Typography,
+    Tabs,
+    Tab,
+    Box,
+    Card,
+} from '@mui/material'
 import DeleteDialog from './delete_modal'
 import EditDialog from './edit_modal'
-import { useNavigate } from 'react-router-dom'
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props
-    const [newToken, setNewToken] = useState([])
-    const navigate = useNavigate()
-
-    useEffect(() => {
-        if (!newToken) {
-            navigate('/signin/')
-        }
-    }, [newToken])
 
     return (
         <>
-            {newToken ? (
-                <div
-                    role="tabpanel"
-                    hidden={value !== index}
-                    id={`simple-tabpanel-${index}`}
-                    aria-labelledby={`simple-tab-${index}`}
-                    {...other}
-                >
-                    {value === index && (
-                        <Box sx={{ p: 3 }}>
-                            <Typography>{children}</Typography>
-                        </Box>
-                    )}
-                </div>
-            ) : (
-                <div>
-                    <h1>Please Log In</h1>
-                </div>
-            )}
+            <div
+                role="tabpanel"
+                hidden={value !== index}
+                id={`simple-tabpanel-${index}`}
+                aria-labelledby={`simple-tab-${index}`}
+                {...other}
+            >
+                {value === index && (
+                    <Box sx={{ p: 3 }}>
+                        <Typography>{children}</Typography>
+                    </Box>
+                )}
+            </div>
         </>
     )
 }
@@ -69,16 +57,8 @@ function PlantDetail() {
     const [value, setValue] = React.useState(0)
     const [details, setDetails] = useState([])
     const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-    const [newToken, setNewToken] = useState([])
-    const navigate = useNavigate()
     const param = useParams()
     const plant_id = param.id
-
-    useEffect(() => {
-        if (!newToken) {
-            navigate('/signin/')
-        }
-    }, [newToken])
 
     const fetchData = async () => {
         const url = `http://localhost:8000/greenhouse/${plant_id}/`
@@ -112,109 +92,97 @@ function PlantDetail() {
 
     return (
         <>
-            {newToken ? (
-                <div className="card-container">
-                    <Card className="card" sx={{ borderRadius: '20px' }}>
-                        <div className="media-content">
-                            <div className="image-container" sx={{}}>
-                                <img
-                                    src={details.original_url}
-                                    className="image"
-                                />
-                                <button
-                                    className="delete-button"
-                                    variant="contained"
-                                    onClick={handleDeleteClick}
-                                >
-                                    <HighlightOffIcon />
-                                </button>
-                                <DeleteDialog ref={DeleteDialogRef} />
-                                <button
-                                    className="edit-button"
-                                    variant="contained"
-                                    onClick={handleEditClick}
-                                >
-                                    <EditIcon />
-                                </button>
-                                <EditDialog
-                                    open={isEditDialogOpen}
-                                    onClose={handleEditDialogClose}
-                                    plantId={plant_id}
-                                    initialData={details}
-                                />
-                            </div>
+            <div className="card-container">
+                <Card className="card" sx={{ borderRadius: '20px' }}>
+                    <div className="media-content">
+                        <div className="image-container" sx={{}}>
+                            <img src={details.original_url} className="image" />
+                            <button
+                                className="delete-button"
+                                variant="contained"
+                                onClick={handleDeleteClick}
+                            >
+                                <HighlightOffIcon />
+                            </button>
+                            <DeleteDialog ref={DeleteDialogRef} />
+                            <button
+                                className="edit-button"
+                                variant="contained"
+                                onClick={handleEditClick}
+                            >
+                                <EditIcon />
+                            </button>
+                            <EditDialog
+                                open={isEditDialogOpen}
+                                onClose={handleEditDialogClose}
+                                plantId={plant_id}
+                                initialData={details}
+                            />
                         </div>
-                        <div className="details">
-                            <Box sx={{ borderTop: 1, borderColor: 'divider' }}>
-                                <CardActions>
-                                    <Tabs
-                                        value={value}
-                                        onChange={handleChange}
-                                        className="tab-labels"
-                                    >
-                                        <Tab
-                                            label="Description"
-                                            {...a11yProps(0)}
+                    </div>
+                    <div className="details">
+                        <Box sx={{ borderTop: 1, borderColor: 'divider' }}>
+                            <CardActions>
+                                <Tabs
+                                    value={value}
+                                    onChange={handleChange}
+                                    className="tab-labels"
+                                >
+                                    <Tab
+                                        label="Description"
+                                        {...a11yProps(0)}
+                                    />
+                                    <Tab label="Plant Care" {...a11yProps(1)} />
+                                    <Tab
+                                        label="Care History"
+                                        {...a11yProps(2)}
+                                    />
+                                </Tabs>
+                            </CardActions>
+                            <CardContent>
+                                <Typography
+                                    gutterBottom
+                                    variant="h5"
+                                    component="div"
+                                >
+                                    {details.common_name === details.name
+                                        ? `${details.common_name}`
+                                        : `${details.common_name} ${details.name}`}
+                                </Typography>
+                                <CustomTabPanel
+                                    value={value}
+                                    index={0}
+                                    className="description"
+                                >
+                                    {details.description}
+                                </CustomTabPanel>
+                                <CustomTabPanel value={value} index={1}>
+                                    <List>
+                                        <ListItemText
+                                            primary={`Care level: ${details.care_level}`}
                                         />
-                                        <Tab
-                                            label="Plant Care"
-                                            {...a11yProps(1)}
+                                        <ListItemText
+                                            primary={`Watering needs: ${details.watering}`}
                                         />
-                                        <Tab
-                                            label="Care History"
-                                            {...a11yProps(2)}
+                                        <ListItemText
+                                            primary={`Sunlight needs: ${details.sunlight}`}
                                         />
-                                    </Tabs>
-                                </CardActions>
-                                <CardContent>
-                                    <Typography
-                                        gutterBottom
-                                        variant="h5"
-                                        component="div"
-                                    >
-                                        {details.common_name === details.name
-                                            ? `${details.common_name}`
-                                            : `${details.common_name} ${details.name}`}
-                                    </Typography>
-                                    <CustomTabPanel
-                                        value={value}
-                                        index={0}
-                                        className="description"
-                                    >
-                                        {details.description}
-                                    </CustomTabPanel>
-                                    <CustomTabPanel value={value} index={1}>
-                                        <List>
-                                            <ListItemText
-                                                primary={`Care level: ${details.care_level}`}
-                                            />
-                                            <ListItemText
-                                                primary={`Watering needs: ${details.watering}`}
-                                            />
-                                            <ListItemText
-                                                primary={`Sunlight needs: ${details.sunlight}`}
-                                            />
-                                            <ListItemText
-                                                primary={`Indoor: ${details.indoor}`}
-                                            />
-                                            <ListItemText
-                                                primary={`Watering schedule: ${details.watering_schedule}`}
-                                            />
-                                        </List>
-                                    </CustomTabPanel>
-                                    <CustomTabPanel value={value} index={2}>
-                                        Care history here
-                                    </CustomTabPanel>
-                                </CardContent>
-                            </Box>
-                        </div>
-                    </Card>
-                </div>
-            ) : (
-                <div>
-                    <h1>Please Log In</h1>
-                </div>
-            )}
+                                        <ListItemText
+                                            primary={`Indoor: ${details.indoor}`}
+                                        />
+                                        <ListItemText
+                                            primary={`Watering schedule: ${details.watering_schedule}`}
+                                        />
+                                    </List>
+                                </CustomTabPanel>
+                                <CustomTabPanel value={value} index={2}>
+                                    Care history here
+                                </CustomTabPanel>
+                            </CardContent>
+                        </Box>
+                    </div>
+                </Card>
+            </div>
         </>
     )
 }
