@@ -81,6 +81,10 @@ const Dashboard = ({ userId }) => {
         fetchWeatherByLocation()
     }, [weatherApiKey])
 
+    useEffect(() => {
+        fetchTodos()
+    }, [])
+
     const openDialog = () => {
         setShowDialog(true)
     }
@@ -111,7 +115,22 @@ const Dashboard = ({ userId }) => {
             console.error('Error fetching manual weather:', error)
         }
     }
-
+    const fetchTodos = async () => {
+        try {
+            const response = await fetch(
+                `http://localhost:8000/dashboard`,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                }
+            )
+            const data = await response.json()
+            setTodos(data)
+        } catch (error) {
+            console.error('Error fetching todos:', error)
+        }
+    }
     return (
         <Container className="container" style={{ textAlign: 'center' }}>
             <Grid container spacing={2} justifyContent="center">
