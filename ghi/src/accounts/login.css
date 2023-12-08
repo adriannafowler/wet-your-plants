@@ -1,0 +1,27 @@
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+.lock_icon {
+    background-color: #C7D7BB !important;
+}
+
+.css-ag7rrr-MuiTypography-root {
+    font-family: 'Virgil' !important;
+    color:#79A6A3;
+    font-size: 40px !important;
+}
+
+.login-container {
+    background-color: #FBF2ED !important;
+}
+
+.log-in-button {
+    font-family: 'Virgil' !important;
+    background-color: #79A6A3 !important;
+}
+
+.log-in-button:hover {
+    filter: brightness(125%);
+}
