@@ -29,7 +29,7 @@ const SearchBar = ({setSearchQuery, onSearch}) => (
         </form>
     );
 
-export default function AddPlantDialog({ open, onClose,}) {
+export default function AddPlantDialog({ open, onClose, updatePlants}) {
     const [formData, setFormData] = useState({
         name: '',
         source: '',
@@ -136,7 +136,9 @@ export default function AddPlantDialog({ open, onClose,}) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
 
-            const data = await response.json();
+            const newPlant = await response.json();
+            // update state with new plant
+            updatePlants(newPlant);
             onClose();
         } catch (error) {
             console.error('Error:', error);

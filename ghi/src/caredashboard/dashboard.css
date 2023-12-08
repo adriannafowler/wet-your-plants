@@ -1,0 +1,54 @@
+/* dashboard.css */
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.paper {
+  position: relative;
+  padding: 16px;
+  margin-top: 16px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+}
+
+.button {
+  margin-left: 16px;
+}
+
+.dialog-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.todo-list {
+  padding: 16px;
+}
+
+.todo-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.checkbox {
+  margin-right: 8px;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.close-button {
+  color: #1976D2;
+}
+
+/* Add more styles as needed */

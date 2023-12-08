@@ -1,81 +1,361 @@
-import React, { useState } from "react";
-import { PlantProvider } from "./contexts/plantcontext";
-import DashboardMaterialUI from "./dashboardMaterialUI";
-import DailyTodoList from "./DailyTodoList";
+// Dashboard.jsx
+import React, { useState, useEffect } from 'react'
+import {
+    Container,
+    Grid,
+    Paper,
+    Button,
+    Typography,
+    Box,
+    Dialog,
+    TextField,
+} from '@mui/material'
+import WeatherWidget from './weatherwidget'
+import DailyTodoList from './dailytodolist'
+import AddTodoDialog from '../plant_detail/addtododialog'
+import './dashboard.css'
 
-const Dashboard = () => {
-  const [showDashboard, setShowDashboard] = useState(false);
+const Dashboard = ({ userId }) => {
+    const [showDialog, setShowDialog] = useState(false)
+    const [weatherData, setWeatherData] = useState(null)
+    const [todos, setTodos] = useState([])
+    const [weatherApiKey, setWeatherApiKey] = useState('')
+    const [manualZipcode, setManualZipcode] = useState('')
+    const [manualWeatherData, setManualWeatherData] = useState(null)
 
-  const toggleDashboard = (isOpen) => {
-    setShowDashboard(isOpen);
-  };
+    useEffect(() => {
+        const fetchWeatherApiKey = async () => {
+            try {
+                const response = await fetch(
+                    'http://localhost:8000/api/weather-key'
+                )
+                if (!response.ok) {
+                    throw new Error(
+                        `Failed to fetch weather API key: ${response.statusText}`
+                    )
+                }
+                const data = await response.json()
+                setWeatherApiKey(data.weatherApiKey)
+            } catch (error) {
+                console.error('Error fetching weather API key:', error)
+            }
+        }
 
-  return (
-    <PlantProvider>
-      <div>
-        <DashboardMaterialUI
-          showDashboard={showDashboard}
-          toggleDashboard={toggleDashboard}
-        />
-        <DailyTodoList /> {/* Include the DailyTodoList component */}
-      </div>
-    </PlantProvider>
-  );
-};
+        fetchWeatherApiKey()
+    }, [])
 
-export default Dashboard;
+    useEffect(() => {
+        const fetchWeatherByLocation = async () => {
+            try {
+                if (weatherApiKey) {
+                    navigator.geolocation.getCurrentPosition(
+                        async (position) => {
+                            const { latitude, longitude } = position.coords
+                            const response = await fetch(
+                                `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${weatherApiKey}`
+                            )
+                            const locationData = await response.json()
 
+                            if (
+                                locationData.length > 0 &&
+                                locationData[0].postal_code
+                            ) {
+                                const zipCode = locationData[0].postal_code
+                                const weatherResponse = await fetch(
+                                    `http://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=imperial&appid=${weatherApiKey}`
+                                )
+                                const weatherData = await weatherResponse.json()
+                                setWeatherData(weatherData)
+                            }
+                        },
+                        (error) => {
+                            console.error('Error getting user location:', error)
+                        }
+                    )
+                }
+            } catch (error) {
+                console.error('Error fetching weather:', error)
+            }
+        }
 
-// import React from 'react';
-// import { useParams } from 'react-router-dom';
-// import { Typography, Tabs, Tab, Box } from '@mui/material';
-// import { usePlantContext } from './PlantContext';
+        fetchWeatherByLocation()
+    }, [weatherApiKey])
 
-// const PlantDetail = () => {
-//   const { plant_id } = useParams();
-//   const { plantCareHistory } = usePlantContext();
+    const openDialog = () => {
+        setShowDialog(true)
+    }
 
-//   const selectedPlantCareHistory = plantCareHistory.filter(
-//     (record) => record.plant_id === parseInt(plant_id)
-//   );
+    const closeDialog = () => {
+        setShowDialog(false)
+    }
 
-//   return (
-//     <div>
-//       <Typography variant="h4">Plant Detail</Typography>
-//       <Tabs value={0} indicatorColor="primary" textColor="primary">
-//         <Tab label="Description" />
-//         <Tab label="Plant Care" />
-//       </Tabs>
-//       <TabPanel value={0}>
-//         {/* Display plant description here */}
-//       </TabPanel>
-//       <TabPanel value={1}>
-//         <Typography variant="h6">Plant Care History</Typography>
-//         {selectedPlantCareHistory.map((record, index) => (
-//           <div key={index}>
-//             <Typography>{record.task}</Typography>
-//             <Typography>{record.completionDate}</Typography>
-//           </div>
-//         ))}
-//       </TabPanel>
-//     </div>
-//   );
-// };
+    const addGreenhouseTask = (newTodo) => {
+        setTodos([newTodo, ...todos])
+        closeDialog() // Close the dialog after adding a todo
+    }
 
-// const TabPanel = (props) => {
-//   const { children, value, index, ...other } = props;
+    const handleManualZipcodeChange = (event) => {
+        setManualZipcode(event.target.value)
+    }
 
-//   return (
-//     <div
-//       role="tabpanel"
-//       hidden={value !== index}
-//       id={`simple-tabpanel-${index}`}
-//       aria-labelledby={`simple-tab-${index}`}
-//       {...other}
-//     >
-//       {value === index && <Box p={3}>{children}</Box>}
-//     </div>
-//   );
-// };
+    const fetchManualWeather = async () => {
+        try {
+            if (manualZipcode && weatherApiKey) {
+                const response = await fetch(
+                    `http://api.openweathermap.org/data/2.5/weather?zip=${manualZipcode}&units=imperial&appid=${weatherApiKey}`
+                )
+                const data = await response.json()
+                setManualWeatherData(data)
+            }
+        } catch (error) {
+            console.error('Error fetching manual weather:', error)
+        }
+    }
 
-// export default PlantDetail;
+    return (
+        <Container className="container" style={{ textAlign: 'center' }}>
+            <Grid container spacing={2} justifyContent="center">
+                <Grid item xs={12} md={10} lg={8}>
+                    <Paper className="dashboard-card">
+                        <Typography variant="h4" gutterBottom>
+                            Plant Care Dashboard
+                        </Typography>
+                        {/* Add Greenhouse Task Button */}
+                        <Button className="button" onClick={openDialog}>
+                            Add Greenhouse Task
+                        </Button>
+                        {/* Placeholder for Daily Todo List */}
+                        <DailyTodoList todos={todos} />
+                        <Box>
+                            {/* Manual Weather Entry */}
+                            <TextField
+                                label="Enter ZIP code for manual weather"
+                                variant="outlined"
+                                value={manualZipcode}
+                                onChange={handleManualZipcodeChange}
+                            />
+                            <Button
+                                className="button"
+                                onClick={fetchManualWeather}
+                            >
+                                Fetch Manual Weather
+                            </Button>
+                            {manualWeatherData && (
+                                <div>
+                                    <Typography variant="h6">
+                                        Manual Weather Information
+                                    </Typography>
+                                    <Typography>{`Temperature: ${manualWeatherData.main.temp} °F`}</Typography>
+                                    <Typography>{`Description: ${manualWeatherData.weather[0].description}`}</Typography>
+                                </div>
+                            )}
+                        </Box>
+                        {/* AddTodoDialog Component */}
+                        <Dialog open={showDialog} onClose={closeDialog}>
+                            <AddTodoDialog
+                                onClose={closeDialog}
+                                onAddTodo={addGreenhouseTask}
+                            />
+                        </Dialog>
+                        {/* Placeholder for Severe Weather Warning */}
+                        <WeatherWidget zipcode={manualZipcode} />
+                    </Paper>
+                </Grid>
+            </Grid>
+        </Container>
+    )
+}
+
+export default Dashboard
+
+// import React, { useState, useEffect } from 'react'
+// import {
+//     Container,
+//     Grid,
+//     Paper,
+//     Button,
+//     Dialog,
+//     Typography,
+//     TextField,
+//     Box,
+// } from '@mui/material'
+// import WeatherWidget from './weatherwidget'
+// import DailyTodoList from './dailytodolist'
+// import AddTodoDialog from '../plant_detail/addtododialog'
+// import './dashboard.css'
+
+// const Dashboard = ({ userId }) => {
+//     const [showDialog, setShowDialog] = useState(false)
+//     const [weatherData, setWeatherData] = useState(null)
+//     const [todos, setTodos] = useState([])
+//     const [weatherApiKey, setWeatherApiKey] = useState('')
+//     const [manualZipcode, setManualZipcode] = useState('')
+//     const [manualWeatherData, setManualWeatherData] = useState(null)
+
+//     useEffect(() => {
+//         const fetchWeatherApiKey = async () => {
+//             try {
+//                 const response = await fetch(
+//                     'http://localhost:8000/api/weather-key'
+//                 )
+//                 if (!response.ok) {
+//                     throw new Error(
+//                         `Failed to fetch weather API key: ${response.statusText}`
+//                     )
+//                 }
+//                 const data = await response.json()
+//                 setWeatherApiKey(data.weatherApiKey)
+//             } catch (error) {
+//                 console.error('Error fetching weather API key:', error)
+//             }
+//         }
+
+//         fetchWeatherApiKey()
+//     }, [])
+
+//     useEffect(() => {
+//         const fetchWeatherByLocation = async () => {
+//             try {
+//                 if (weatherApiKey) {
+//                     navigator.geolocation.getCurrentPosition(
+//                         async (position) => {
+//                             const { latitude, longitude } = position.coords
+//                             const response = await fetch(
+//                                 `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=${weatherApiKey}`
+//                             )
+//                             const locationData = await response.json()
+
+//                             if (
+//                                 locationData.length > 0 &&
+//                                 locationData[0].postal_code
+//                             ) {
+//                                 const zipCode = locationData[0].postal_code
+//                                 const weatherResponse = await fetch(
+//                                     `http://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=imperial&appid=${weatherApiKey}`
+//                                 )
+//                                 const weatherData = await weatherResponse.json()
+//                                 setWeatherData(weatherData)
+//                             }
+//                         },
+//                         (error) => {
+//                             console.error('Error getting user location:', error)
+//                         }
+//                     )
+//                 }
+//             } catch (error) {
+//                 console.error('Error fetching weather:', error)
+//             }
+//         }
+
+//         fetchWeatherByLocation()
+//     }, [weatherApiKey])
+
+//     const openDialog = async () => {
+//         try {
+//             const response = await fetch(
+//                 `http://localhost:8000/todos/${userId}`,
+//                 {
+//                     credentials: 'include',
+//                 }
+//             )
+//             const data = await response.json()
+//             setTodos(data)
+//             setShowDialog(true)
+//         } catch (error) {
+//             console.error('Error fetching todos:', error)
+//         }
+//     }
+
+//     const closeDialog = () => {
+//         setShowDialog(false)
+//     }
+
+//     const addManualTodo = (newTodo) => {
+//         fetch(`http://localhost:8000/dashboard?plant_id=${userId}`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json',
+//             },
+//             body: JSON.stringify(newTodo),
+//         })
+//             .then((response) => response.json())
+//             .then((data) => {
+//                 setTodos([...todos, data])
+//             })
+//     }
+
+//     const handleManualZipcodeChange = (event) => {
+//         setManualZipcode(event.target.value)
+//     }
+
+//     const fetchManualWeather = async () => {
+//         try {
+//             if (manualZipcode && weatherApiKey) {
+//                 const response = await fetch(
+//                     `http://api.openweathermap.org/data/2.5/weather?zip=${manualZipcode}&units=imperial&appid=${weatherApiKey}`
+//                 )
+//                 const data = await response.json()
+//                 setManualWeatherData(data)
+//             }
+//         } catch (error) {
+//             console.error('Error fetching manual weather:', error)
+//         }
+//     }
+
+//     return (
+//         <Container className="container">
+//             <Grid container spacing={2}>
+//                 <Grid item xs={12}>
+//                     <Paper className="paper">
+//                         <Typography variant="h4" gutterBottom>
+//                             Plant Care Dashboard
+//                         </Typography>
+//                         <Box>
+//                             <TextField
+//                                 label="Enter ZIP code for manual weather"
+//                                 variant="outlined"
+//                                 value={manualZipcode}
+//                                 onChange={handleManualZipcodeChange}
+//                             />
+//                             <Button
+//                                 className="button"
+//                                 onClick={fetchManualWeather}
+//                             >
+//                                 Fetch Manual Weather
+//                             </Button>
+//                             {manualWeatherData && (
+//                                 <div>
+//                                     <Typography variant="h6">
+//                                         Manual Weather Information
+//                                     </Typography>
+//                                     <Typography>{`Temperature: ${manualWeatherData.main.temp} °F`}</Typography>
+//                                     <Typography>{`Description: ${manualWeatherData.weather[0].description}`}</Typography>
+//                                 </div>
+//                             )}
+//                         </Box>
+//                         <Button className="button" onClick={openDialog}>
+//                             Open Dashboard
+//                         </Button>
+//                         <AddTodoDialog
+//                             open={showDialog}
+//                             onClose={closeDialog}
+//                             onAddTodo={addManualTodo}
+//                         />
+//                         {weatherData && (
+//                             <div>
+//                                 <Typography variant="h6">
+//                                     Weather Information
+//                                 </Typography>
+//                                 <Typography>{`Temperature: ${weatherData.main.temp} °F`}</Typography>
+//                                 <Typography>{`Description: ${weatherData.weather[0].description}`}</Typography>
+//                             </div>
+//                         )}
+//                         <WeatherWidget zipcode={manualZipcode} />
+//                     </Paper>
+//                 </Grid>
+//             </Grid>
+//         </Container>
+//     )
+// }
+
+// export default Dashboard

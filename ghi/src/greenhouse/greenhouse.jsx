@@ -17,7 +17,9 @@ const Greenhouse = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false)
     const navigate = useNavigate()
     const [isAddPlantDialogOpen, setIsAddPlantDialogOpen] = useState(false)
-
+    const updatePlants = (newPlant) => {
+        setPlants([...plants, newPlant])
+    }
     const handleAddPlantClick = () => {
         setIsAddPlantDialogOpen(true)
     }
@@ -106,6 +108,7 @@ const Greenhouse = () => {
                             <AddPlantDialog
                                 open={isAddPlantDialogOpen}
                                 onClose={handleAddPlantDialogClose}
+                                updatePlants={updatePlants}
                             />
                         </div>
                     </div>

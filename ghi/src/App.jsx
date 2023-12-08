@@ -5,7 +5,7 @@ import Greenhouse from './greenhouse/greenhouse'
 import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import SignInForm from './accounts/signin'
-
+import Dashboard from './caredashboard/dashboard'
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
     throw Error('VITE_APP_API_HOST was undefined')
@@ -25,6 +25,9 @@ function App() {
                     </Route>
                     <Route path="signin/">
                         <Route index element={<SignInForm />} />
+                    </Route>
+                    <Route path="dashboard/">
+                        <Route index element={<Dashboard />} />
                     </Route>
                 </Routes>
             </BrowserRouter>

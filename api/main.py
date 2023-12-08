@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from keys import OPEN_WEATHER_API_KEY
 import os
 from routers import (
     plant_detail,
@@ -20,6 +21,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+@app.get("/api/weather-key", response_model=dict)
+def get_weather_api_key():
+    return {"weatherApiKey": OPENWEATHER_API_KEY}
 
 print(os.environ.get("CORS_HOST", "http://localhost:3000"))
 
