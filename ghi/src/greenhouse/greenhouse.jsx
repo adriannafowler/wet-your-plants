@@ -8,6 +8,7 @@ import AddPlantDialog from './plant_form'
 import SideDrawer from './sidedrawer'
 import LoginModal from './loginmodal'
 import './greenhouse.css'
+import hamburger from '../public/hamburger.svg'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
