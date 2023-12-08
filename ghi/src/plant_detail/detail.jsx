@@ -14,9 +14,11 @@ import {
     Tab,
     Box,
     Card,
+    IconButton,
 } from '@mui/material'
 import DeleteDialog from './delete_modal'
 import EditDialog from './edit_modal'
+import './detail.css'
 
 function CustomTabPanel(props) {
     const { children, value, index, ...other } = props
@@ -92,7 +94,35 @@ function PlantDetail() {
 
     return (
         <>
+            {/* <div className="return_button">
+                <IconButton>
+                    <Typography
+                        style={{
+                            fontFamily: 'Virgil, sans-serif',
+                            fontSize: 18,
+                            color: 'black',
+                        }}
+                    >
+                        Return To Greenhouse
+                    </Typography>
+                </IconButton>
+            </div> */}
             <div className="card-container">
+                <div className="return_button">
+                    <a href="http://localhost:3000/greenhouse">
+                        <IconButton>
+                            <Typography
+                                style={{
+                                    fontFamily: 'Virgil, sans-serif',
+                                    fontSize: 18,
+                                    color: 'black',
+                                }}
+                            >
+                                Return To Greenhouse
+                            </Typography>
+                        </IconButton>
+                    </a>
+                </div>
                 <Card className="card" sx={{ borderRadius: '20px' }}>
                     <div className="media-content">
                         <div className="image-container" sx={{}}>

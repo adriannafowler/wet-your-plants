@@ -7,7 +7,10 @@
     font-family: 'Virgil';
     src: url('../public/fonts/Virgil.woff2') format('truetype');
 }
-
+body {
+    padding-left: 200px;
+    padding-right: 200px;
+}
 .hamburger {
     height: 100px;
     width: 100px;

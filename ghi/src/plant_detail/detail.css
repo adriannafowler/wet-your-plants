@@ -1,0 +1,12 @@
+.return_button {
+    display: flex;
+    flex-direction: column;
+    align-self: start;
+    position: relative;
+    top: 50px;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+}
