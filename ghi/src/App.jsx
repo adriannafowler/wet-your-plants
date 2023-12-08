@@ -6,6 +6,7 @@ import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import SignInForm from './accounts/signin'
 import Homepage from './main/home'
+import LoginForm from './accounts/login'
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
@@ -24,8 +25,8 @@ function App() {
                     <Route path="signup/">
                         <Route index element={<SignUpForm />} />
                     </Route>
-                    <Route path="signin/">
-                        <Route index element={<SignInForm />} />
+                    <Route path="login/">
+                        <Route index element={<LoginForm />} />
                     </Route>
                     <Route path="homepage/">
                         <Route index element={<Homepage />} />

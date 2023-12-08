@@ -8,9 +8,8 @@ router = APIRouter()
 
 
 @router.get("/watering-schedules/")
-
 def get_all_watering_schedules(
     repo: ScheduleRepository = Depends(),
-    user: UserOut = Depends(authenticator.get_current_account_data)
+    user: UserOut = Depends(authenticator.get_current_account_data),
 ) -> List[ScheduleOut]:
     return repo.get_schedules()

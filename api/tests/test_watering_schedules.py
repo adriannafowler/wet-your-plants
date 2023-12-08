@@ -6,23 +6,23 @@ from models import UserOut
 
 client = TestClient(app)
 
+
 class FakeScheduleRepository:
     def get_schedules(self):
         return []
 
 
 def fake_get_current_account_data():
-    return dict(UserOut(
-        id = 1,
-        name = "test test",
-        email="test@test.com",
-        zipcode="12345"
-        ))
+    return dict(
+        UserOut(id=1, name="test test", email="test@test.com", zipcode="12345")
+    )
 
 
 def test_get_thing():
     # Arrange
-    app.dependency_overrides[authenticator.get_current_account_data] = fake_get_current_account_data
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_get_current_account_data
     app.dependency_overrides[ScheduleRepository] = FakeScheduleRepository
 
     # Act
