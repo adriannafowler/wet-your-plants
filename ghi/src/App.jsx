@@ -33,9 +33,6 @@ function App() {
                     <Route path="/">
                         <Route index element={<HomePage/>} />
                     </Route>
-                    <Route path="PlantCare">
-                        <Route index element={<PlantCare/>} />
-                    </Route>
                     <Route path="dashboard/">
                         <Route index element={<Dashboard />} />
                     </Route>
