@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import {
     TextField,
+    InputLabel,
     Button,
     Select,
     MenuItem,
@@ -12,8 +13,10 @@ import {
     DialogContent,
     DialogActions,
     Grid,
+    Box,
 } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+
 
 const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
     const [todoName, setTodoName] = useState('')
@@ -22,6 +25,28 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
     const [isRecurring, setIsRecurring] = useState(false)
     const [dueDateError, setDueDateError] = useState('')
     const navigate = useNavigate()
+    const [plants, setPlants] = useState([])
+    const [selectedPlantId, setSelectedPlantId] = useState('')
+
+    const fetchPlants = async () => {
+        try {
+            const url = `http://localhost:8000/greenhouse/`
+            const response = await fetch(url, {
+                credentials: 'include',
+            })
+            if (!response.ok) {
+                throw new Error('Failed to fetch plants')
+            }
+            const data = await response.json()
+            setPlants(data)
+        } catch (error) {
+            console.error('Error fetching plants:', error)
+        }
+    }
+
+    useEffect(() => {
+        fetchPlants();
+    }, []);
 
     const handleTodoNameChange = (e) => {
         setTodoName(e.target.value)
@@ -46,21 +71,21 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
         }
     }
 
+
     const isValidDate = (dateString) => {
-        const regEx = /^\d{2}-\d{2}-\d{4}$/
+        const regEx = /^\d{4}-\d{2}-\d{2}$/
         return regEx.test(dateString)
     }
 
     const handleAddTodo = async () => {
         const newTodo = {
             todo: todoName,
-            due_date: dueDate, // Assuming you want to use the state variable dueDate
-            recurrence: isRecurring ? recurrence : 'once',
+            due_date: dueDate,
         }
 
         try {
             const response = await fetch(
-                `http://localhost:8000/dashboard/?plant_id=${plantid}`,
+                `http://localhost:8000/dashboard/?plant_id=${selectedPlantId}`,
                 {
                     method: 'POST',
                     headers: {
@@ -74,11 +99,13 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
                 }
             )
             const data = await response.json()
-            navigate('/dashboard')
+            console.log(newTodo)
+            window.location.reload()
         } catch (err) {
             console.log(err)
         }
     }
+
 
     return (
         <Dialog open={true} onClose={onClose} fullWidth maxWidth="sm">
@@ -86,6 +113,28 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
                 <Grid container spacing={2}></Grid>
                 <Grid item xs={12}>
                     <DialogTitle>Add New To-Do Here</DialogTitle>
+                    <Box sx={{ my: 2 }}>
+                        <FormControl fullWidth>
+                            <InputLabel id="plant-select-label">Select a Plant</InputLabel>
+                            <Select
+                                labelId="plant-select-label"
+                                value={selectedPlantId}
+                                label="Select a Plant"
+                                onChange={(e) => setSelectedPlantId(e.target.value)}
+                            >
+                                {plants.map((plant) => (
+                                    <MenuItem key={plant.id} value={plant.id}>
+                                        <ul>
+                                            <li>
+                                                {plant.common_name}
+                                                <img src={plant.original_url} style={{ width: '100px', height: '100px' }}/>
+                                            </li>
+                                        </ul>
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    </Box>
                     <TextField
                         label="Task Name"
                         fullWidth
@@ -96,7 +145,7 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
                 <Grid item xs={12}>
                     <DialogTitle>To-Do Due Date</DialogTitle>
                     <TextField
-                        label="Must be mm-dd-yyyy"
+                        label="Must be yyyy-mm-dd"
                         fullWidth
                         value={dueDate}
                         onChange={handleDueDateChange}

@@ -6,8 +6,9 @@ import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import HomePage from './main/home'
 import LoginForm from './accounts/login'
-import Dashboard from './caredashboard/dashboard'
 import PlantCare from './main/PlantCare'
+import Dashboard from './caredashboard/dashboard'
+import AddGenericTodoDialog from './caredashboard/dashboard'
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {

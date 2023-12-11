@@ -14,7 +14,10 @@ def get_all_todos(
     user: UserOut = Depends(authenticator.get_current_account_data),
     plant_id: int = None,
 ) -> List[TodoOut] | None:
-    return repo.get_all(user.get("id"))
+    if plant_id:
+        return repo.get_by_plant_id(user.get("id"), plant_id)
+    else:
+        return repo.get_all(user.get("id"))
 
 
 @router.delete("/dashboard/{todo_id}/")

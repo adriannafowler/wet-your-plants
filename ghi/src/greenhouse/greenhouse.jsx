@@ -64,7 +64,6 @@ const Greenhouse = () => {
                 throw new Error('Failed to fetch plants')
             }
             const data = await response.json()
-            console.log(data)
             setPlants(data)
         } catch (error) {
             console.error('Error fetching plants:', error)
@@ -127,6 +126,7 @@ const Greenhouse = () => {
                     <div className="plant_container">
                         {plants.map((plant) => (
                             <a
+                                key={plant.id}
                                 className="plant_link"
                                 href={`http://localhost:3000/greenhouse/${plant.id}`}
                             >

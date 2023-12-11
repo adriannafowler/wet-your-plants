@@ -13,7 +13,6 @@ import Container from '@mui/material/Container'
 import useToken, { useAuthContext } from '@galvanize-inc/jwtdown-for-react'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import styles from './login.css'
 import './login.css'
 
 export default function LoginForm() {
@@ -63,7 +62,7 @@ export default function LoginForm() {
                             <Typography
                                 component="h1"
                                 variant="h5"
-                                className={styles.login_title}
+                                className='login_title'
                             >
                                 Log in
                             </Typography>

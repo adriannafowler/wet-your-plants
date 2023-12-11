@@ -37,7 +37,6 @@ function CustomTabPanel({ children, value, index }) {
         </div>
     )
 }
-
 function a11yProps(index) {
     return {
         id: `simple-tab-${index}`,
@@ -99,7 +98,6 @@ function PlantDetail() {
                 navigate('/signin/')
             }
         }
-
         fetchPlantData()
         fetchTodos()
         checkToken()

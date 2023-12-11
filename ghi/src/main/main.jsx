@@ -34,7 +34,7 @@ function Main(props) {
 
 Main.propTypes = {
   posts: PropTypes.arrayOf(PropTypes.string).isRequired,
-  title: PropTypes.string.isRequired,
+  title: PropTypes.string,
 };
 
 export default Main;
