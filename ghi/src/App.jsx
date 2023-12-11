@@ -6,9 +6,7 @@ import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
 import SignUpForm from './accounts/signup'
 import HomePage from './main/home'
 import LoginForm from './accounts/login'
-import PlantCare from './main/PlantCare'
 import Dashboard from './caredashboard/dashboard'
-import AddGenericTodoDialog from './caredashboard/dashboard'
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
@@ -32,9 +30,6 @@ function App() {
                     </Route>
                     <Route path="/">
                         <Route index element={<HomePage />} />
-                    </Route>
-                    <Route path="PlantCare">
-                        <Route index element={<PlantCare />} />
                     </Route>
                     <Route path="dashboard/">
                         <Route index element={<Dashboard />} />
