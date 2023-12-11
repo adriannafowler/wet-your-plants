@@ -8,8 +8,8 @@ const WeatherWidget = ({ zipcode }) => {
     const fetchWeather = async () => {
       try {
         const response = await fetch(
-          `http://api.openweathermap.org/data/2.5/weather?zip=${zipcode}&units=imperial&appid=YOUR_OPENWEATHER_API_KEY`
-        );
+            `http://api.openweathermap.org/data/2.5/weather?zip=${zipcode}&units=imperial&appid=c289d5ddb9dcd1282b02b4a11cdaa063`
+        )
         const data = await response.json();
         setWeather(data);
       } catch (error) {

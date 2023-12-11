@@ -1,52 +1,201 @@
-import React, { useState } from "react";
-import { TextField, Button, List, ListItem, ListItemText } from "@mui/material";
-import { usePlantContext } from "./PlantContext";
+import React, { useState } from 'react'
+import {
+    TextField,
+    Button,
+    List,
+    ListItem,
+    ListItemText,
+    ListItemSecondaryAction,
+    Checkbox,
+    IconButton,
+} from '@mui/material'
+import DeleteIcon from '@mui/icons-material/Delete'
+import './dashboard.css'
 
-const DailyTodoList = () => {
-  const [task, setTask] = useState("");
-  const [todos, setTodos] = useState([]);
-  const { updatePlantCareHistory } = usePlantContext();
+const DailyTodoList = ({ todos, setTodos, onClose, onAddTodo }) => {
+    const [task, setTask] = useState('')
 
-  const addTodo = () => {
-    if (task.trim() !== "") {
-      setTodos([...todos, task]);
-      setTask("");
+    const addTodo = () => {
+        if (task.trim() !== '') {
+            const newTodo = { text: task, complete: false }
+            onAddTodo(newTodo)
+            setTask('')
+        }
     }
-  };
 
-  const removeTodo = (index) => {
-    const completedTodo = todos[index];
-    const newTodos = [...todos];
-    newTodos.splice(index, 1);
-    setTodos(newTodos);
+    const toggleTodo = (index) => {
+        const updatedTodo = {
+            ...todos[index],
+            complete: !todos[index].complete,
+        }
+        fetch(
+            `http://localhost:8000/dashboard/complete/?todo_id=${todos[index].id}`,
+            {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                credentials: 'include',
+                body: JSON.stringify({
+                    complete: updatedTodo.complete,
+                }),
+            }
+        )
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to update todo completion status')
+                }
+                return response.json()
+            })
+            .then((updatedTodo) => {
+                // Update the state only after the server confirms the change
+                const newTodos = [...todos]
+                newTodos[index] = updatedTodo
+                // Assuming there's a state setter function provided, e.g., setTodos
+                setTodos(newTodos)
+            })
+            .catch((error) => {
+                console.error('Error updating todo:', error)
+            })
+    }
 
-    updatePlantCareHistory({
-      date: new Date().toLocaleDateString(),
-      action: `Completed task: ${completedTodo}`,
-    });
-  };
+    const removeTodo = (index) => {
+        // Remove the todo from the server
+        // ...
 
-  return (
-    <div>
-      <TextField
-        label="Add a task"
-        value={task}
-        onChange={(e) => setTask(e.target.value)}
-      />
-      <Button onClick={addTodo}>Add</Button>
+        const newTodos = [...todos]
+        newTodos.splice(index, 1)
+        // setTodos(newTodos) // this needs to be passed in from parent component as a prompt?
+    }
+    return (
+        <div className="todo-list">
+            <TextField
+                label="Add a task"
+                value={task}
+                onChange={(e) => setTask(e.target.value)}
+            />
+            <Button className="button" onClick={addTodo}>
+                Add
+            </Button>
 
-      {todos.length > 0 && (
-        <List>
-          {todos.map((todo, index) => (
-            <ListItem key={index}>
-              <ListItemText primary={todo} />
-              <Button onClick={() => removeTodo(index)}>Remove</Button>
-            </ListItem>
-          ))}
-        </List>
-      )}
-    </div>
-  );
-};
+            {todos.length > 0 && (
+                <List>
+                    {todos.map((todo, index) => (
+                        <ListItem key={index} className="todo-item">
+                            <Checkbox
+                                className="checkbox"
+                                checked={todo.complete}
+                                onClick={() => toggleTodo(index)}
+                            />
+                            <ListItemText
+                                primary={todo.todo}
+                                className={todo.complete ? 'complete' : ''}
+                            />
+                            <ListItemSecondaryAction>
+                                <IconButton
+                                    edge="end"
+                                    className="delete-button"
+                                    onClick={() => removeTodo(index)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItemSecondaryAction>
+                        </ListItem>
+                    ))}
+                </List>
+            )}
 
-export default DailyTodoList;
+            <Button className="close-button" onClick={onClose} color="primary">
+                Close
+            </Button>
+        </div>
+    )
+}
+
+export default DailyTodoList
+
+// import React, { useState } from 'react'
+// import {
+//     TextField,
+//     Button,
+//     List,
+//     ListItem,
+//     ListItemText,
+//     ListItemSecondaryAction,
+//     Checkbox,
+//     IconButton,
+// } from '@mui/material'
+// import DeleteIcon from '@mui/icons-material/Delete'
+
+// const DailyTodoList = ({ todos, onClose, onAddTodo }) => {
+//     const [task, setTask] = useState('')
+
+//     const addTodo = () => {
+//         if (task.trim() !== '') {
+//             const newTodo = { text: task, completed: false }
+//             onAddTodo(newTodo)
+//             setTask('')
+//         }
+//     }
+
+//     const toggleTodo = (index) => {
+//         const newTodos = [...todos]
+//         newTodos[index].completed = !newTodos[index].completed
+//         // Update the server with the new status if needed
+//     }
+
+//     const removeTodo = (index) => {
+//         // Remove the todo from the server
+//         // ...
+
+//         const newTodos = [...todos]
+//         newTodos.splice(index, 1)
+//         // setTodos(newTodos) // this needs to be passed in from parent component as a prompt?
+//     }
+
+//     return (
+//         <div className="todo-list">
+//             <TextField
+//                 label="Add a task"
+//                 value={task}
+//                 onChange={(e) => setTask(e.target.value)}
+//             />
+//             <Button className="button" onClick={addTodo}>
+//                 Add
+//             </Button>
+
+//             {todos.length > 0 && (
+//                 <List>
+//                     {todos.map((todo, index) => (
+//                         <ListItem key={index} className="todo-item">
+//                             <Checkbox
+//                                 className="checkbox"
+//                                 checked={todo.completed}
+//                                 onChange={() => toggleTodo(index)}
+//                             />
+//                             <ListItemText
+//                                 primary={todo.todo}
+//                                 className={todo.completed ? 'completed' : ''}
+//                             />
+//                             <ListItemSecondaryAction>
+//                                 <IconButton
+//                                     edge="end"
+//                                     className="delete-button"
+//                                     onClick={() => removeTodo(index)}
+//                                 >
+//                                     <DeleteIcon />
+//                                 </IconButton>
+//                             </ListItemSecondaryAction>
+//                         </ListItem>
+//                     ))}
+//                 </List>
+//             )}
+
+//             <Button className="close-button" onClick={onClose} color="primary">
+//                 Close
+//             </Button>
+//         </div>
+//     )
+// }
+
+// export default DailyTodoList
