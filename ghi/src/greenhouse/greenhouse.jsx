@@ -2,13 +2,11 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
 import Can from '../public/watering_can.svg'
-import AddIcon from '@mui/icons-material/Add'
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import AddPlantDialog from './plant_form'
 import SideDrawer from './sidedrawer'
 import LoginModal from './loginmodal'
 import './greenhouse.css'
-import hamburger from '../public/hamburger.svg'
 import add_button from '../public/add_button.svg'
 
 const Greenhouse = () => {
@@ -81,7 +79,6 @@ const Greenhouse = () => {
         fetchPlants()
     }, [newToken])
 
-
     return (
         <>
             <div className="overall">
@@ -95,38 +92,36 @@ const Greenhouse = () => {
                         </div>
                         <Tooltip title="Open care dashboard">
                             <div className="watering_can_div">
-                                <button className="watering_can_button">
-                                    <img className="watering_can" src={Can}></img>
-                                </button>
+                                <a href="/dashboard">
+                                    <button className="watering_can_button">
+                                        <img
+                                            className="watering_can"
+                                            src={Can}
+                                        ></img>
+                                    </button>
+                                </a>
                             </div>
                         </Tooltip>
                     </div>
-                        <div className="add_plant_div">
-                            <IconButton
-                                className="add-plant-button"
-                                onClick={handleAddPlantClick}
-                                style={{ fontSize: '36px' }}
-                            >
-                                {/* <Typography
-                                    style={{
-                                        fontFamily: 'Virgil, sans-serif',
-                                        fontSize: 20,
-                                        color: '#79a6a3',
-                                        fontWeight: 'bold',
-                                    }}
-                                >
-                                    Add a plant
-                                </Typography>
-                                <AddIcon className="add_plant_icon"></AddIcon> */}
-                                <Tooltip title="Add a plant">
-                                    <img src={add_button} alt="Add a Plant" className='add_plant_icon'/>
-                                </Tooltip>
-                            </IconButton>
-                            <AddPlantDialog
-                                open={isAddPlantDialogOpen}
-                                onClose={handleAddPlantDialogClose}
-                            />
-                        </div>
+                    <div className="add_plant_div">
+                        <IconButton
+                            className="add-plant-button"
+                            onClick={handleAddPlantClick}
+                            style={{ fontSize: '36px' }}
+                        >
+                            <Tooltip title="Add a plant">
+                                <img
+                                    src={add_button}
+                                    alt="Add a Plant"
+                                    className="add_plant_icon"
+                                />
+                            </Tooltip>
+                        </IconButton>
+                        <AddPlantDialog
+                            open={isAddPlantDialogOpen}
+                            onClose={handleAddPlantDialogClose}
+                        />
+                    </div>
                 </div>
                 <div className="middle">
                     <div className="plant_container">
@@ -155,7 +150,7 @@ const Greenhouse = () => {
                 message="Login to see greenhouse"
                 isOpen={modalOpen}
                 onRequestClose={handleModalClose}
-                redirectTo="/login/"
+                redirectTo="/login"
             />
         </>
     )

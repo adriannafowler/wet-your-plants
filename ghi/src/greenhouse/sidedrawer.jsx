@@ -20,7 +20,7 @@ const SideDrawer = () => {
     const handleRedirectHome = async (event) => {
         event.preventDefault()
         setTimeout(() => {
-            navigate('/home')
+            navigate('/')
         }, 1000)
     }
 
@@ -40,7 +40,7 @@ const SideDrawer = () => {
                 aria-label="logo"
                 onClick={() => setIsDrawerOpen(true)}
             >
-                <img src={MenuIcon} className='hamburger'></img>
+                <img src={MenuIcon} className="hamburger"></img>
             </IconButton>
             <Drawer
                 anchor="left"

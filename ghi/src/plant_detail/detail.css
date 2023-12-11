@@ -11,9 +11,9 @@
 .return_button {
     display: flex;
     flex-direction: column;
-    align-self: start;
+    align-self: flex-start;
     position: relative;
-    top: 50px;
+    left: 400px;
 }
 
 .tab_labels {
@@ -24,11 +24,14 @@
 .card-container {
     display: flex;
     flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    margin-top: 50px;
 }
 
 .tab {
-    font-family: 'Virgil' !important;
-    color: #79a6a3 !important;
+    font-family: 'Virgil';
+    color: #79a6a3;
 }
 
 .tab.Mui-selected {
@@ -36,7 +39,6 @@
 }
 
 .plant_name {
-    font-family: 'Coustard-Regular' !important;
-    text-align: left !important;
-
+    font-family: 'Coustard-Regular';
+    text-align: left;
 }
