@@ -131,6 +131,7 @@ const Greenhouse = () => {
                     <div className="plant_container">
                         {plants.map((plant) => (
                             <a
+                                key={plant.id}
                                 className="plant_link"
                                 href={`http://localhost:3000/greenhouse/${plant.id}`}
                             >
