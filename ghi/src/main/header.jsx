@@ -6,17 +6,18 @@ import IconButton from '@mui/material/IconButton';
 import SearchIcon from '@mui/icons-material/Search';
 import Typography from '@mui/material/Typography';
 import Link from '@mui/material/Link';
+import { useNavigate } from "react-router-dom";
+
+
 
 function Header(props) {
   const { sections, title } = props;
+  const navigate = useNavigate();
 
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <Button variant="outlined" size="small">
+        <Button onClick={() => navigate('/signin')} variant="outlined" size="small">
           Sign In
         </Button>
         <Typography
@@ -32,7 +33,7 @@ function Header(props) {
         <IconButton>
           <SearchIcon />
         </IconButton>
-        <Button variant="outlined" size="small">
+        <Button onClick={() => navigate('/signup')} variant="outlined" size="small">
           Sign up
         </Button>
       </Toolbar>

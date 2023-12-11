@@ -2,13 +2,10 @@ import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
 import Container from '@mui/material/Container';
-import GitHubIcon from '@mui/icons-material/GitHub';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Header from './header';
 import MainFeaturedPost from './mainfeaturedpost';
-import FeaturedPost from './featuredpost';
+import FeaturedPost from './features';
 import Main from './main';
 import Footer from './footer';
 import './background.css'
@@ -42,6 +39,7 @@ const featuredPosts = [
       'Enter your Greenhouse and take a wiff!',
     image: 'https://source.unsplash.com/random?plants',
     imageLabel: 'Image Text',
+    path: '/greenhouse'
   },
   {
     title: 'Plant Care',
@@ -49,6 +47,7 @@ const featuredPosts = [
       'Please water your plants',
     image: 'https://source.unsplash.com/random?plants',
     imageLabel: 'Image Text',
+    path: '/PlantCare'
   },
 ];
 
@@ -56,7 +55,7 @@ const posts = [];
 
 const defaultTheme = createTheme();
 
-export default function Blog() {
+export default function HomePage() {
   return (
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />

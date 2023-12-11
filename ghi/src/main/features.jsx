@@ -6,9 +6,11 @@ import Card from '@mui/material/Card';
 import CardActionArea from '@mui/material/CardActionArea';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
+import { useNavigate } from "react-router-dom";
 
-function FeaturedPost(props) {
+function featuredPosts(props) {
   const { post } = props;
+  const navigate = useNavigate();
 
   return (
     <Grid item xs={12} md={12}>
@@ -18,13 +20,10 @@ function FeaturedPost(props) {
             <Typography component="h2" variant="h5">
               {post.title}
             </Typography>
-            {/* <Typography variant="subtitle1" color="text.secondary">
-              {post.date}
-            </Typography> */}
             <Typography variant="subtitle1" paragraph>
               {post.description}
             </Typography>
-            <Typography variant="subtitle1" color="primary">
+            <Typography onClick={() => navigate(post.path)} variant="subtitle1" color="primary">
               View More
             </Typography>
           </CardContent>
@@ -40,7 +39,8 @@ function FeaturedPost(props) {
   );
 }
 
-FeaturedPost.propTypes = {
+
+featuredPosts.propTypes = {
   post: PropTypes.shape({
     date: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
@@ -50,4 +50,4 @@ FeaturedPost.propTypes = {
   }).isRequired,
 };
 
-export default FeaturedPost;
+export default featuredPosts;
