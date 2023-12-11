@@ -5,9 +5,6 @@ from queries.users import (
     UserQueries,
 )
 from models import UserOutWithPassword, UserOut
-from dotenv import load_dotenv
-
-load_dotenv()
 
 
 class PlantAuthenticator(Authenticator):
@@ -35,11 +32,5 @@ class PlantAuthenticator(Authenticator):
         return account.email, account.dict()
 
 
-# authenticator = PlantAuthenticator(os.environ.get("SIGNING_KEY"))
-# authenticator = PlantAuthenticator(os.environ["SIGNING_KEY"])
-
-signing_key = os.environ.get("SIGNING_KEY")
-if not signing_key:
-    raise ValueError("SIGNING_KEY environment variable not set")
-
-authenticator = PlantAuthenticator(signing_key)
+authenticator = PlantAuthenticator(os.environ.get("SIGNING_KEY"))
+authenticator = PlantAuthenticator(os.environ["SIGNING_KEY"])

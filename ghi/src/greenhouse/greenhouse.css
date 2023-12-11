@@ -16,10 +16,10 @@ html, body, #root {
 }
 
 body {
-width: 100vw !important; /* This sets the body to the width of the viewport */
+width: 100vw !important;
 max-width: none;
-margin: 0; /* This removes the default margin browsers apply to the body */
-display: flex; /* This ensures the body is a flex container */
+margin: 0;
+display: flex;
 flex-basis: auto;
 }
 
@@ -55,7 +55,7 @@ flex-basis: auto;
 .watering_can_button {
     border: none;
     background-color: transparent;
-    padding: 0; /* Removes padding to ensure the image fits well */
+    padding: 0;
 }
 
 .watering_can_div:hover {
@@ -64,13 +64,13 @@ flex-basis: auto;
 
 .watering_can {
     width: 100%;
-    height: auto; /* Make the image fill the container */
-    object-fit: contain; /* Ensures that the entire image is visible */
-    border-radius: 50%; /* If you want the image itself to be circular (not necessary since the container is already circular and hiding overflow) */
+    height: auto;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 .watering_can:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Simulates being pressed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .inventory_name {
@@ -96,19 +96,18 @@ body {
 
 .plant_container {
     display: grid;
-    grid-gap: 20px; /* Gap between items */
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Adjust '200px' to your preferred minimum width */
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     padding: 10px;
     justify-content: center;
 }
 
 .card {
-    border: none; /* Removes the border */
-    padding: 20px;
+    border: none;
     justify-content: center;
     align-content: center;
     background-color: transparent;
-    border-radius: 8px; /* Rounds the corners of the card */
+    border-radius: 8px;
     box-shadow: none;
 }
 
@@ -118,27 +117,25 @@ body {
     align-self: center;
     justify-self: center;
     flex-shrink: 0;
-    border-radius: 15px; /* Rounds the corners of the image */
+    border-radius: 15px;
 }
 
 .plant_link {
-    text-decoration: none; /* Removes underline */
+    text-decoration: none;
 }
 
 .plant_name {
     font-size: 25px;
-    font-family: 'Virgil', sans-serif; /* Fallback to sans-serif */
+    font-family: 'Virgil', sans-serif;
     color: #79a6a3;
     width: auto;
     height: 16px;
     text-align: center;
-    transition: color 0.3s ease; /* Smooth transition for color change */
+    transition: color 0.3s ease;
 }
 
 .plant_name:hover {
-    filter: brightness(65%); /* Darkens the color */
-    /* Or specify a specific darker color:
-    color: #darker-shade-color; */
+    filter: brightness(65%);
 }
 
 .card_content {

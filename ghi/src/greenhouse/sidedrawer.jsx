@@ -20,7 +20,7 @@ const SideDrawer = () => {
     const handleRedirectHome = async (event) => {
         event.preventDefault()
         setTimeout(() => {
-            navigate('/home')
+            navigate('/')
         }, 1000)
     }
 

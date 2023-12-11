@@ -140,7 +140,7 @@ Merge a change into main to kick off the initial deploy. Once the build pipeline
 finishes you should be able to see an "under construction" page on your GitLab
 pages site.
 # Wet Your Plants
-- Adrianna Fowler 
+- Adrianna Fowler
 - Danny Gomez
 - Jason Seet
 - Deon Nguyen
@@ -193,8 +193,20 @@ To fully enjoy this application on your local machine, please make sure to follo
 1. Clone the repository down to your local machine
 2. CD into the new project directory
 3. code . to open your IDE
-4. Create a file in "api" named keys.py (insert the code below)
-5.  PERENUAL_API_KEY = "Replace with key from plantID API"
+4. Create a file in "api" named .env (insert the code below)
+5. Create a file in "wet-your-plants" named .env (insert the code below)
+6. This code can go in both .env files
+    PERENUAL_API_KEY = "Replace with key from plantID API"
     OPEN_WEATHER_API_KEY = "Replace with key from openweathermap API"
+    VITE_APP_API_HOST= "http://localhost:8000"
+    DEFAULT_EMAIL = "email address of your choice here"
+    PG_PASSWORD = "password"
+    SIGNING_KEY = "can be anything"
+    DATABASE_URL = "your database url here"
+    *OPEN_WEATHER_API_KEY = "your key here"
+    *PERENUAL_API_KEY = "your key here"
 6. Run `docker compose build`
 7. Run `docker compose up`
+
+* to obtain an Open Weather API key https://openweathermap.org/current
+* to obtain a Perenual API key https://perenual.com/docs/api

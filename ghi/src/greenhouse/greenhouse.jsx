@@ -66,7 +66,6 @@ const Greenhouse = () => {
                 throw new Error('Failed to fetch plants')
             }
             const data = await response.json()
-            console.log(data)
             setPlants(data)
         } catch (error) {
             console.error('Error fetching plants:', error)

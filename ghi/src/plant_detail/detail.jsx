@@ -36,6 +36,12 @@ function CustomTabPanel({ children, value, index }) {
         </div>
     )
 }
+function a11yProps(index) {
+    return {
+        id: `simple-tab-${index}`,
+        'aria-controls': `simple-tabpanel-${index}`,
+    }
+}
 
 function PlantDetail() {
     const [newToken, setNewToken] = useState([])
@@ -48,10 +54,6 @@ function PlantDetail() {
     const navigate = useNavigate()
     const param = useParams()
     const plant_id = param.id
-
-    // useEffect(() => {
-    //     fetchToken()
-    // })
 
     useEffect(() => {
         const fetchPlantData = async () => {
@@ -95,7 +97,6 @@ function PlantDetail() {
                 navigate('/signin/')
             }
         }
-
         fetchPlantData()
         fetchTodos()
         checkToken()
@@ -196,7 +197,7 @@ function PlantDetail() {
                                         borderTopRightRadius: '20px',
                                     }}
                                 />
-                                <div className="action-buttons">
+                            <div className="action-buttons">
                                     <IconButton onClick={handleDeleteClick}>
                                         <HighlightOffIcon />
                                     </IconButton>
@@ -216,42 +217,39 @@ function PlantDetail() {
                             }}
                         >
                             <CardActions>
-<<<<<<< HEAD
-                                <Tabs value={value} onChange={handleChange}>
-                                    <Tab label="Description" />
-                                    <Tab label="Plant Care" />
-                                    <Tab label="Care History" />
-                                    <Tab label="Dashboard Todo's" />
-=======
                                 <Tabs
                                     value={value}
                                     onChange={handleChange}
                                     className="tab-labels"
-                                    variant='fullWidth'
+                                    variant="fullWidth"
                                 >
                                     <Tab
                                         label="Description"
                                         {...a11yProps(0)}
-                                        className='tab'
+                                        className="tab"
                                     />
-                                    <Tab className='tab' label="Plant Care" {...a11yProps(1)} />
                                     <Tab
-                                        className='tab'
+                                        label="Plant Care"
+                                        {...a11yProps(1)}
+                                        className="tab"
+                                    />
+                                    <Tab
                                         label="Care History"
                                         {...a11yProps(2)}
+                                        className="tab"
                                     />
->>>>>>> 4a8498f2c3b871ca1a7275f5b7ee9d07753e6f49
+                                    <Tab
+                                        label="Dashboard Todo's"
+                                        {...a11yProps(3)}
+                                        className="tab"
+                                    />
                                 </Tabs>
                             </CardActions>
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
-<<<<<<< HEAD
-                                    gutterBottom
-=======
-                                    className='plant_name'
->>>>>>> 4a8498f2c3b871ca1a7275f5b7ee9d07753e6f49
+                                    className="plant_name"
                                 >
                                     {details.common_name === details.name ? (
                                         `${details.common_name}`
@@ -300,13 +298,14 @@ function PlantDetail() {
                                     </CustomTabPanel>
                                     <CustomTabPanel value={value} index={3}>
                                         <List>
-                                            {todos.map((todo) => 
-                                                !todo.complete && (
-                                                    <ListItemText
-                                                        key={todo.id}
-                                                        primary={todo.todo}
-                                                    />
-                                                )
+                                            {todos.map(
+                                                (todo) =>
+                                                    !todo.complete && (
+                                                        <ListItemText
+                                                            key={todo.id}
+                                                            primary={todo.todo}
+                                                        />
+                                                    )
                                             )}
                                         </List>
                                         <Button
@@ -364,4 +363,3 @@ function PlantDetail() {
 }
 
 export default PlantDetail
-
