@@ -51,13 +51,25 @@ DEC 4, 2023
 DEC 5, 2023
     - refactored plant_detail, used black to format api, worked on removing unused imports
     - updated linter in gitlab-ci to use black instead of flake8
-    - fixed requirements.txt to include only libraries that are being used
+
 
 DEC 6, 2023
     - adjusted seed data
     - updated inventory router
-    -
-    
+    - fixed requirements.txt to include only libraries that are being used
+    - updated env files
+    - started process of moving front end api call (get plant species) to the      backend using a .env file for our api keys for best practice
+
 DEC 7, 2023
+    - finished moving front end api call for plant species, working, this effects add a plant form and edit a plant form
+    - added styling to greenhouse.jsx
+    - formatted api with black
+    - started deployment process
+    - added env variables to gitlab CI/CD settings
+    - edited docker-compose yaml
 
 DEC 8, 2023
+    -
+
+DEC 11, 2023
+    -
