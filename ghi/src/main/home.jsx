@@ -43,7 +43,7 @@ const featuredPosts = [
       'Please water your plants',
     image: 'https://source.unsplash.com/random?plants',
     imageLabel: 'Image Text',
-    path: '/PlantCare'
+    path: '/dashboard'
   },
 ];
 
