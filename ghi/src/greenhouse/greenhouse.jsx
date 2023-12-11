@@ -9,6 +9,7 @@ import SideDrawer from './sidedrawer'
 import LoginModal from './loginmodal'
 import './greenhouse.css'
 import hamburger from '../public/hamburger.svg'
+import add_button from '../public/add_button.svg'
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
@@ -80,6 +81,7 @@ const Greenhouse = () => {
         fetchPlants()
     }, [newToken])
 
+
     return (
         <>
             <div className="overall">
@@ -91,35 +93,40 @@ const Greenhouse = () => {
                         <div className="inventory_name">
                             {info}'s Greenhouse
                         </div>
-                        <div className="icon_div">
-                            <button className="watering_can_button">
-                                <img className="watering_can" src={Can}></img>
-                            </button>
-                        </div>
+                        <Tooltip title="Open care dashboard">
+                            <div className="watering_can_div">
+                                <button className="watering_can_button">
+                                    <img className="watering_can" src={Can}></img>
+                                </button>
+                            </div>
+                        </Tooltip>
                     </div>
-                    <div className="add_plant_div">
-                        <IconButton
-                            className="add-plant-button"
-                            onClick={handleAddPlantClick}
-                            style={{ fontSize: '36px' }}
-                        >
-                            <Typography
-                                style={{
-                                    fontFamily: 'Virgil, sans-serif',
-                                    fontSize: 20,
-                                    color: '#79a6a3',
-                                    fontWeight: 'bold',
-                                }}
+                        <div className="add_plant_div">
+                            <IconButton
+                                className="add-plant-button"
+                                onClick={handleAddPlantClick}
+                                style={{ fontSize: '36px' }}
                             >
-                                Add a plant
-                            </Typography>
-                            <AddIcon className="add_plant_icon"></AddIcon>
-                        </IconButton>
-                        <AddPlantDialog
-                            open={isAddPlantDialogOpen}
-                            onClose={handleAddPlantDialogClose}
-                        />
-                    </div>
+                                {/* <Typography
+                                    style={{
+                                        fontFamily: 'Virgil, sans-serif',
+                                        fontSize: 20,
+                                        color: '#79a6a3',
+                                        fontWeight: 'bold',
+                                    }}
+                                >
+                                    Add a plant
+                                </Typography>
+                                <AddIcon className="add_plant_icon"></AddIcon> */}
+                                <Tooltip title="Add a plant">
+                                    <img src={add_button} alt="Add a Plant" className='add_plant_icon'/>
+                                </Tooltip>
+                            </IconButton>
+                            <AddPlantDialog
+                                open={isAddPlantDialogOpen}
+                                onClose={handleAddPlantDialogClose}
+                            />
+                        </div>
                 </div>
                 <div className="middle">
                     <div className="plant_container">

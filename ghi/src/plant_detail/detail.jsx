@@ -216,18 +216,42 @@ function PlantDetail() {
                             }}
                         >
                             <CardActions>
+<<<<<<< HEAD
                                 <Tabs value={value} onChange={handleChange}>
                                     <Tab label="Description" />
                                     <Tab label="Plant Care" />
                                     <Tab label="Care History" />
                                     <Tab label="Dashboard Todo's" />
+=======
+                                <Tabs
+                                    value={value}
+                                    onChange={handleChange}
+                                    className="tab-labels"
+                                    variant='fullWidth'
+                                >
+                                    <Tab
+                                        label="Description"
+                                        {...a11yProps(0)}
+                                        className='tab'
+                                    />
+                                    <Tab className='tab' label="Plant Care" {...a11yProps(1)} />
+                                    <Tab
+                                        className='tab'
+                                        label="Care History"
+                                        {...a11yProps(2)}
+                                    />
+>>>>>>> 4a8498f2c3b871ca1a7275f5b7ee9d07753e6f49
                                 </Tabs>
                             </CardActions>
                             <CardContent>
                                 <Typography
                                     variant="h5"
                                     component="div"
+<<<<<<< HEAD
                                     gutterBottom
+=======
+                                    className='plant_name'
+>>>>>>> 4a8498f2c3b871ca1a7275f5b7ee9d07753e6f49
                                 >
                                     {details.common_name === details.name ? (
                                         `${details.common_name}`

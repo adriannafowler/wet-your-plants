@@ -1,3 +1,13 @@
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+@font-face {
+    font-family: 'Coustard-Regular';
+    src: url('../public/fonts/Coustard-Regular.ttf') format('truetype');
+}
+
 .return_button {
     display: flex;
     flex-direction: column;
@@ -6,7 +16,27 @@
     top: 50px;
 }
 
+.tab_labels {
+    display: flex;
+    justify-content: space-around;
+}
+
 .card-container {
     display: flex;
     flex-direction: column;
+}
+
+.tab {
+    font-family: 'Virgil' !important;
+    color: #79a6a3 !important;
+}
+
+.tab.Mui-selected {
+    filter: brightness(65%);
+}
+
+.plant_name {
+    font-family: 'Coustard-Regular' !important;
+    text-align: left !important;
+
 }

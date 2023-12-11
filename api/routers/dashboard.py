@@ -14,6 +14,7 @@ def get_all_todos(
     user: UserOut = Depends(authenticator.get_current_account_data),
     plant_id: int = None,
 ) -> List[TodoOut] | None:
+<<<<<<< HEAD
     if plant_id:
         return repo.get_by_plant_id(user.get("id"), plant_id)
     else:
@@ -32,6 +33,9 @@ def get_all_todos(
     #         owner_id=user.id
     #     )
     # ]
+=======
+    return repo.get_all(user.get("id"))
+>>>>>>> 4a8498f2c3b871ca1a7275f5b7ee9d07753e6f49
 
 
 @router.delete("/dashboard/{todo_id}/")
