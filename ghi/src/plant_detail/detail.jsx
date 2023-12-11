@@ -144,13 +144,16 @@ function PlantDetail() {
                                     value={value}
                                     onChange={handleChange}
                                     className="tab-labels"
+                                    variant='fullWidth'
                                 >
                                     <Tab
                                         label="Description"
                                         {...a11yProps(0)}
+                                        className='tab'
                                     />
-                                    <Tab label="Plant Care" {...a11yProps(1)} />
+                                    <Tab className='tab' label="Plant Care" {...a11yProps(1)} />
                                     <Tab
+                                        className='tab'
                                         label="Care History"
                                         {...a11yProps(2)}
                                     />
@@ -161,6 +164,7 @@ function PlantDetail() {
                                     gutterBottom
                                     variant="h5"
                                     component="div"
+                                    className='plant_name'
                                 >
                                     {details.common_name === details.name
                                         ? `${details.common_name}`
