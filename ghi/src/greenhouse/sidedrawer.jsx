@@ -40,7 +40,7 @@ const SideDrawer = () => {
                 aria-label="logo"
                 onClick={() => setIsDrawerOpen(true)}
             >
-                <img src={MenuIcon} style={{ width: 30, height: 30 }}></img>
+                <img src={MenuIcon} className='hamburger'></img>
             </IconButton>
             <Drawer
                 anchor="left"
