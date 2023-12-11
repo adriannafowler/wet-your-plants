@@ -27,8 +27,6 @@ def root():
     return {"message": "You hit the root path!"}
 
 
-print(os.environ.get("CORS_HOST", "http://localhost:3000"))
-
 app.include_router(authenticator.router)
 app.include_router(plant_detail.router)
 app.include_router(users.router)

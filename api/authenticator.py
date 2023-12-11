@@ -22,7 +22,6 @@ class PlantAuthenticator(Authenticator):
         return accounts
 
     def get_hashed_password(self, account: UserOutWithPassword):
-        print(account)
         return account.hashed_password
 
     def get_account_data_for_cookie(self, account):
