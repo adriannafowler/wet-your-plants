@@ -17,8 +17,8 @@ function Header(props) {
   return (
     <React.Fragment>
       <Toolbar sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Button onClick={() => navigate('/signin')} variant="outlined" size="small">
-          Sign In
+        <Button onClick={() => navigate('/login')} variant="outlined" size="small" className='button'>
+          Log in
         </Button>
         <Typography
           component="h2"
@@ -30,10 +30,7 @@ function Header(props) {
         >
           {title}
         </Typography>
-        <IconButton>
-          <SearchIcon />
-        </IconButton>
-        <Button onClick={() => navigate('/signup')} variant="outlined" size="small">
+        <Button onClick={() => navigate('/signup')} variant="outlined" size="small" className='button'>
           Sign up
         </Button>
       </Toolbar>

@@ -28,7 +28,7 @@ function App() {
                     <Route path="login/">
                         <Route index element={<LoginForm />} />
                     </Route>
-                    <Route path="HomePage">
+                    <Route path="/">
                         <Route index element={<HomePage/>} />
                     </Route>
                     <Route path="PlantCare">

@@ -1,3 +1,123 @@
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+@font-face {
+    font-family: 'Coustard-Regular';
+    src: url('../public/fonts/Coustard-Regular.ttf') format('truetype');
+}
+
 .body {
     background-color: #FBF2ED !important;
+}
+
+.css-1k76al1  {
+    background-color: #FBF2ED !important;
+    outline: none !important;
+}
+
+.css-tcrtuv-MuiTypography-root {
+    font-family: 'Virgil' !important;
+    color: #79a6a3;
+}
+
+.css-1xatcrf-MuiTypography-root {
+    color: #79a6a3 !important;
+}
+
+.css-1vl95ex-MuiTypography-root {
+    color: #79a6a3 !important;
+}
+
+.css-9mgopn-MuiDivider-root {
+    border-color: #E7927F !important;
+}
+
+.css-zvs8dy-MuiTypography-root {
+    color: #C7D7BB !important;
+    font-family: 'Coustard-Regular' !important;
+    font-size: 75px !important;
+}
+
+.button {
+    font-family: 'Virgil' !important;
+    background-color: #79A6A3 !important;
+    color: white !important;
+    border: transparent !important;
+}
+
+.button:hover {
+    filter: brightness(125%);
+}
+
+.css-mqf1yl-MuiPaper-root {
+    border-radius: 15px !important;
+}
+
+.banner_img {
+    width: 100% !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+.css-1plq5y9 {
+    background-color: transparent !important;
+}
+
+.css-mqf1yl-MuiPaper-root {
+    height: 200px !important;
+
+}
+
+.plant_img_container{
+    display: flex m !important;
+    justify-content: center !important;
+    padding: 0;
+}
+
+.featured_plants_title {
+    font-family: 'Virgil';
+    color: #79A6A3;
+
+}
+.css-uym98a-MuiImageList-root {
+    width: 100vw !important;
+}
+
+.featured_plants {
+    justify-content: center !important;
+}
+
+.plant_pic {
+    border-radius: 15px !important;
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.css-vstcif-MuiImageList-root {
+    width: 100% !important;
+    height: auto !important;
+    justify-content: center !important;
+    overflow: hidden;
+}
+
+.css-ta95xa-MuiImageListItem-root {
+    aspect-ratio: 1/1 !important;
+    width: 85%;
+    height: 85%;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding-left: 35px;
+}
+
+.post_title {
+    font-family: 'Virgil' !important;
+    font-size: 20px !important;
+    color: #79A6A3 !important;
+}
+
+.post_card {
+    border-radius: 15px !important;
 }

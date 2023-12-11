@@ -15,12 +15,12 @@ function featuredPosts(props) {
   return (
     <Grid item xs={12} md={12}>
       <CardActionArea component="a" href="#">
-        <Card sx={{ display: 'flex' }}>
+        <Card sx={{ display: 'flex' }} className='post_card'>
           <CardContent sx={{ flex: 1 }}>
-            <Typography component="h2" variant="h5">
+            <Typography className='post_title'>
               {post.title}
             </Typography>
-            <Typography variant="subtitle1" paragraph>
+            <Typography variant="subtitle1" paragraph className='post_subtitle'>
               {post.description}
             </Typography>
             <Typography onClick={() => navigate(post.path)} variant="subtitle1" color="primary">
