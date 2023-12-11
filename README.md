@@ -38,12 +38,14 @@ Utilize the Greenhouse page as your central hub for managing plant inventory. Tr
 Harness the power of the PlantID API to access detailed care instructions and descriptions for each house plant. Empower yourself with the knowledge needed for optimal plant growth.
 
 5. Plant Care Dashboard
-Local Weather Integration: Real-time weather updates from the OpenWeatherMap API to tailor your plant care routine based on local conditions.
-Weather Warning Bar: Receive alerts when weather conditions pose a potential threat to your outdoor plants.
 Daily To-Do List: Generate a personalized to-do list based on watering needs and other care requirements, with the ability to add manual tasks.
 
 6. Plant Care History
 Review your plant care journey with the Plant Care History feature. Store completed tasks and monitor your progress in nurturing your plants.
+
+## Stretch Goals
+- Local Weather Integration: Real-time weather updates from the OpenWeatherMap API to tailor your plant care routine based on local conditions.
+- Weather Warning Bar: Receive alerts when weather conditions pose a potential threat to your outdoor plants.
 
 ## Project Initialization
 
