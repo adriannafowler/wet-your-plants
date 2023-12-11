@@ -47,7 +47,7 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
     }
 
     const isValidDate = (dateString) => {
-        const regEx = /^\d{4}-\d{2}-\d{2}$/
+        const regEx = /^\d{2}-\d{2}-\d{4}$/
         return regEx.test(dateString)
     }
 
@@ -96,7 +96,7 @@ const AddTodoDialog = ({ onClose, onAddTodo, plantid }) => {
                 <Grid item xs={12}>
                     <DialogTitle>To-Do Due Date</DialogTitle>
                     <TextField
-                        label="Due Date"
+                        label="Must be mm-dd-yyyy"
                         fullWidth
                         value={dueDate}
                         onChange={handleDueDateChange}

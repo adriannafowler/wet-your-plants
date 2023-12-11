@@ -141,7 +141,7 @@ const Dashboard = ({ userId }) => {
                         <Button className="button" onClick={openDialog}>
                             Add Greenhouse Task
                         </Button>
-                        {/* Placeholder for Daily Todo List */}
+
                         <DailyTodoList todos={todos} setTodos={setTodos} />
                         <Box>
                             {/* Manual Weather Entry */}
