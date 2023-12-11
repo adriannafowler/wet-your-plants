@@ -47,3 +47,17 @@ DEC 4, 2023
     - reorganized backend so that all pydantic models are found in models.py
     - refactored dashboard.py, added docstrings, endpoints working
     - refactored greenhouse.py, added docstrings, endpoints working
+
+DEC 5, 2023
+    - refactored plant_detail, used black to format api, worked on removing unused imports
+    - updated linter in gitlab-ci to use black instead of flake8
+    - fixed requirements.txt to include only libraries that are being used
+
+DEC 6, 2023
+    - adjusted seed data
+    - updated inventory router
+    -
+    
+DEC 7, 2023
+
+DEC 8, 2023
