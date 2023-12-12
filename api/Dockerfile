@@ -15,4 +15,4 @@ COPY tests tests
 RUN python -m pip install -r requirements.txt
 
 # CMD uvicorn main:app --host 0.0.0.0 --port 80 --forwarded-allow-ips "*"
-CMD python -m migrations up && uvicorn main:app --host 0.0.0.0 --port 80
+CMD uvicorn main:app --host 0.0.0.0 --port 80
