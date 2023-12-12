@@ -332,6 +332,7 @@ function PlantDetail() {
                         onClose={handleEditDialogClose}
                         plantid={plant_id}
                         initialData={details}
+                        plantId={plant_id}
                     />
                 </DialogContent>
                 <DialogActions>

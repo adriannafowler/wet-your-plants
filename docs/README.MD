@@ -1,4 +1,4 @@
-``# Wet Your Plants - Plant Care Assistant
+# Wet Your Plants - Plant Care Assistant
 
 - Adrianna Fowler
 - Danny Gomez
