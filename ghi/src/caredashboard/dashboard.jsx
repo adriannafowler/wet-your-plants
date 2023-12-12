@@ -25,63 +25,43 @@ const Dashboard = ({ userId }) => {
     const [manualWeatherData, setManualWeatherData] = useState(null)
 
 
+
     // useEffect(() => {
-    //     const fetchWeatherApiKey = async () => {
+    //     const fetchWeatherByLocation = async () => {
     //         try {
-    //             const response = await fetch(
-    //                 'http://localhost:8000/api/weather-key'
-    //             )
-    //             if (!response.ok) {
-    //                 throw new Error(
-    //                     `Failed to fetch weather API key: ${response.statusText}`
+    //             if (weatherApiKey) {
+    //                 navigator.geolocation.getCurrentPosition(
+    //                     async (position) => {
+    //                         const { latitude, longitude } = position.coords
+    //                         const response = await fetch(
+    //                             `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=c289d5ddb9dcd1282b02b4a11cdaa063`
+    //                         )
+    //                         const locationData = await response.json()
+
+    //                         if (
+    //                             locationData.length > 0 &&
+    //                             locationData[0].postal_code
+    //                         ) {
+    //                             const zipCode = locationData[0].postal_code
+    //                             const weatherResponse = await fetch(
+    //                                 `http://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=imperial&appid=c289d5ddb9dcd1282b02b4a11cdaa063`
+    //                             )
+    //                             const weatherData = await weatherResponse.json()
+    //                             setWeatherData(weatherData)
+    //                         }
+    //                     },
+    //                     (error) => {
+    //                         console.error('Error getting user location:', error)
+    //                     }
     //                 )
     //             }
-    //             const data = await response.json()
-    //             setWeatherApiKey(data.weatherApiKey)
     //         } catch (error) {
-    //             console.error('Error fetching weather API key:', error)
+    //             console.error('Error fetching weather:', error)
     //         }
     //     }
 
-    //     fetchWeatherApiKey()
-    // }, [])
-
-    useEffect(() => {
-        const fetchWeatherByLocation = async () => {
-            try {
-                if (weatherApiKey) {
-                    navigator.geolocation.getCurrentPosition(
-                        async (position) => {
-                            const { latitude, longitude } = position.coords
-                            const response = await fetch(
-                                `https://api.openweathermap.org/geo/1.0/reverse?lat=${latitude}&lon=${longitude}&limit=1&appid=c289d5ddb9dcd1282b02b4a11cdaa063`
-                            )
-                            const locationData = await response.json()
-
-                            if (
-                                locationData.length > 0 &&
-                                locationData[0].postal_code
-                            ) {
-                                const zipCode = locationData[0].postal_code
-                                const weatherResponse = await fetch(
-                                    `http://api.openweathermap.org/data/2.5/weather?zip=${zipCode}&units=imperial&appid=c289d5ddb9dcd1282b02b4a11cdaa063`
-                                )
-                                const weatherData = await weatherResponse.json()
-                                setWeatherData(weatherData)
-                            }
-                        },
-                        (error) => {
-                            console.error('Error getting user location:', error)
-                        }
-                    )
-                }
-            } catch (error) {
-                console.error('Error fetching weather:', error)
-            }
-        }
-
-        fetchWeatherByLocation()
-    }, [weatherApiKey])
+    //     fetchWeatherByLocation()
+    // }, [weatherApiKey])
 
     useEffect(() => {
         fetchTodos()

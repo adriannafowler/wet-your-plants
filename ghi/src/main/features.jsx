@@ -23,7 +23,7 @@ function featuredPosts(props) {
             <Typography variant="subtitle1" paragraph className='post_subtitle'>
               {post.description}
             </Typography>
-            <Typography onClick={() => navigate(post.path)} variant="subtitle1" color="primary">
+            <Typography  variant="subtitle1" color="primary">
               View More
             </Typography>
           </CardContent>
