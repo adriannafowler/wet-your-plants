@@ -55,7 +55,7 @@ def update_todo(
     return repo.update(todo_id, todo)
 
 
-@router.put("/dashboard/complete/")
+@router.put("/dashboard/complete/{todo_id}")
 def update_complete_todo(
     todo_id: int,
     complete: CompleteIn,
