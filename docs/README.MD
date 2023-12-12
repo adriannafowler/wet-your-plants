@@ -50,11 +50,12 @@ To fully enjoy this application on your local machine, please be sure to follow 
 2. Install dependencies using appropriate package managers for both backend and frontend.
 3. Set up PostgreSQL and configure the database.
 4. Obtain API keys for [PerenualAPI](https://perenual.com/docs/api) and [OpenWeatherMapAPI](https://openweathermap.org/api).
-5. Create .env files in these directories:
-    -api
-    -wet-your-plants
-    
+5. Create .env files in these directories:  
+    - api
+    - wet-your-plants
+
     insert this information for both files:
+    ```
     VITE_APP_API_HOST= "http://localhost:8000"
         DEFAULT_EMAIL = "default email here"
         PG_PASSWORD = "password here"
@@ -65,5 +66,6 @@ To fully enjoy this application on your local machine, please be sure to follow 
         POSTGRES_DB = "database name here"
         POSTGRES_USER = "database user here"
         POSTGRES_PASSWORD = "password here"
+    ```
 
 5. Run the application and start managing your plants with ease.
