@@ -34,12 +34,3 @@ def test_get_thing():
     # Assert
     assert response.status_code == 200
     assert response.json() == []
-
-
-# def update_user():
-#     app.dependency_overrides[
-#         authenticator.get_current_account_data
-#     ] = fake_get_current_account_data
-#     app.dependency_overrides[PlantRepository] = FakePlantRepository
-
-#     fake_plant_id = 1
