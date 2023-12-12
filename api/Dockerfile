@@ -10,7 +10,7 @@ COPY acls.py acls.py
 COPY queries queries
 COPY routers routers
 COPY tests tests
-COPY migrations migrations
+# COPY migrations migrations
 
 RUN python -m pip install -r requirements.txt
 
