@@ -26,8 +26,40 @@ class TodoRepository:
                         SELECT *
                         FROM todos
                         WHERE owner_id = %s
+                        ORDER BY id ASC
                         """,
                         [user_id],
+                    )
+                    records = result.fetchall()
+                    return [self.record_out(record) for record in records]
+        except Exception as e:
+            logging.error("Error in getting plants: %s", e)
+            raise
+
+    def get_by_plant_id(self, user_id: int, plant_id: int) -> List[TodoOut]:
+        """
+        Retrieves all todo items associated with a given user ID and plant ID.
+
+        Parameters
+        ----------
+        user_id : int
+        plant_id : int
+
+        Returns
+        -------
+        List[TodoOut]
+            A list of TodoOut objects representing the todo items.
+        """
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT *
+                        FROM todos
+                        WHERE owner_id = %s AND plant_id = %s
+                        """,
+                        [user_id, plant_id],
                     )
                     records = result.fetchall()
                     return [self.record_out(record) for record in records]

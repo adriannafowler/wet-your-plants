@@ -24,12 +24,6 @@ class UserQueries:
                         zipcode=record[4],
                         hashed_password=record[5],
                     )
-                    # record = None
-                    # for row in cur.fetchall():
-                    #     record = {}
-                    #     for i, column in enumerate(cur.description):
-                    #         record[column.name] = row[i]
-                    # return UserOutWithPassword(**record)
                 except Exception:
                     return {
                         "message": "Could not get user record for this user id"

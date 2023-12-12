@@ -12,23 +12,12 @@ router = APIRouter()
 def get_all_todos(
     repo: TodoRepository = Depends(),
     user: UserOut = Depends(authenticator.get_current_account_data),
+    plant_id: int = None,
 ) -> List[TodoOut] | None:
-    # try:
-    return repo.get_all(user.get("id"))
-    # except Exception:
-    #     raise HTTPException
-    # return [
-    #     TodoOut(
-    #         id=1,
-    #         todo="Sample Todo",
-    #         due_date="2023-12-05",
-    #         time_completed=None,
-    #         complete=False,
-    #         status="upcoming",
-    #         plant_id=2,
-    #         owner_id=user.id
-    #     )
-    # ]
+    if plant_id:
+        return repo.get_by_plant_id(user.get("id"), plant_id)
+    else:
+        return repo.get_all(user.get("id"))
 
 
 @router.delete("/dashboard/{todo_id}/")
@@ -66,7 +55,7 @@ def update_todo(
     return repo.update(todo_id, todo)
 
 
-@router.put("/complete/")
+@router.put("/dashboard/complete/")
 def update_complete_todo(
     todo_id: int,
     complete: CompleteIn,

@@ -7,14 +7,33 @@
     font-family: 'Virgil';
     src: url('../public/fonts/Virgil.woff2') format('truetype');
 }
-body {
-    padding-left: 200px;
-    padding-right: 200px;
+
+html, body, #root {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0;
+    width: 100vw;
 }
+
+body {
+width: 100vw !important;
+max-width: none;
+margin: 0;
+display: flex;
+flex-basis: auto;
+}
+
+.overall {
+    align-items: center;
+    margin-right: 25px;
+    margin-left: auto;
+}
+
+
 .hamburger {
-    height: 100px;
-    width: 100px;
-    margin: auto;
+    width: 50px;
+    height: auto;
+    margin-left: 0;
 }
 
 .watering_can_div {
@@ -22,28 +41,36 @@ body {
     justify-content: center;
     align-items: center;
     width: 125px;
-    height: auto;
+    height: 125px;
     border-radius: 50%;
     border: 2px solid #c7d7bb;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     overflow: hidden;
+    background-color: white !important;
+    margin-right: 0;
+    margin: 20px;
+    transition: all 0.3s ease;
 }
 
 .watering_can_button {
     border: none;
     background-color: transparent;
-    padding: 0; /* Removes padding to ensure the image fits well */
+    padding: 0;
+}
+
+.watering_can_div:hover {
+    transform: scale(1.25);
 }
 
 .watering_can {
-    height: 100%; /* Make the image fill the container */
-    width: 100%; /* Make the image fill the container */
-    object-fit: contain; /* Ensures that the entire image is visible */
-    border-radius: 50%; /* If you want the image itself to be circular (not necessary since the container is already circular and hiding overflow) */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 .watering_can:active {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Simulates being pressed */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .inventory_name {
@@ -59,26 +86,28 @@ body {
 
 .header {
     margin-top: 20px;
+    width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+    padding: 0 20px;
 }
 
 .plant_container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 20px;
-    margin-top: 10px;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 10px;
+    justify-content: center;
 }
 
 .card {
-    border: none; /* Removes the border */
-    padding: 20px;
+    border: none;
     justify-content: center;
     align-content: center;
     background-color: transparent;
-    border-radius: 8px; /* Rounds the corners of the card */
+    border-radius: 8px;
     box-shadow: none;
 }
 
@@ -88,27 +117,25 @@ body {
     align-self: center;
     justify-self: center;
     flex-shrink: 0;
-    border-radius: 15px; /* Rounds the corners of the image */
+    border-radius: 15px;
 }
 
 .plant_link {
-    text-decoration: none; /* Removes underline */
+    text-decoration: none;
 }
 
 .plant_name {
     font-size: 25px;
-    font-family: 'Virgil', sans-serif; /* Fallback to sans-serif */
+    font-family: 'Virgil', sans-serif;
     color: #79a6a3;
     width: auto;
     height: 16px;
     text-align: center;
-    transition: color 0.3s ease; /* Smooth transition for color change */
+    transition: color 0.3s ease;
 }
 
 .plant_name:hover {
-    filter: brightness(65%); /* Darkens the color */
-    /* Or specify a specific darker color:
-    color: #darker-shade-color; */
+    filter: brightness(65%);
 }
 
 .card_content {
@@ -121,11 +148,24 @@ body {
 .add_plant_div {
     display: flex;
     justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.add_plant_button {
+    width: 20px;
+    height: auto;
+    display: flex;
+    margin: 50px !important;
 }
 
 .add_plant_icon {
-    width: 64px;
-    height: 64px;
+    width: 50px;
+    height: auto;
+}
+
+.add_plant_button:hover {
+    transform: scale(1.25) !important;
 }
 
 .plant_link {
