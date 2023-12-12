@@ -69,7 +69,13 @@ DEC 7, 2023
     - edited docker-compose yaml
 
 DEC 8, 2023
-    -
+    - reformatted login and signup forms
+    - updated routes
+    - updated greenhouse styling
 
 DEC 11, 2023
-    -
+    - updated homepage and homepage styling
+    - added a dropdown menu to choose plant in create a todo form
+    - add post call to api for create a todo
+    - updated README to include env instructions
+    - did walk through with group of application and fixed a couple errors to create final submission 
