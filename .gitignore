@@ -1,4 +1,5 @@
 # Byte-compiled / optimized / DLL files
+api/keys.py
 __pycache__/
 *.py[cod]
 *$py.class
@@ -177,6 +178,7 @@ scratch-paper.txt
 .env.development.local
 .env.test.local
 .env.production.local
+.api.keys.py
 
 **/*npm-debug.log*
 **/*yarn-debug.log*

@@ -1,0 +1,18 @@
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+.potted_plant1 {
+    width: 100px;
+    height: auto;
+}
+
+.signup_button {
+    background-color: #79A6A3 !important;
+    font-family: 'Virgil' !important;
+}
+
+.signup_button:hover {
+    filter: brightness(125%);
+}

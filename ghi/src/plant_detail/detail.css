@@ -1,0 +1,44 @@
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+@font-face {
+    font-family: 'Coustard-Regular';
+    src: url('../public/fonts/Coustard-Regular.ttf') format('truetype');
+}
+
+.return_button {
+    display: flex;
+    flex-direction: column;
+    align-self: flex-start;
+    position: relative;
+    left: 400px;
+}
+
+.tab_labels {
+    display: flex;
+    justify-content: space-around;
+}
+
+.card-container {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    margin-top: 50px;
+}
+
+.tab {
+    font-family: 'Virgil';
+    color: #79a6a3;
+}
+
+.tab.Mui-selected {
+    filter: brightness(65%);
+}
+
+.plant_name {
+    font-family: 'Coustard-Regular';
+    text-align: left;
+}

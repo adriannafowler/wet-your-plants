@@ -1,0 +1,178 @@
+@font-face {
+    font-family: 'estirada';
+    src: url('../public/fonts/Cupcakie.otf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Virgil';
+    src: url('../public/fonts/Virgil.woff2') format('truetype');
+}
+
+html, body, #root {
+    margin-left: 20px;
+    margin-right: 20px;
+    padding: 0;
+    width: 100vw;
+}
+
+body {
+width: 100vw !important;
+max-width: none;
+margin: 0;
+display: flex;
+flex-basis: auto;
+}
+
+.overall {
+    align-items: center;
+    margin-right: 25px;
+    margin-left: auto;
+}
+
+
+.hamburger {
+    width: 50px;
+    height: auto;
+    margin-left: 0;
+}
+
+.watering_can_div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    border: 2px solid #c7d7bb;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    background-color: white !important;
+    margin-right: 0;
+    margin: 20px;
+    transition: all 0.3s ease;
+}
+
+.watering_can_button {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+}
+
+.watering_can_div:hover {
+    transform: scale(1.25);
+}
+
+.watering_can {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 50%;
+}
+
+.watering_can:active {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.inventory_name {
+    font-size: 95px;
+    font-family: 'Cupcakie';
+    justify-content: space-around;
+    color: #c7d7bb;
+}
+
+body {
+    background-color: #fbf2ed;
+}
+
+.header {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.plant_container {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    padding: 10px;
+    justify-content: center;
+}
+
+.card {
+    border: none;
+    justify-content: center;
+    align-content: center;
+    background-color: transparent;
+    border-radius: 8px;
+    box-shadow: none;
+}
+
+.plant_image {
+    height: 200px;
+    width: 200px;
+    align-self: center;
+    justify-self: center;
+    flex-shrink: 0;
+    border-radius: 15px;
+}
+
+.plant_link {
+    text-decoration: none;
+}
+
+.plant_name {
+    font-size: 25px;
+    font-family: 'Virgil', sans-serif;
+    color: #79a6a3;
+    width: auto;
+    height: 16px;
+    text-align: center;
+    transition: color 0.3s ease;
+}
+
+.plant_name:hover {
+    filter: brightness(65%);
+}
+
+.card_content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+}
+
+.add_plant_div {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.add_plant_button {
+    width: 20px;
+    height: auto;
+    display: flex;
+    margin: 50px !important;
+}
+
+.add_plant_icon {
+    width: 50px;
+    height: auto;
+}
+
+.add_plant_button:hover {
+    transform: scale(1.25) !important;
+}
+
+.plant_link {
+    text-decoration: none;
+}
+
+.inventory_name {
+    margin-left: 10px;
+    margin-right: 10px;
+}

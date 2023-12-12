@@ -1,38 +1,42 @@
-import { useState, useEffect } from 'react'
-import ErrorNotification from './ErrorNotification'
-import Construct from './Construct'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import './App.css'
+import PlantDetail from './plant_detail/detail'
+import Greenhouse from './greenhouse/greenhouse'
+import { AuthProvider } from '@galvanize-inc/jwtdown-for-react'
+import SignUpForm from './accounts/signup'
+import HomePage from './main/home'
+import LoginForm from './accounts/login'
+import Dashboard from './caredashboard/dashboard'
 
-console.log(import.meta.env)
+const URL = import.meta.env.VITE_APP_API_HOST
+if (!URL) {
+    throw Error('VITE_APP_API_HOST was undefined')
+}
 
 function App() {
-    const [launchInfo, setLaunchInfo] = useState([])
-    const [error, setError] = useState(null)
-
-    useEffect(() => {
-        async function getData() {
-            let url = `${import.meta.env.VITE_API_HOST}/api/launch-details`
-            console.log('fastapi url: ', url)
-            let response = await fetch(url)
-            console.log('------- hello? -------')
-            let data = await response.json()
-
-            if (response.ok) {
-                console.log('got launch data!')
-                setLaunchInfo(data.launch_details)
-            } else {
-                console.log('drat! something happened')
-                setError(data.message)
-            }
-        }
-        getData()
-    }, [])
-
     return (
-        <div>
-            <ErrorNotification error={error} />
-            <Construct info={launchInfo} />
-        </div>
+        <AuthProvider baseUrl={URL}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="greenhouse">
+                        <Route index element={<Greenhouse />} />
+                        <Route path=":id/" element={<PlantDetail />} />
+                    </Route>
+                    <Route path="signup">
+                        <Route index element={<SignUpForm />} />
+                    </Route>
+                    <Route path="login/">
+                        <Route index element={<LoginForm />} />
+                    </Route>
+                    <Route path="/">
+                        <Route index element={<HomePage />} />
+                    </Route>
+                    <Route path="dashboard/">
+                        <Route index element={<Dashboard />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+        </AuthProvider>
     )
 }
 

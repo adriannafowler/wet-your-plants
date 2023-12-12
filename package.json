@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@galvanize-inc/jwtdown-for-react": "^0.2.2",
+    "@mui/icons-material": "^5.14.19",
+    "react-router-dom": "^6.20.1"
+  }
+}
