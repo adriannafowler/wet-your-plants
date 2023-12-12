@@ -1,23 +1,13 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useState, useEffect } from 'react'
-<<<<<<< HEAD
-
-import AddIcon from '@mui/icons-material/Add'
-=======
 import Can from '../public/watering_can.svg'
->>>>>>> main
 import { IconButton, Tooltip, Typography } from '@mui/material'
 import AddPlantDialog from './plant_form'
 import SideDrawer from './sidedrawer'
 import LoginModal from './loginmodal'
 import './greenhouse.css'
-<<<<<<< HEAD
-import Can from '../public/watering_can.svg'
-import hamburger from '../public/hamburger.svg'
-=======
 import add_button from '../public/add_button.svg'
->>>>>>> main
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
@@ -90,20 +80,6 @@ const Greenhouse = () => {
 
     return (
         <>
-<<<<<<< HEAD
-            {newToken ? (
-                <div className="overall">
-                    <div className="top">
-                        <div className="header">
-                            <div className="icon_div">
-                                <img className='hamburger' src={hamburger}>
-                                </img>
-                                <SideDrawer />
-                            </div>
-                            <div className="inventory_name">
-                                {info}'s Greenhouse
-                            </div>
-=======
             <div className="overall">
                 <div className="top">
                     <div className="header">
@@ -114,7 +90,6 @@ const Greenhouse = () => {
                             {info}'s Greenhouse
                         </div>
                         <Tooltip title="Open care dashboard">
->>>>>>> main
                             <div className="watering_can_div">
                                 <a href="/dashboard">
                                     <button className="watering_can_button">

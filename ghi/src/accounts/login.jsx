@@ -62,7 +62,7 @@ export default function LoginForm() {
                             <Typography
                                 component="h1"
                                 variant="h5"
-                                className='login_title'
+                                className="login_title"
                             >
                                 Log in
                             </Typography>
