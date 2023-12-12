@@ -2,7 +2,7 @@
 
 ## Dashboard
 
-- **Method**: `GET`,
+- **Method**: `GET`,`DELETE`,`POST`,`PUT`
 - **Path**: `/api/dashboard/`,`/api/dashboard/{todo_id}`,`/api/complete/`
 
 Input:
@@ -166,7 +166,7 @@ The Users API will create and update an account for a user to access the Wet You
 
 ## Watering Schedule
 
-- **Method**: `GET`, `POST`, `PUT`, `DELETE`
+- **Method**: `GET`
 - **Path**: `/api/watering-schedules/`
 
 Input:
