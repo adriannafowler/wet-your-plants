@@ -30,7 +30,7 @@ const SearchBar = ({ setSearchQuery, onSearch }) => (
     </form>
 )
 
-export default function AddPlantDialog({ open, onClose }) {
+export default function AddPlantDialog({ open, onClose, plants, setPlants }) {
     const [formData, setFormData] = useState({
         name: '',
         source: '',
@@ -141,6 +141,7 @@ export default function AddPlantDialog({ open, onClose }) {
             }
 
             const data = await response.json()
+            setPlants([...plants, data])
             onClose()
         } catch (error) {
             console.error('Error:', error)
