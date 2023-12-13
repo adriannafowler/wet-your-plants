@@ -68,10 +68,10 @@ build-front-end-job:
     - cd ghi
     - npm install
     - npm run build
-    # The following line creates a _redirects file to redirect all URLs to index.html
+    - cp dist/index.html dist/404.html
   artifacts:
     paths:
-      - ghi/build/
+      - ghi/dist/
 
 # Deploy the React/JavaScript front-end to GitLab pages
 pages:
