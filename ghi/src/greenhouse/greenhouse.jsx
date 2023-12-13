@@ -8,6 +8,7 @@ import SideDrawer from './sidedrawer'
 import LoginModal from './loginmodal'
 import './greenhouse.css'
 import add_button from '../public/add_button.svg'
+import { Link } from 'react-router-dom';
 
 const Greenhouse = () => {
     const [info, setInfo] = useState([])
@@ -91,7 +92,7 @@ const Greenhouse = () => {
                         </div>
                         <Tooltip title="Open care dashboard">
                             <div className="watering_can_div">
-                                <a href="/dashboard">
+                                <Link to="/dashboard">
                                     <button className="watering_can_button">
                                         <img
                                             className="watering_can"
@@ -125,10 +126,10 @@ const Greenhouse = () => {
                 <div className="middle">
                     <div className="plant_container">
                         {plants.map((plant) => (
-                            <a
+                            <Link
                                 key={plant.id}
                                 className="plant_link"
-                                href={`http://localhost:3000/greenhouse/${plant.id}`}
+                                to={`http://localhost:3000/greenhouse/${plant.id}`}
                             >
                                 <div className="card">
                                     <div className="card_content">

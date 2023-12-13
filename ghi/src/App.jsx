@@ -12,11 +12,13 @@ const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
     throw Error('VITE_APP_API_HOST was undefined')
 }
+const domain = /https:\/\/[^/]+/;
+const basename = process.env.PUBLIC_URL.replace(domain, '');
 
 function App() {
     return (
         <AuthProvider baseUrl={URL}>
-            <BrowserRouter>
+            <BrowserRouter basename={basename}>
                 <Routes>
                     <Route path="greenhouse">
                         <Route index element={<Greenhouse />} />
