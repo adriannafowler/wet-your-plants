@@ -68,7 +68,7 @@ build-front-end-job:
     - cd ghi
     - npm install
     - npm run build -- --base=/wet-your-plants/assets
-    - cp dist/index.html dist/404.html
+    - echo "/* /index.html 200" > dist/_redirects
   artifacts:
     paths:
       - ghi/dist/
