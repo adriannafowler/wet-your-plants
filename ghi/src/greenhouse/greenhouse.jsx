@@ -99,7 +99,7 @@ const Greenhouse = () => {
                                             src={Can}
                                         ></img>
                                     </button>
-                                </a>
+                                </ Link>
                             </div>
                         </Tooltip>
                     </div>
@@ -142,7 +142,7 @@ const Greenhouse = () => {
                                         </h3>
                                     </div>
                                 </div>
-                            </a>
+                            </Link>
                         ))}
                     </div>
                 </div>
