@@ -14,7 +14,7 @@ if (!URL) {
     throw Error('VITE_APP_API_HOST was undefined')
 }
 const domain = /https:\/\/[^/]+/;
-const basename = process.env.PUBLIC_URL.replace(domain, '');
+const basename = process.env.BASE_URL.replace(domain, '');
 
 function App() {
     return (
