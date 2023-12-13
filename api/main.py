@@ -15,7 +15,11 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.environ.get("CORS_HOST", "https://the-horticoders.gitlab.io/wet-your-plants/")],
+    allow_origins=[
+        os.environ.get(
+            "CORS_HOST", "https://the-horticoders.gitlab.io/wet-your-plants/"
+        )
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -34,4 +34,3 @@ def test_get_thing():
     # Assert
     assert response.status_code == 200
     assert response.json() == []
-
