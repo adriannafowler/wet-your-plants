@@ -7,6 +7,7 @@ import SignUpForm from './accounts/signup'
 import HomePage from './main/home'
 import LoginForm from './accounts/login'
 import Dashboard from './caredashboard/dashboard'
+import.meta.env.BASE_URL
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
