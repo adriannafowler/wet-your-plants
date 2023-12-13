@@ -67,7 +67,7 @@ build-front-end-job:
   script:
     - cd ghi
     - npm install
-    - npm run build
+    - npm run build -- --base=/wet-your-plants/assets
     - cp dist/index.html dist/404.html
   artifacts:
     paths:
