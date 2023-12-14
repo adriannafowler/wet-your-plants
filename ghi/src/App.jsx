@@ -7,14 +7,14 @@ import SignUpForm from './accounts/signup'
 import HomePage from './main/home'
 import LoginForm from './accounts/login'
 import Dashboard from './caredashboard/dashboard'
-import.meta.env.BASE_URL
+
 
 const URL = import.meta.env.VITE_APP_API_HOST
 if (!URL) {
     throw Error('VITE_APP_API_HOST was undefined')
 }
-const domain = /https:\/\/[^/]+/;
-const basename = process.env.PUBLIC_URL.replace(domain, '');
+
+const basename = import.meta.env.BASE_URL
 
 function App() {
     return (
