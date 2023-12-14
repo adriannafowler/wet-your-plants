@@ -63,7 +63,6 @@ build-front-end-job:
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     VITE_PUBLIC_URL: https://the-horticoders.gitlab.io/wet-your-plants
     VITE_APP_API_HOST: https://aug-2023-1-pt-api.mod3projects.com
-    VITE_API_HOST: https://DEPLOYED_API_SERVICE.mod3projects.com
   script:
     - cd ghi
     - npm install
