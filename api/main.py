@@ -17,7 +17,7 @@ app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         os.environ.get(
-            "CORS_HOST", "https://the-horticoders.gitlab.io/wet-your-plants/"
+            "CORS_HOST", "http://localhost:8000"
         )
     ],
     allow_credentials=True,
